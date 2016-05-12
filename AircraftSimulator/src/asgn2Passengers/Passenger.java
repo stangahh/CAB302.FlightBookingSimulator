@@ -110,7 +110,7 @@ public abstract class Passenger {
 	 * Transition passenger to Confirmed seat<br>
 	 * PRE: isNew(this) OR inQueue(this)<br>
 	 * POST: isConfirmed(this) AND this.getConfirmationTime() == confirmationTime AND <br>
-	 * 	     this.getBookingTime() == bookingTime<br>
+	 * 	     this.getDepartureTime() == departureTime<br>
 	 * <ul>
 	 * <li>confirmSeat: New -> Confirmed</li>
 	 * <li>confirmSeat: Queued -> Confirmed; up until departureTime</li> 
