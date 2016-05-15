@@ -72,10 +72,19 @@ public abstract class Passenger {
 	 * OR (departureTime < bookingTime) 
 	 */
 	public Passenger(int bookingTime, int departureTime) throws PassengerException  {
+		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
+			throw new PassengerException("Invalid booking");
+		} else {
+			this.bookingTime = bookingTime;
+			this.departureTime = departureTime;
+		}
+		
 		//Stuff here 
 		this.passID = "" + Passenger.index; 
 		Passenger.index++; 
 		//Stuff here 
+		
+		newState = true;
 	}
 	
 	/**
@@ -103,7 +112,16 @@ public abstract class Passenger {
 	 *         isFlown(this) OR (cancellationTime < 0) OR (departureTime < cancellationTime)
 	 */
 	public void cancelSeat(int cancellationTime) throws PassengerException {
-
+		if (isNew() || isQueued() || isRefused() || isFlown()) {
+			throw new PassengerException("Flight not confirmed and cannot be cancelled");
+		} else if (cancellationTime < 0 || departureTime < cancellationTime) {
+			throw new PassengerException("Invalid cancellation time");
+		} else if (isConfirmed()){
+			
+			bookingTime = cancellationTime;
+			newState = true;
+			confirmed = false;
+		}		
 	}
 
 	/**
@@ -123,7 +141,23 @@ public abstract class Passenger {
 	 * 		   OR (confirmationTime < 0) OR (departureTime < confirmationTime)
 	 */
 	public void confirmSeat(int confirmationTime, int departureTime) throws PassengerException {
-	
+		if (isConfirmed() || isRefused() || isFlown()) {
+			throw new PassengerException("Not currently in queue or a new booking");
+		} else if (confirmationTime < 0 || departureTime < confirmationTime) {
+			throw new PassengerException("Invalid confirmation time");
+		} else {
+			if (isNew()) {
+				newState = false;
+			} else if (isQueued()) {
+				inQueue = false;
+				exitQueueTime = confirmationTime;
+			}
+			
+			this.confirmationTime = confirmationTime;
+			this.departureTime = departureTime;
+			confirmed = true;
+			
+		}
 	}
 
 	/**
@@ -139,7 +173,17 @@ public abstract class Passenger {
 	 *         isFlown(this) OR (departureTime <= 0)
 	 */
 	public void flyPassenger(int departureTime) throws PassengerException {
-		
+		if (isNew() || isQueued() || isRefused() || isFlown()) {
+			throw new PassengerException("Passenger not yet confirmed");
+		} else if (departureTime <= 0) {
+			throw new PassengerException("Invalid departure time");
+		} else if (isConfirmed()){
+			
+			flown = true;
+			this.departureTime = departureTime;
+			confirmed = false;
+			
+		}
 	}
 
 	/**
@@ -148,7 +192,7 @@ public abstract class Passenger {
 	 * @return the bookingTime
 	 */
 	public int getBookingTime() {
-		
+		return bookingTime;
 	}
 
 	/**
@@ -158,7 +202,7 @@ public abstract class Passenger {
 	 * @return the confirmationTime
 	 */
 	public int getConfirmationTime() {
-		
+		return confirmationTime;
 	}
 
 	/**
@@ -167,7 +211,7 @@ public abstract class Passenger {
 	 * @return the departureTime
 	 */
 	public int getDepartureTime() {
-		
+		return departureTime;
 	}
 	
 	/**
@@ -176,7 +220,7 @@ public abstract class Passenger {
 	 * @return the enterQueueTime
 	 */
 	public int getEnterQueueTime() {
-		
+		return enterQueueTime;
 	}
 
 	/**
@@ -185,7 +229,7 @@ public abstract class Passenger {
 	 * @return the exitQueueTime
 	 */
 	public int getExitQueueTime() {
-		
+		return exitQueueTime;
 	}
 
 	/**
@@ -194,7 +238,7 @@ public abstract class Passenger {
 	 * @return the passID
 	 */
 	public String getPassID() {
-		
+		return passID;
 	}
 
 	/**
@@ -203,7 +247,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if Confirmed state; false otherwise 
 	 */
 	public boolean isConfirmed() {
-		
+		return confirmed;
 	}
 		
 	/**
@@ -212,7 +256,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if Flown state; false otherwise 
 	 */
 	public boolean isFlown() {
-		
+		return flown;
 	}
 	
 	/**
@@ -221,7 +265,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if New state; false otherwise 
 	 */
 	public boolean isNew() {
-		
+		return newState;
 	}
 
 	/**
@@ -230,7 +274,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if Queued state; false otherwise 
 	 */
 	public boolean isQueued() {
-		
+		return inQueue;
 	}
 	
 	/**
@@ -239,7 +283,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if Refused state; false otherwise 
 	 */
 	public boolean isRefused() {
-		
+		return refused;
 	}
 	
 	/**
@@ -267,7 +311,18 @@ public abstract class Passenger {
 	 *         isFlown(this) OR (queueTime < 0) OR (departureTime < queueTime)
 	 */
 	public void queuePassenger(int queueTime, int departureTime) throws PassengerException {
-		
+		if (isQueued() || isConfirmed() || isRefused() || isFlown()) {
+			throw new PassengerException("Passenger is not new");
+		} else if (queueTime < 0 || departureTime < queueTime) {
+			throw new PassengerException("Invalid queue time");
+		} else if (isNew()) {
+			
+			inQueue = true;
+			newState = false;
+			enterQueueTime = queueTime;
+			this.departureTime = departureTime;
+			
+		}
 	}
 	
 	/**
@@ -285,7 +340,21 @@ public abstract class Passenger {
 	 * 			OR (refusalTime < 0) OR (refusalTime < bookingTime)
 	 */
 	public void refusePassenger(int refusalTime) throws PassengerException {
-		
+		if (isConfirmed() || isRefused() || isFlown()) {
+			throw new PassengerException("Passenger not new or in the queue");
+		} else if (refusalTime < 0 || refusalTime < bookingTime) {
+			throw new PassengerException("Invalid refusal time");
+		} else {
+			if (isNew()) {
+				newState = false;
+			} else if (isQueued()) {
+				inQueue = false;
+				exitQueueTime = refusalTime;
+			}
+
+			refused = true;		
+			
+		}
 	}
 	
 	/* (non-Javadoc) (Supplied) 
@@ -327,7 +396,11 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if was Confirmed state; false otherwise
 	 */
 	public boolean wasConfirmed() {
-		
+		if (confirmationTime != 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -336,7 +409,11 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if was Queued state; false otherwise
 	 */
 	public boolean wasQueued() {
-		
+		if (enterQueueTime != 0 || exitQueueTime != 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**
