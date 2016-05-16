@@ -20,12 +20,14 @@ public class First extends Passenger {
 	 * @see asgnPassengers.Passenger#Passenger(int,int)
 	 */
 	public First(int bookingTime, int departureTime) throws PassengerException {
-		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
-			throw new PassengerException("Invalid booking");
-		} else {
-			//Call here 
-			this.passID = "F:" + this.passID;
-		}
+		super(bookingTime, departureTime);
+//		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
+//			throw new PassengerException("Invalid booking");
+//		} else {
+		//Call here 
+		this.passID = "F:" + this.passID;
+			
+//		}
 	}
 	
 	/**
@@ -44,5 +46,6 @@ public class First extends Passenger {
 	@Override
 	public Passenger upgrade() {
 		//Think about it :) 
+		//CAN'T UPGRADE PAST FIRST CLASS
 	}
 }

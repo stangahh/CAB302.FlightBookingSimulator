@@ -143,7 +143,7 @@ public abstract class Passenger {
 	public void confirmSeat(int confirmationTime, int departureTime) throws PassengerException {
 		if (isConfirmed() || isRefused() || isFlown()) {
 			throw new PassengerException("Not currently in queue or a new booking");
-		} else if (confirmationTime < 0 || departureTime < confirmationTime) {
+		} else if (confirmationTime < 0 || departureTime < confirmationTime || confirmationTime < getBookingTime()) {
 			throw new PassengerException("Invalid confirmation time");
 		} else {
 			if (isNew()) {

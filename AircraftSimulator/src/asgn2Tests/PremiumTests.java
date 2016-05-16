@@ -5,7 +5,7 @@ package asgn2Tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import asgn2Passengers.Premium;
@@ -19,8 +19,8 @@ public class PremiumTests extends Premium {
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	@Before
+	public void setUpBeforeClass() throws Exception {
 	}
 
 	@Test

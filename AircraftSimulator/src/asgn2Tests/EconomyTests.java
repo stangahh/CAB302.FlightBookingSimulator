@@ -2,15 +2,15 @@ package asgn2Tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import asgn2Passengers.Economy;
 
 public class EconomyTests extends Economy {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	@Before
+	public  void setUpBeforeClass() throws Exception {
 	}
 
 	@Test
