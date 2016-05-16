@@ -149,4 +149,5 @@ public class Bookings {
 	public void setAvailable(int available) {
 		this.available = available;
 	}
+	
 }

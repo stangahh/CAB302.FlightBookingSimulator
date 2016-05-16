@@ -44,4 +44,5 @@ public class A380 extends Aircraft {
 		//Call here 
 		this.type = "A380";
 	}
+	
 }

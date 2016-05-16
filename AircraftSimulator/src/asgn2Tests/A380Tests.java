@@ -21,6 +21,7 @@ public class A380Tests extends A380 {
 	 */
 	@Before
 	public void setUpBeforeClass() throws Exception {
+		
 	}
 
 	@Test

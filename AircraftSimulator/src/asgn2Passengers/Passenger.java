@@ -352,7 +352,7 @@ public abstract class Passenger {
 				exitQueueTime = refusalTime;
 			}
 
-			refused = true;		
+			refused = true;
 			
 		}
 	}
@@ -396,7 +396,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if was Confirmed state; false otherwise
 	 */
 	public boolean wasConfirmed() {
-		if (confirmationTime != 0) {
+		if (getConfirmationTime() != 0) {
 			return true;
 		} else {
 			return false;
@@ -409,7 +409,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if was Queued state; false otherwise
 	 */
 	public boolean wasQueued() {
-		if (enterQueueTime != 0 || exitQueueTime != 0) {
+		if (getEnterQueueTime() != 0 || getExitQueueTime() != 0) {
 			return true;
 		} else {
 			return false;

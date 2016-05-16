@@ -189,7 +189,7 @@ public abstract class Aircraft {
 	 * 
 	 * @return <code>int</code> number of Economy Class passengers 
 	 */
-	public int getNumEonomy() {
+	public int getNumEconomy() {
 		return numEconomy;
 	}
 
@@ -208,7 +208,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Confirmed passengers 
 	 */
 	public int getNumPassengers() {
-		return getNumFirst() + getNumBusiness() + getNumPremium() + getNumEonomy();
+		return getNumFirst() + getNumBusiness() + getNumPremium() + getNumEconomy();
 	}
 	
 	/**
@@ -336,4 +336,5 @@ public abstract class Aircraft {
 		String msg = "";
 		return msg + p.noSeatsMsg(); 
 	}
+	
 }
