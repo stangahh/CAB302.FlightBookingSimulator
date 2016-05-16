@@ -20,8 +20,12 @@ public class First extends Passenger {
 	 * @see asgnPassengers.Passenger#Passenger(int,int)
 	 */
 	public First(int bookingTime, int departureTime) throws PassengerException {
-		//Call here 
-		this.passID = "F:" + this.passID;
+		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
+			throw new PassengerException("Invalid booking");
+		} else {
+			//Call here 
+			this.passID = "F:" + this.passID;
+		}
 	}
 	
 	/**

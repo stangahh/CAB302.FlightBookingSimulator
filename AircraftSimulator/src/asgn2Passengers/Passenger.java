@@ -77,14 +77,14 @@ public abstract class Passenger {
 		} else {
 			this.bookingTime = bookingTime;
 			this.departureTime = departureTime;
+		
+			//Stuff here 
+			this.passID = "" + Passenger.index; 
+			Passenger.index++; 
+			//Stuff here 
+			
+			newState = true;
 		}
-		
-		//Stuff here 
-		this.passID = "" + Passenger.index; 
-		Passenger.index++; 
-		//Stuff here 
-		
-		newState = true;
 	}
 	
 	/**
