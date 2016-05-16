@@ -79,10 +79,19 @@ public abstract class Aircraft {
 	 * is invalid. See {@link asgn2Passengers.Passenger#cancelSeat(int)}
 	 * @throws AircraftException if <code>Passenger</code> is not recorded in aircraft seating 
 	 */
-	public void cancelBooking(Passenger p,int cancellationTime) throws PassengerException, AircraftException {
-		//Stuff here
+	public void cancelBooking(Passenger p, int cancellationTime) throws AircraftException, PassengerException {
+		//AircraftException - if Passenger is not recorded in aircraft seating
+		
+		//Transition method on the passenger
+			//called ont he passenger object
+		
+		//Update of status string for the aircraft (see below)
 		this.status += Log.setPassengerMsg(p,"C","N");
-		//Stuff here
+		
+		//Remove passenger from the seat storage for the aircraft
+		
+		//Decrement the counts – this needs to be polymorphic, find hte right class of the cancelling passenger
+		
 	}
 
 	/**
@@ -95,7 +104,9 @@ public abstract class Aircraft {
 	 * OR confirmationTime OR departureTime is invalid. See {@link asgn2Passengers.Passenger#confirmSeat(int, int)}
 	 * @throws AircraftException if no seats available in <code>Passenger</code> fare class. 
 	 */
-	public void confirmBooking(Passenger p,int confirmationTime) throws AircraftException, PassengerException { 
+	public void confirmBooking(Passenger p, int confirmationTime) throws AircraftException, PassengerException { 
+		//Somewhat of a clone of cancelBooking (inversed), relies on polymorphism
+		
 		//Stuff here
 		this.status += Log.setPassengerMsg(p,"N/Q","C");
 		//Stuff here
@@ -119,8 +130,10 @@ public abstract class Aircraft {
 	 * 
 	 * @return <code>boolean</code> true if aircraft empty; false otherwise 
 	 */
-	public boolean flightEmpty() {
-		
+	public boolean flightEmpty() {		
+		if (getNumPassengers() == 0) {
+			return true;
+		}
 	}
 	
 	/**
@@ -129,7 +142,9 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft full; false otherwise 
 	 */
 	public boolean flightFull() {
-		
+		if (getNumPassengers() == capacity) {
+			return true;
+		}
 	}
 	
 	/**
@@ -142,7 +157,8 @@ public abstract class Aircraft {
 	 * See {@link asgn2Passengers.Passenger#flyPassenger(int)}. 
 	 */
 	public void flyPassengers(int departureTime) throws PassengerException { 
-		
+		//going through and changing the state of each of the passengers.
+		//call method on the passenger, and make sure the departure time is correct, then log the status again
 	}
 	
 	/**
@@ -152,6 +168,9 @@ public abstract class Aircraft {
 	 * @return <code>Bookings</code> object containing the status.  
 	 */
 	public Bookings getBookings() {
+		//grabs a single object containing hte confirmed booking status for this aircraft
+		//not a to string. purely here to enable the use of graphing later on so that we 
+		//dont need to pass a string coming back.
 		
 	}
 	
@@ -161,7 +180,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Business Class passengers 
 	 */
 	public int getNumBusiness() {
-		
+		return numBusiness;
 	}
 	
 	
@@ -171,7 +190,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Economy Class passengers 
 	 */
 	public int getNumEonomy() {
-		
+		return numEconomy;
 	}
 
 	/**
@@ -180,7 +199,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of First Class passengers 
 	 */
 	public int getNumFirst() {
-		
+		return numFirst;
 	}
 
 	/**
@@ -189,7 +208,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Confirmed passengers 
 	 */
 	public int getNumPassengers() {
-		
+		return getNumFirst() + getNumBusiness() + getNumPremium() + getNumEonomy();
 	}
 	
 	/**
@@ -198,7 +217,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Premium Economy Class passengers
 	 */
 	public int getNumPremium() {
-		
+		return numPremium;
 	}
 	
 	/**
@@ -208,7 +227,9 @@ public abstract class Aircraft {
 	 * @return <code>List<Passenger></code> object containing the passengers.  
 	 */
 	public List<Passenger> getPassengers() {
-		
+		//a getter which exposes the list of passengers to enable us to do some 
+		//stuff with it. This is a copy of the list of passengers. Need to create 
+		//a new Collection here, NOT passing a reference to list of passengers.
 	}
 	
 	/**
@@ -234,7 +255,7 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if isConfirmed(p); false otherwise 
 	 */
 	public boolean hasPassenger(Passenger p) {
-		
+		//is this passenger on the aircraft?
 	}
 	
 
@@ -259,7 +280,7 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if seats in Class(p); false otherwise
 	 */
 	public boolean seatsAvailable(Passenger p) {		
-		
+		//capture the type of passenger (first, business, premium or economy)
 	}
 
 	/* 
@@ -276,7 +297,6 @@ public abstract class Aircraft {
 			    + "]";
 	}
 
-
 	/**
 	 * Method to upgrade Passengers to try to fill the aircraft seating. 
 	 * Called at departureTime. Works through the aircraft fare classes in 
@@ -287,7 +307,8 @@ public abstract class Aircraft {
 	 * where possible to Premium.  
 	 */
 	public void upgradeBookings() { 
-		
+		//if I upgrade a passenger from business to first, i need to remember that
+		//this will create an opening in business. 
 	}
 
 	/**
