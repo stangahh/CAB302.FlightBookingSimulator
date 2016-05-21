@@ -19,6 +19,7 @@ import asgn2Passengers.PassengerException;
  *
  */ 
 public class SimulationRunner {
+	
 	/**
 	 * Main program for the simulation 
 	 * 
@@ -26,6 +27,11 @@ public class SimulationRunner {
 	 * see {@link asgn2Simulators.SimulationRunner#printErrorAndExit()}
 	 */
 	public static void main(String[] args) {
+		
+		//Provided is the text output version (apparently). 
+		//We need to be able to choose between text output and GUI output.
+		//default: GUI
+		
 		final int NUM_ARGS = 9; 
 		Simulator s = null; 
 		Log l = null; 
@@ -41,6 +47,7 @@ public class SimulationRunner {
 					break;
 				}
 				default: {
+					//Launch GUI
 					printErrorAndExit(); 
 				}
 			}
@@ -51,7 +58,7 @@ public class SimulationRunner {
 		}
 	
 		//Run the simulation 
-		SimulationRunner sr = new SimulationRunner(s,l);
+		SimulationRunner sr = new SimulationRunner(s, l);
 		try {
 			sr.runSimulation();
 		} catch (Exception e) {
@@ -77,8 +84,8 @@ public class SimulationRunner {
 		double premiumProb = Double.parseDouble(args[6]);
 		double economyProb = Double.parseDouble(args[7]);
 		double cancelProb = Double.parseDouble(args[8]);
-		return new Simulator(seed,maxQueueSize,meanBookings,sdBookings,firstProb,businessProb,
-						  premiumProb,economyProb,cancelProb);	
+		return new Simulator(seed, maxQueueSize, meanBookings, sdBookings, firstProb, businessProb,
+						  premiumProb, economyProb, cancelProb);	
 	}
 	
 	/**
@@ -116,18 +123,20 @@ public class SimulationRunner {
 	 * @throws PassengerException See methods from {@link asgn2Simulators.Simulator} 
 	 * @throws SimulationException See methods from {@link asgn2Simulators.Simulator} 
 	 * @throws IOException on logging failures See methods from {@link asgn2Simulators.Log} 
-
+	 * 
+	 * Embed this somehow in the GUI we create.
 	 */
 	public void runSimulation() throws AircraftException, PassengerException, SimulationException, IOException {
 		this.sim.createSchedule();
 		this.log.initialEntry(this.sim);
 		
 		//Main simulation loop 
-		for (int time=0; time<=Constants.DURATION; time++) {
+		for (int time = 0; time <= Constants.DURATION; time++) {
 			this.sim.resetStatus(time); 
 			this.sim.rebookCancelledPassengers(time); 
 			this.sim.generateAndHandleBookings(time);
 			this.sim.processNewCancellations(time);
+			
 			if (time >= Constants.FIRST_FLIGHT) {
 				this.sim.processUpgrades(time);
 				this.sim.processQueue(time);
@@ -137,9 +146,10 @@ public class SimulationRunner {
 			} else {
 				this.sim.processQueue(time);
 			}
+			
 			//Log progress 
 			this.log.logQREntries(time, sim);
-			this.log.logEntry(time,this.sim);
+			this.log.logEntry(time, this.sim);
 		}
 		this.log.finalise(this.sim);
 	}

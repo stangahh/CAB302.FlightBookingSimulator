@@ -83,10 +83,16 @@ public class Simulator {
 	 * (sdDailyBookings < 0). See {@link #Simulator(int, int, double, double, double, double, double, double, double)}
 	 */
 	public Simulator() throws SimulationException {
-		this(Constants.DEFAULT_SEED,Constants.DEFAULT_MAX_QUEUE_SIZE,Constants.DEFAULT_DAILY_BOOKING_MEAN,Constants.DEFAULT_DAILY_BOOKING_SD,
-	 		 Constants.DEFAULT_FIRST_PROB,Constants.DEFAULT_BUSINESS_PROB,
-			 Constants.DEFAULT_PREMIUM_PROB,Constants.DEFAULT_ECONOMY_PROB,
-			 Constants.DEFAULT_CANCELLATION_PROB);
+		this(Constants.DEFAULT_SEED,
+				Constants.DEFAULT_MAX_QUEUE_SIZE, 
+				Constants.DEFAULT_DAILY_BOOKING_MEAN,
+				Constants.DEFAULT_DAILY_BOOKING_SD,
+				Constants.DEFAULT_FIRST_PROB,
+				Constants.DEFAULT_BUSINESS_PROB,
+				Constants.DEFAULT_PREMIUM_PROB,
+				Constants.DEFAULT_ECONOMY_PROB,
+				Constants.DEFAULT_CANCELLATION_PROB
+			);
 	}
 	
 	/**
@@ -124,13 +130,13 @@ public class Simulator {
 		this.refused = new ArrayList<Passenger>();
 		this.cancelled = new ArrayList<Passenger>();
 		
-		this.currentBookings=0;
-		this.totalFirst=0;
-		this.totalBusiness=0;
-		this.totalPremium=0;
-		this.totalEconomy=0; 
-		this.totalFlown=0;
-		this.totalEmpty=0;
+		this.currentBookings = 0;
+		this.totalFirst = 0;
+		this.totalBusiness = 0;
+		this.totalPremium = 0;
+		this.totalEconomy = 0; 
+		this.totalFlown = 0;
+		this.totalEmpty = 0;
 		this.status = "";
 	}
 	
@@ -147,16 +153,17 @@ public class Simulator {
 	 */
 	public Passenger createPassenger(int bookingTime,int departureTime) throws PassengerException {
 		double testValue = rng.nextDouble();
-		double busTest = this.firstProb+this.businessProb;
-		double premTest = busTest+this.premiumProb;
+		double busTest = this.firstProb + this.businessProb;
+		double premTest = busTest + this.premiumProb;
+		
 		if (testValue >= (1.0 - this.firstProb)) {
-			return new First(bookingTime,departureTime);
+			return new First(bookingTime, departureTime);
 		} else if (testValue >= (1.0 - busTest)) {
-			return new Business(bookingTime,departureTime); 
+			return new Business(bookingTime, departureTime); 
 		} else if (testValue >= premTest) {
-			return new Premium(bookingTime,departureTime); 
+			return new Premium(bookingTime, departureTime); 
 		} else {
-			return new Economy(bookingTime,departureTime);
+			return new Economy(bookingTime, departureTime);
 		}
 	}
 
@@ -166,8 +173,8 @@ public class Simulator {
 	 * @throws AircraftException if problems with arguments to {@link asgn2Aircraft.Aircraft} constructor
 	 */
 	public void createSchedule() throws AircraftException {
-		for (int time=0; time<=Constants.DURATION-Constants.FIRST_FLIGHT; time++) {
-			this.schedule.add(new Flights(time+Constants.FIRST_FLIGHT));
+		for (int time = 0; time <= Constants.DURATION-Constants.FIRST_FLIGHT; time++) {
+			this.schedule.add(new Flights(time + Constants.FIRST_FLIGHT));
 		}
 	}
 
@@ -214,17 +221,17 @@ public class Simulator {
 		//Correct for current time, possible end of simulation 
 		assert Constants.MAX_BOOKING_PERIOD > Constants.FIRST_FLIGHT; 
 		int bookingStart = Math.max(time, Constants.FIRST_FLIGHT);
-		int bookingEnd = Math.min(time+Constants.MAX_BOOKING_PERIOD,Constants.DURATION);
-		int bookingDays = bookingEnd - bookingStart +1; 
+		int bookingEnd = Math.min(time + Constants.MAX_BOOKING_PERIOD, Constants.DURATION);
+		int bookingDays = bookingEnd - bookingStart + 1; 
 		
 		this.currentBookings = this.getDailyBookings(); 
-		int bookingsPerDay = Math.max(1,((int) Math.floor(this.currentBookings/bookingDays)));	
+		int bookingsPerDay = Math.max(1, ((int) Math.floor(this.currentBookings/bookingDays)));	
 		
 		//Process the whole booking period 
-		for (int departureTime=bookingStart; departureTime<=bookingEnd; departureTime++) {
+		for (int departureTime = bookingStart; departureTime <= bookingEnd; departureTime++) {
 			Flights flights = this.getFlights(departureTime);
 			
-			for (int pass=0; pass<=bookingsPerDay-1; pass++) {
+			for (int pass = 0; pass <= bookingsPerDay-1; pass++) {
 				//Passenger in New state 
 				Passenger p = this.createPassenger(time, departureTime);
 				processNewPassenger(flights, p, time, departureTime);
@@ -240,7 +247,7 @@ public class Simulator {
 	public int getDailyBookings() {
 		//z ~ N(0,1) so transform 
 		double z = this.rng.nextGaussian(); 
-		double x = z*this.sdDailyBookings + this.meanDailyBookings;
+		double x = z * this.sdDailyBookings + this.meanDailyBookings;
 		int bookings = ((int) x);
 		return Math.max(bookings,Constants.MINIMUM_BOOKINGS);
 	}

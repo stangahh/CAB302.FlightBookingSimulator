@@ -40,7 +40,10 @@ public class GUISimulator extends JFrame implements Runnable {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		
+		//Use this temporarily to help try out the simulator. 
+		//We will not be using this main as the final executable main method. 
+		//Instead the main we will use is a modified main() in SimulationRunner.java. 
 	}
 
 }

@@ -37,8 +37,8 @@ public class Log {
 	 * @param target <code>String</code> holding finishing state (uses Q,C,R,F) - (Queued,Confirmed,Refused,Flown)
 	 * @return <code>String</code> containing transition in the form: |(F|J|P|Y):(N|Q|C)>(Q|C|R|F)| 
 	 */
-	public static String setPassengerMsg(Passenger p,String source, String target) {
-		String str="";
+	public static String setPassengerMsg(Passenger p, String source, String target) {
+		String str = "";
 		if (p instanceof First) {
 			str += "F";
 		} else if (p instanceof Business) {
@@ -58,7 +58,7 @@ public class Log {
 	 * @return <code>String</code> containing transition in the form: |(J|P|Y)>(F|J|P)| 
 	 */
 	public static String setUpgradeMsg(Passenger p) {
-		String str="";
+		String str = "";
 		if (p instanceof Business) {
 			str += "J>F";
 		} else if (p instanceof Premium) {
@@ -133,7 +133,7 @@ public class Log {
 	 * @throws SimulationException See {@link asgn2Simulators.Simulator#getSummary(int, boolean)}
 	 * @throws IOException on write failures 
 	 */
-	public void logEntry(int time,Simulator sim) throws IOException, SimulationException {
+	public void logEntry(int time, Simulator sim) throws IOException, SimulationException {
 		boolean flying = (time >= Constants.FIRST_FLIGHT);
 		writer.write(sim.getSummary(time, flying));
 	}
@@ -146,7 +146,7 @@ public class Log {
 	 * @param sim <code>Simulator</code> controlling simulation 
 	 * @throws IOException on write failures 
 	 */
-	public void logQREntries(int time,Simulator sim) throws IOException {
+	public void logQREntries(int time, Simulator sim) throws IOException {
 		if (Log.SAVE_STATUS) {
 			detWriter.write(sim.getStatus(time));
 		}
@@ -161,7 +161,7 @@ public class Log {
 	 * @throws IOException on write failures 
 	 * @throws SimulationException See {@link Simulator#getFlights(int)}
 	 */
-	public void logFlightEntries(int time,Simulator sim) throws IOException, SimulationException {
+	public void logFlightEntries(int time, Simulator sim) throws IOException, SimulationException {
 		if (Log.SAVE_STATUS) {
 			Flights flights = sim.getFlights(time); 
 			detWriter.write(flights.getStatus(time));

@@ -48,7 +48,7 @@ public class Flights {
 	 * @throws AircraftException See {@link asgn2Aircraft.Aircraft#confirmBooking(Passenger, int)}
 	 * @throws PassengerException See {@link asgn2Aircraft.Aircraft#confirmBooking(Passenger, int)}
 	 */
-	public void addPassenger(Passenger p,int time) throws AircraftException, PassengerException {
+	public void addPassenger(Passenger p, int time) throws AircraftException, PassengerException {
 		for (Aircraft a : this.daily) {
 			if (a.seatsAvailable(p)) {
 				a.confirmBooking(p, time);
@@ -67,7 +67,7 @@ public class Flights {
 	 * @throws PassengerException See {@link asgn2Aircraft.Aircraft#cancelBooking(Passenger, int)}
 	 * @throws AircraftException See {@link asgn2Aircraft.Aircraft#cancelBooking(Passenger, int)}
 	 */
-	public List<Passenger> cancelBookings(Random rng,double cancelProb,int cancelTime) throws PassengerException, AircraftException {
+	public List<Passenger> cancelBookings(Random rng, double cancelProb, int cancelTime) throws PassengerException, AircraftException {
 		List<Passenger> cancelled = new ArrayList<Passenger>(); 
 		for (Aircraft a : this.daily) {
 			List<Passenger> passengers =  a.getPassengers();
@@ -146,7 +146,7 @@ public class Flights {
 		for (Aircraft a : this.daily) {
 			if (a.seatsAvailable(p)) {
 				status = true;
-				break; 
+				break;
 			}
 		}
 		return status; 
@@ -197,6 +197,7 @@ public class Flights {
 	 */
 	private void totalFlightCounts() {
 		this.counts = new Bookings(0,0,0,0,0,0);
+		
 		for (Aircraft a : this.daily) {
 			Bookings b = a.getBookings();
 			int first = this.counts.getNumFirst();
@@ -213,4 +214,5 @@ public class Flights {
 			this.counts.setAvailable(available + b.getAvailable());
 		}
 	}
+	
 }
