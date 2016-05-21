@@ -90,7 +90,7 @@ public abstract class Aircraft {
 		
 		//Remove passenger from the seat storage for the aircraft
 		
-		//Decrement the counts – this needs to be polymorphic, find hte right class of the cancelling passenger
+		//Decrement the counts ï¿½ this needs to be polymorphic, find hte right class of the cancelling passenger
 		
 	}
 
