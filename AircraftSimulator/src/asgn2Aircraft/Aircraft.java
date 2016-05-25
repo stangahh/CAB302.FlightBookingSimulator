@@ -227,9 +227,7 @@ public abstract class Aircraft {
 	 * @return <code>List<Passenger></code> object containing the passengers.  
 	 */
 	public List<Passenger> getPassengers() {
-		//a getter which exposes the list of passengers to enable us to do some 
-		//stuff with it. This is a copy of the list of passengers. Need to create 
-		//a new Collection here, NOT passing a reference to list of passengers.
+		return new ArrayList<Passenger>(seats);
 	}
 	
 	/**
