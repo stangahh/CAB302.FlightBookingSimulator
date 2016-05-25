@@ -150,14 +150,14 @@ public class Simulator {
 	 * @throws PassengerException if invalid constructor parameters. 
 	 * See {@link asgn1Passengers.Passenger#Passenger(int,int)}
 	 */
-	public Passenger createPassenger(int bookingTime,int departureTime) throws PassengerException {
+	public Passenger createPassenger(int bookingTime, int departureTime) throws PassengerException {
 		double testValue = rng.nextDouble();
 <<<<<<< HEAD
 		double busTest = this.firstProb + this.businessProb;
 		double premTest = busTest + this.premiumProb;
 =======
-		double busTest = this.firstProb+this.businessProb;
-		double premTest = busTest+this.premiumProb;
+		double busTest = this.firstProb + this.businessProb;
+		double premTest = busTest + this.premiumProb;
 >>>>>>> master
 		
 		if (testValue >= (1.0 - this.firstProb)) {
@@ -170,7 +170,7 @@ public class Simulator {
 =======
 			return new Business(bookingTime,departureTime); 
 		} else if (testValue >= (1.0 - premTest)) {
-			return new Premium(bookingTime,departureTime); 
+			return new Premium(bookingTime, departureTime); 
 >>>>>>> master
 		} else {
 			return new Economy(bookingTime, departureTime);
