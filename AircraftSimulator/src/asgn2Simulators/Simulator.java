@@ -579,7 +579,8 @@ public class Simulator {
 		return "Simulator [meanDailyBookings=" + meanDailyBookings + ", sdDailyBookings=" + sdDailyBookings
 				+ ", seed=" + seed + ", firstProb=" + firstProb + ", businessProb="
 				+ businessProb + ", premiumProb=" + premiumProb 
-				+ ", economyProb=" + economyProb +"]";
+				+ ", economyProb=" + economyProb + ", maxQueueSize=" + maxQueueSize 
+				+ ", cancellationProb=" + cancelProb + "]";
 	}
 
 	/**
