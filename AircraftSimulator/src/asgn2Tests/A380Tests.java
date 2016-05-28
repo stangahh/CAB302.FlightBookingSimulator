@@ -16,7 +16,7 @@ import asgn2Aircraft.AircraftException;
  * @author Megan Hunter, Jesse Stanger
  *
  */
-public class A380Tests extends A380 {
+public class A380Tests {
 	
 	Aircraft plane;
 
@@ -26,7 +26,6 @@ public class A380Tests extends A380 {
 	@Before
 	public void setUpBeforeClass() throws Exception {
 		this.plane = new A380("A380", 14, 25, 50, 100, 200);
-
 	}
 	
 	@Test (expected = AircraftException.class)
@@ -42,41 +41,39 @@ public class A380Tests extends A380 {
 	}
 	
 	@Test (expected = AircraftException.class)
-	public void testAircraftEmptyFlightCodeDefault() throws AircraftException {
+	public void testAircraftNegativeDepartureTime() throws AircraftException {
 		@SuppressWarnings("unused")
-		Aircraft nullPlane = new A380("", 1);
+		Aircraft nullPlane = new A380("A380", -1, 1, 1, 1, 1);
 	}
 	
 	@Test (expected = AircraftException.class)
-	public void testAircraftNullFlightCodeDefault() throws AircraftException {
+	public void testAircraftZeroDepartureTime() throws AircraftException {
 		@SuppressWarnings("unused")
-		Aircraft nullPlane = new A380(null, 1);
-	}
-
-	
-	@Test
-	public void testAircraftnNegativeDepartureTime() {
-		fail("Not yet implemented");
+		Aircraft nullPlane = new A380("A380", 0, 1, 1, 1, 1);
 	}
 	
-	@Test
-	public void testAircraftNegativeCapacityFirst() {
-		fail("Not yet implemented");
+	@Test (expected = AircraftException.class)
+	public void testAircraftNegativeCapacityFirst() throws AircraftException {
+		@SuppressWarnings("unused")
+		Aircraft nullPlane = new A380("A380", 1, -1, 1, 1, 1);
 	}
 	
-	@Test
-	public void testAircraftNegativeCapacityBusiness() {
-		fail("Not yet implemented");
+	@Test (expected = AircraftException.class)
+	public void testAircraftNegativeCapacityBusiness() throws AircraftException {
+		@SuppressWarnings("unused")
+		Aircraft nullPlane = new A380("A380", 1, 1, -1, 1, 1);
 	}
 	
-	@Test
-	public void testAircraftNegativeCapacityPremium() {
-		fail("Not yet implemented");
+	@Test (expected = AircraftException.class)
+	public void testAircraftNegativeCapacityPremium() throws AircraftException {
+		@SuppressWarnings("unused")
+		Aircraft nullPlane = new A380("A380", 1, 1, 1, -1, 1);
 	}
 	
-	@Test
-	public void testAircraftNegativeCapacityEconomy() {
-		fail("Not yet implemented");
+	@Test (expected = AircraftException.class)
+	public void testAircraftNegativeCapacityEconomy() throws AircraftException {
+		@SuppressWarnings("unused")
+		Aircraft nullPlane = new A380("A380", 1, 1, 1, 1, -1);
 	}
 	
 	@Test
