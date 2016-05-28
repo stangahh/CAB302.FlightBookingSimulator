@@ -94,17 +94,34 @@ public abstract class Aircraft {
 	 */
 	public void cancelBooking(Passenger p, int cancellationTime) throws AircraftException, PassengerException {
 		//AircraftException - if Passenger is not recorded in aircraft seating
+		if (!seats.contains(p)) {
+			throw new AircraftException("Passenger not booked");
+		} else if (!p.isConfirmed()) {
+			throw new PassengerException("Passenger not confirmed");
+		} else if (cancellationTime < 0) {
+			throw new PassengerException("Cancellation time invalid");
+		} else {
+			//Update of status string for the aircraft (see below)
+			this.status += Log.setPassengerMsg(p,"C","N");
+			
+			//Decrement the counts � this needs to be polymorphic, find hte right class of the cancelling passenger
+			String pClass = p.getPassID();
+			if (pClass.contains("J:")) {
+				businessCapacity -= 1;
+			} else if (pClass.contains("Y:")) {
+				economyCapacity -= 1;
+			} else if (pClass.contains("F:")) {
+				firstCapacity -= 1;
+			} else if (pClass.contains("P:")) {
+				premiumCapacity -= 1;
+			}
+			// IS THERE A BETTER WAY TO DO THIS?!
 		
-		//Transition method on the passenger
-			//called ont he passenger object
+			//Remove passenger from the seat storage for the aircraft
+			seats.remove(p);
 		
-		//Update of status string for the aircraft (see below)
-		this.status += Log.setPassengerMsg(p,"C","N");
-		
-		//Remove passenger from the seat storage for the aircraft
-		
-		//Decrement the counts � this needs to be polymorphic, find hte right class of the cancelling passenger
-		
+			
+		}
 	}
 
 	/**
@@ -118,11 +135,47 @@ public abstract class Aircraft {
 	 * @throws AircraftException if no seats available in <code>Passenger</code> fare class. 
 	 */
 	public void confirmBooking(Passenger p, int confirmationTime) throws AircraftException, PassengerException { 
+		//Change to just calling confirmSeat from the Passenger class???
+		if (confirmationTime < 0 || confirmationTime < p.getDepartureTime()) {
+			throw new PassengerException("Invalid times");
+		} else if (p.isConfirmed() || p.isRefused() || p.isFlown()) {
+			throw new PassengerException("Not currently in queue or a new booking");
+		}
+		
 		//Somewhat of a clone of cancelBooking (inversed), relies on polymorphism
+		String pClass = p.getPassID();
+		if (pClass.contains("J:")) {
+			if (numBusiness == businessCapacity) {
+				throw new AircraftException("No Business seats available");
+			} else {
+				numBusiness += 1;
+			}			
+		} else if (pClass.contains("Y:")) {
+			if (numEconomy == economyCapacity) {
+				throw new AircraftException("No Economy seats available");
+			} else {
+				numEconomy += 1;
+			}
+		} else if (pClass.contains("F:")) {
+			if (numFirst == firstCapacity) {
+				throw new AircraftException("No First Class seats available");
+			} else {
+				numFirst += 1;
+			}
+		} else if (pClass.contains("P:")) {
+			if (numPremium == premiumCapacity) {
+				throw new AircraftException("No Premium seats available");
+			} else {
+				numPremium += 1;
+			}
+		}
+		//PROBABLY A BETTER WAY OF DOING THIS?!
 		
 		//Stuff here
 		this.status += Log.setPassengerMsg(p,"N/Q","C");
 		//Stuff here
+		
+		p.confirmSeat(confirmationTime, p.getDepartureTime());
 	}
 	
 	/**
@@ -146,6 +199,8 @@ public abstract class Aircraft {
 	public boolean flightEmpty() {		
 		if (getNumPassengers() == 0) {
 			return true;
+		} else {
+			return false;
 		}
 	}
 	
@@ -157,6 +212,8 @@ public abstract class Aircraft {
 	public boolean flightFull() {
 		if (getNumPassengers() == capacity) {
 			return true;
+		} else {
+			return false;
 		}
 	}
 	
@@ -181,10 +238,16 @@ public abstract class Aircraft {
 	 * @return <code>Bookings</code> object containing the status.  
 	 */
 	public Bookings getBookings() {
-		//grabs a single object containing hte confirmed booking status for this aircraft
+		//grabs a single object containing the confirmed booking status for this aircraft
 		//not a to string. purely here to enable the use of graphing later on so that we 
 		//dont need to pass a string coming back.
-		
+		int availableFirst = firstCapacity - numFirst;
+		int availableBusiness = businessCapacity - numBusiness;
+		int availablePremium = premiumCapacity - numPremium;
+		int availableEconomy = economyCapacity - numEconomy;
+		int totalAvailable = availableFirst + availableBusiness + availablePremium + availableEconomy;
+				
+		return new Bookings(numFirst, numBusiness, numPremium, numEconomy, seats.size(), totalAvailable);
 	}
 	
 	/**
@@ -266,7 +329,11 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if isConfirmed(p); false otherwise 
 	 */
 	public boolean hasPassenger(Passenger p) {
-		//is this passenger on the aircraft?
+		if (p.isConfirmed()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 
@@ -292,6 +359,18 @@ public abstract class Aircraft {
 	 */
 	public boolean seatsAvailable(Passenger p) {		
 		//capture the type of passenger (first, business, premium or economy)
+		String pClass = p.getPassID();
+		if (pClass.contains("J:")) {
+			return (numBusiness != businessCapacity);
+		} else if (pClass.contains("Y:")) {
+			return (numEconomy != economyCapacity);
+		} else if (pClass.contains("F:")) {
+			return (numFirst != firstCapacity);
+		} else if (pClass.contains("P:")) {
+			return (numPremium != premiumCapacity);
+		} else {
+			return false;
+		}
 	}
 
 	/* 
@@ -356,8 +435,8 @@ public abstract class Aircraft {
 		}
 	}
 	
-	private boolean isNull(String str) {
-		if (str == null || str == "") {
+	private boolean isNull(String flightCode) {
+		if (flightCode == null || flightCode == "" || flightCode == " ") {
 			return true;
 		} else {
 			return false;
