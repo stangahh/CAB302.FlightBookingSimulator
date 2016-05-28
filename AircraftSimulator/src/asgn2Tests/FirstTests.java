@@ -28,17 +28,17 @@ public class FirstTests extends First {
 	}
 
 	@Test
-	public void testBookingTime() throws PassengerException {
+	public void testBookingTime() {
 		assertEquals(2, person.getBookingTime());
 	}
 	
 	@Test
-	public void testDepartureTime() throws PassengerException {
+	public void testDepartureTime() {
 		assertEquals(10, person.getDepartureTime());
 	}
 	
 	@Test
-	public void testNewState() throws PassengerException {
+	public void testNewState() {
 		assertTrue(person.isNew());
 	}
 	
