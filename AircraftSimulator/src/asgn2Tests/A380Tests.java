@@ -9,27 +9,50 @@ import org.junit.Before;
 import org.junit.Test;
 
 import asgn2Aircraft.A380;
-import asgn2Aircraft.AircraftException;
 import asgn2Aircraft.Aircraft;
+import asgn2Aircraft.AircraftException;
 
 /**
- * @author Megan
+ * @author Megan Hunter, Jesse Stanger
  *
  */
 public class A380Tests extends A380 {
+	
+	Aircraft plane;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUpBeforeClass() throws Exception {
-		//Aircraft("A380", 14, 25, 50, 100, 200);
+		this.plane = new A380("A380", 14, 25, 50, 100, 200);
+
+	}
+	
+	@Test (expected = AircraftException.class)
+	public void testAircraftEmptyFlightCode() throws AircraftException {
+		@SuppressWarnings("unused")
+		Aircraft nullPlane = new A380("", 1, 1, 1, 1, 1);
+	}
+	
+	@Test (expected = AircraftException.class)
+	public void testAircraftNullFlightCode() throws AircraftException {
+		@SuppressWarnings("unused")
+		Aircraft nullPlane = new A380(null, 1, 1, 1, 1, 1);
+	}
+	
+	@Test (expected = AircraftException.class)
+	public void testAircraftEmptyFlightCodeDefault() throws AircraftException {
+		@SuppressWarnings("unused")
+		Aircraft nullPlane = new A380("", 1);
+	}
+	
+	@Test (expected = AircraftException.class)
+	public void testAircraftNullFlightCodeDefault() throws AircraftException {
+		@SuppressWarnings("unused")
+		Aircraft nullPlane = new A380(null, 1);
 	}
 
-	@Test (expected = AircraftException.class)
-	public void testAircraftNullFlightCode() {
-		Aircraft("null", 1, 1, 1, 1, 1);
-	}
 	
 	@Test
 	public void testAircraftnNegativeDepartureTime() {

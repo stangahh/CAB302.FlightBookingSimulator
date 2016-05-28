@@ -348,8 +348,16 @@ public abstract class Aircraft {
 		return msg + p.noSeatsMsg(); 
 	}
 	
-	private boolean capacityLessThanZero(f, j, p, y) {
+	private boolean capacityLessThanZero(int f, int j, int p, int y) {
 		if (f < 0 || j < 0 || p < 0 || y < 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private boolean isNull(String str) {
+		if (str == null || str == "") {
 			return true;
 		} else {
 			return false;
