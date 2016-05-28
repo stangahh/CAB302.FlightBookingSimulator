@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import asgn2Passengers.First;
-import asgn2Passengers.Passenger;
 import asgn2Passengers.PassengerException;
 
 /**
@@ -18,15 +17,13 @@ import asgn2Passengers.PassengerException;
  */
 public class FirstTests extends First {
 
-	Passenger person;
+	First person;
 	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUpBeforeClass() throws PassengerException {
-		//CAN'T INSTANTIATE AN ABSTRACT CLASS
-		//This before doesn't work with the test cases for some reason...
 		this.person = new First(2,10);
 	}
 
