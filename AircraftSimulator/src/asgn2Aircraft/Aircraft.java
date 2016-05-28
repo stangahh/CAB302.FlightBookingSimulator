@@ -65,9 +65,22 @@ public abstract class Aircraft {
 	 * @throws AircraftException if isNull(flightCode) OR (departureTime <=0) OR ({first,business,premium,economy} <0)
 	 */
 	public Aircraft(String flightCode,int departureTime, int first, int business, int premium, int economy) throws AircraftException {
-		//Lots here 
-		this.status = "";
+		if (isNull(flightCode) || departureTime <= 0 || capacityLessThanZero(first, business, premium, economy)) {
+			throw new AircraftException("Cannot have Aircraft with null or negative items.");
+		} else {
+			this.flightCode = flightCode;
+			this.departureTime = departureTime;
+			this.firstCapacity = first;
+			this.businessCapacity = business;
+			this.premiumCapacity = premium;
+			this.economyCapacity = economy;
+			this.capacity = first + business + premium + economy;
+			this.status = "";
+		}
+		
 	}
+	
+
 	
 	/**
 	 * Method to remove passenger from the aircraft - passenger must have a confirmed 
@@ -333,6 +346,14 @@ public abstract class Aircraft {
 	private String noSeatsAvailableMsg(Passenger p) {
 		String msg = "";
 		return msg + p.noSeatsMsg(); 
+	}
+	
+	private boolean capacityLessThanZero(f, j, p, y) {
+		if (f < 0 || j < 0 || p < 0 || y < 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 }
