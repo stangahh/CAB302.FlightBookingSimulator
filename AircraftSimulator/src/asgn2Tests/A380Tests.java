@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import asgn2Aircraft.A380;
+import asgn2Aircraft.AircraftException;
+import asgn2Aircraft.Aircraft;
 
 /**
  * @author Megan
@@ -21,12 +23,12 @@ public class A380Tests extends A380 {
 	 */
 	@Before
 	public void setUpBeforeClass() throws Exception {
-		//Aircraft(A380, 14, 25, 50, 100, 200);
+		//Aircraft("A380", 14, 25, 50, 100, 200);
 	}
 
 	@Test (expected = AircraftException.class)
 	public void testAircraftNullFlightCode() {
-		Aircraft(null, 1, 1, 1, 1, 1);
+		Aircraft("null", 1, 1, 1, 1, 1);
 	}
 	
 	@Test

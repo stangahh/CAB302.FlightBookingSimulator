@@ -21,14 +21,14 @@ public class First extends Passenger {
 	 */
 	public First(int bookingTime, int departureTime) throws PassengerException {
 		super(bookingTime, departureTime);
-//		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
-//			throw new PassengerException("Invalid booking");
-//		} else {
+		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
+			throw new PassengerException("Invalid booking");
+		} else {
 		
 		//Call here 
 		this.passID = "F:" + this.passID;
 			
-//		}
+		}
 	}
 	
 	/**
