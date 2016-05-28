@@ -146,29 +146,30 @@ public abstract class Aircraft {
 		String pClass = p.getPassID();
 		if (pClass.contains("J:")) {
 			if (numBusiness == businessCapacity) {
-				throw new AircraftException("No Business seats available");
+				throw new AircraftException(noSeatsAvailableMsg(p));
 			} else {
 				numBusiness += 1;
 			}			
 		} else if (pClass.contains("Y:")) {
 			if (numEconomy == economyCapacity) {
-				throw new AircraftException("No Economy seats available");
+				throw new AircraftException(noSeatsAvailableMsg(p));
 			} else {
 				numEconomy += 1;
 			}
 		} else if (pClass.contains("F:")) {
 			if (numFirst == firstCapacity) {
-				throw new AircraftException("No First Class seats available");
+				throw new AircraftException(noSeatsAvailableMsg(p));
 			} else {
 				numFirst += 1;
 			}
 		} else if (pClass.contains("P:")) {
 			if (numPremium == premiumCapacity) {
-				throw new AircraftException("No Premium seats available");
+				throw new AircraftException(noSeatsAvailableMsg(p));
 			} else {
 				numPremium += 1;
 			}
 		}
+		
 		//PROBABLY A BETTER WAY OF DOING THIS?!
 		
 		//Stuff here
