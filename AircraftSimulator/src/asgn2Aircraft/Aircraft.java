@@ -197,11 +197,7 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft empty; false otherwise 
 	 */
 	public boolean flightEmpty() {		
-		if (getNumPassengers() == 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return (getNumPassengers() == 0);
 	}
 	
 	/**
@@ -210,11 +206,7 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft full; false otherwise 
 	 */
 	public boolean flightFull() {
-		if (getNumPassengers() == capacity) {
-			return true;
-		} else {
-			return false;
-		}
+		return (getNumPassengers() == capacity);
 	}
 	
 	/**

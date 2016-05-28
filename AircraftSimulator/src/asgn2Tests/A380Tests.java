@@ -12,13 +12,17 @@ import asgn2Aircraft.A380;
 import asgn2Aircraft.Aircraft;
 import asgn2Aircraft.AircraftException;
 
+import asgn2Passengers.First;
+import asgn2Passengers.PassengerException;
+
 /**
  * @author Megan Hunter, Jesse Stanger
  *
  */
 public class A380Tests {
 	
-	Aircraft plane;
+	A380 plane;
+	First passenger;
 
 	/**
 	 * @throws java.lang.Exception
@@ -26,6 +30,7 @@ public class A380Tests {
 	@Before
 	public void setUpBeforeClass() throws Exception {
 		this.plane = new A380("A380", 14, 25, 50, 100, 200);
+		this.passenger = new First(1, 14);
 	}
 	
 	@Test (expected = AircraftException.class)
@@ -78,8 +83,14 @@ public class A380Tests {
 	
 	@Test
 	public void testCancelBooking() {
-		fail("Not yet implemented");
+		assertTrue(/*contains passenger*/);
+		plane.cancelBooking(passenger, 10);
+		assertFalse(/*no longer contains passenger*/);
+		
 	}
+	/*
+	 * 
+	 * */
 	
 	@Test
 	public void testConfirmBooking() {
