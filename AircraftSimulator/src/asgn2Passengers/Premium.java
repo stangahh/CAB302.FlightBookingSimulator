@@ -20,6 +20,7 @@ public class Premium extends Passenger {
 	 * @see asgnPassengers.Passenger#Passenger(int,int)
 	 */
 	public Premium(int bookingTime,int departureTime) throws PassengerException {
+		super(bookingTime, departureTime);
 		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
 			throw new PassengerException("Invalid booking");
 		} else {
@@ -31,17 +32,15 @@ public class Premium extends Passenger {
 	/**
 	 * Simple constructor to support {@link asgn2Passengers.Passenger#upgrade()} in other subclasses
 	 */
-	protected Premium() {
-		
-	}
-
-	@Override
-	public Passenger upgrade() {
-		
-	}
+	protected Premium(){}
 	
 	@Override
 	public String noSeatsMsg() {
 		return "No seats available in Premium";
+	}
+	
+	@Override
+	public Passenger upgrade() {
+		//to Business
 	}
 }

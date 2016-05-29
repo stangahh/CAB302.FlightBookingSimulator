@@ -90,9 +90,7 @@ public abstract class Passenger {
 	/**
 	 * Simple no-argument constructor to support {@link #upgrade()}
 	 */
-	protected Passenger() {
-
-	}
+	protected Passenger(){}
 	
 	/**
 	 * Transition passenger to New<br>
@@ -117,7 +115,6 @@ public abstract class Passenger {
 		} else if (cancellationTime < 0 || departureTime < cancellationTime) {
 			throw new PassengerException("Invalid cancellation time");
 		} else if (isConfirmed()){
-			
 			bookingTime = cancellationTime;
 			newState = true;
 			confirmed = false;

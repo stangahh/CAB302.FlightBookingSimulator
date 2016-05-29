@@ -20,6 +20,7 @@ public class Economy extends Passenger {
 	 * @see asgnPassengers.Passenger#Passenger(int,int)
 	 */
 	public Economy(int bookingTime,int departureTime) throws PassengerException {
+		super(bookingTime, departureTime);
 		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
 			throw new PassengerException("Invalid booking");
 		} else {
@@ -28,6 +29,12 @@ public class Economy extends Passenger {
 		}
 	}
 	
+//	/**
+//	 * Simple constructor to support {@link asgn2Passengers.Passenger#upgrade()} in other subclasses
+//	 */
+//	protected Economy(){}
+	//Shouldn't this have a no args constructor too? It didnt until now
+	
 	@Override
 	public String noSeatsMsg() {
 		return "No seats available in Economy";
@@ -35,6 +42,6 @@ public class Economy extends Passenger {
 
 	@Override
 	public Passenger upgrade() {
-
+		//to premium
 	}
 }

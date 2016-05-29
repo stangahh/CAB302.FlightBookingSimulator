@@ -20,6 +20,7 @@ public class Business extends Passenger {
 	 * @see asgnPassengers.Passenger#Passenger(int,int)
 	 */
 	public Business(int bookingTime, int departureTime) throws PassengerException {
+		super(bookingTime, departureTime);
 		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
 			throw new PassengerException("Invalid booking");
 		} else {
@@ -31,9 +32,7 @@ public class Business extends Passenger {
 	/**
 	 * Simple constructor to support {@link asgn2Passengers.Passenger#upgrade()} in other subclasses
 	 */
-	protected Business() {
-		
-	}
+	protected Business(){}
 	
 	@Override
 	public String noSeatsMsg() {
@@ -42,6 +41,6 @@ public class Business extends Passenger {
 
 	@Override
 	public Passenger upgrade() {
-	
+		//to first
 	}
 }

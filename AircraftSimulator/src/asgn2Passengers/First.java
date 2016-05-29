@@ -24,29 +24,25 @@ public class First extends Passenger {
 		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
 			throw new PassengerException("Invalid booking");
 		} else {
-		
-		//Call here 
-		this.passID = "F:" + this.passID;
-			
+			//Stuff here
+			this.passID = "F:" + this.passID;
 		}
 	}
 	
 	/**
 	 * Simple constructor to support {@link asgn2Passengers.Passenger#upgrade()} in other subclasses
 	 */
-	protected First() {
-
-	}
+	protected First(){}
 
 	@Override
 	public String noSeatsMsg() {
 		return "No seats available in First";
 	}
 
-
 	@Override
 	public Passenger upgrade() {
-		//CAN'T UPGRADE PAST FIRST CLASS
 		//return unchanged current object (passenger)
+		return this;
+		//DOES THAT WORK LOL?
 	}
 }
