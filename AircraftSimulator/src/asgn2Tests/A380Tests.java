@@ -13,10 +13,12 @@ import org.junit.Test;
 import asgn2Aircraft.A380;
 import asgn2Aircraft.Aircraft;
 import asgn2Aircraft.AircraftException;
-
+import asgn2Passengers.Business;
+import asgn2Passengers.Economy;
 import asgn2Passengers.First;
 import asgn2Passengers.Passenger;
 import asgn2Passengers.PassengerException;
+import asgn2Passengers.Premium;
 
 /**
  * @author Megan Hunter, Jesse Stanger
@@ -96,7 +98,57 @@ public class A380Tests {
 	
 	@Test (expected = PassengerException.class)
 	public void testConfirmBookingConfirmationGreaterThanDepartureTime() throws AircraftException, PassengerException {
+		plane.confirmBooking(passenger, passenger.getDepartureTime() + 1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testConfirmBookingExceptionConfirmedPassenger() throws AircraftException, PassengerException {
 		fail("Not yet implemented");
+		plane.confirmBooking(passenger, 1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testConfirmBookingExceptionRefusedPassenger() throws AircraftException, PassengerException {
+		fail("Not yet implemented");
+		plane.confirmBooking(passenger, 1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testConfirmBookingExceptionFlownPassenger() throws AircraftException, PassengerException {
+		fail("Not yet implemented");
+		plane.confirmBooking(passenger, 1);
+	}
+	
+	@Test
+	public void testConfirmBookingCorrectlyIncrementsFirst() throws PassengerException, AircraftException {
+		int orig = plane.getNumFirst();
+		Passenger test = new First(1, 14);
+		plane.confirmBooking(test, 2);
+		assertEquals(orig + 1, plane.getNumFirst());
+	}
+	
+	@Test
+	public void testConfirmBookingCorrectlyIncrementsBusiness() throws PassengerException, AircraftException {
+		int orig = plane.getNumBusiness();
+		Passenger test = new Business(1, 14);
+		plane.confirmBooking(test, 2);
+		assertEquals(orig + 1, plane.getNumBusiness());
+	}
+	
+	@Test
+	public void testConfirmBookingCorrectlyIncrementsPremium() throws PassengerException, AircraftException {
+		int orig = plane.getNumPremium();
+		Passenger test = new Premium(1, 14);
+		plane.confirmBooking(test, 2);
+		assertEquals(orig + 1, plane.getNumPremium());
+	}
+	
+	@Test
+	public void testConfirmBookingCorrectlyIncrementsEconomy() throws PassengerException, AircraftException {
+		int orig = plane.getNumEconomy();
+		Passenger test = new Economy(1, 14);
+		plane.confirmBooking(test, 2);
+		assertEquals(orig + 1, plane.getNumEconomy());
 	}
 	
 	@Test
