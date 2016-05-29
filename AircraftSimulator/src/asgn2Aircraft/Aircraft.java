@@ -142,7 +142,7 @@ public abstract class Aircraft {
 	 */
 	public void confirmBooking(Passenger p, int confirmationTime) throws AircraftException, PassengerException { 
 		//Change to just calling confirmSeat from the Passenger class???
-		if (confirmationTime < 0 || confirmationTime < p.getDepartureTime()) {
+		if (confirmationTime < 0 || confirmationTime > p.getDepartureTime()) {
 			throw new PassengerException("Invalid times");
 		} else if (p.isConfirmed() || p.isRefused() || p.isFlown()) {
 			throw new PassengerException("Not currently in queue or a new booking");
