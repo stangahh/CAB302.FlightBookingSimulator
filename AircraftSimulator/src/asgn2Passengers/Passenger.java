@@ -77,12 +77,8 @@ public abstract class Passenger {
 		} else {
 			this.bookingTime = bookingTime;
 			this.departureTime = departureTime;
-		
-			//Stuff here 
 			this.passID = "" + Passenger.index; 
 			Passenger.index++; 
-			//Stuff here 
-			
 			newState = true;
 		}
 	}
@@ -149,11 +145,9 @@ public abstract class Passenger {
 				inQueue = false;
 				exitQueueTime = confirmationTime;
 			}
-			
 			this.confirmationTime = confirmationTime;
 			this.departureTime = departureTime;
 			confirmed = true;
-			
 		}
 	}
 
@@ -175,11 +169,9 @@ public abstract class Passenger {
 		} else if (departureTime <= 0) {
 			throw new PassengerException("Invalid departure time");
 		} else if (isConfirmed()){
-			
 			flown = true;
 			this.departureTime = departureTime;
 			confirmed = false;
-			
 		}
 	}
 
@@ -313,12 +305,10 @@ public abstract class Passenger {
 		} else if (queueTime < 0 || departureTime < queueTime) {
 			throw new PassengerException("Invalid queue time");
 		} else if (isNew()) {
-			
 			inQueue = true;
 			newState = false;
 			enterQueueTime = queueTime;
 			this.departureTime = departureTime;
-			
 		}
 	}
 	
@@ -348,9 +338,7 @@ public abstract class Passenger {
 				inQueue = false;
 				exitQueueTime = refusalTime;
 			}
-
 			refused = true;
-			
 		}
 	}
 	
@@ -393,11 +381,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if was Confirmed state; false otherwise
 	 */
 	public boolean wasConfirmed() {
-		if (getConfirmationTime() != 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return (getConfirmationTime() != 0);
 	}
 
 	/**
@@ -406,11 +390,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if was Queued state; false otherwise
 	 */
 	public boolean wasQueued() {
-		if (getEnterQueueTime() != 0 || getExitQueueTime() != 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return (getEnterQueueTime() != 0 || getExitQueueTime() != 0);
 	}
 	
 	/**
