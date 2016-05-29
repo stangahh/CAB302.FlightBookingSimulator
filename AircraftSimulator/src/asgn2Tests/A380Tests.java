@@ -5,6 +5,8 @@ package asgn2Tests;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,6 +15,7 @@ import asgn2Aircraft.Aircraft;
 import asgn2Aircraft.AircraftException;
 
 import asgn2Passengers.First;
+import asgn2Passengers.Passenger;
 import asgn2Passengers.PassengerException;
 
 /**
@@ -83,17 +86,16 @@ public class A380Tests {
 	
 	@Test
 	public void testCancelBooking() {
-		assertTrue(/*contains passenger*/);
-		plane.cancelBooking(passenger, 10);
-		assertFalse(/*no longer contains passenger*/);
-		
+		fail("Not yet implemented");
 	}
-	/*
-	 * 
-	 * */
 	
-	@Test
-	public void testConfirmBooking() {
+	@Test (expected = PassengerException.class)
+	public void testConfirmBookingNegativeConfirmationTime() throws AircraftException, PassengerException {
+		plane.confirmBooking(passenger, -1);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testConfirmBookingConfirmationGreaterThanDepartureTime() throws AircraftException, PassengerException {
 		fail("Not yet implemented");
 	}
 	

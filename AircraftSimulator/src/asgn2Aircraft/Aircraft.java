@@ -77,10 +77,7 @@ public abstract class Aircraft {
 			this.capacity = first + business + premium + economy;
 			this.status = "";
 		}
-		
 	}
-	
-
 	
 	/**
 	 * Method to remove passenger from the aircraft - passenger must have a confirmed 
@@ -119,8 +116,6 @@ public abstract class Aircraft {
 		
 			//Remove passenger from the seat storage for the aircraft
 			seats.remove(p);
-		
-			
 		}
 	}
 
@@ -172,9 +167,7 @@ public abstract class Aircraft {
 		
 		//PROBABLY A BETTER WAY OF DOING THIS?!
 		
-		//Stuff here
 		this.status += Log.setPassengerMsg(p,"N/Q","C");
-		//Stuff here
 		
 		p.confirmSeat(confirmationTime, p.getDepartureTime());
 	}
@@ -186,9 +179,11 @@ public abstract class Aircraft {
 	 */
 	public String finalState() {
 		String str = aircraftIDString() + " Pass: " + this.seats.size() + "\n";
+		
 		for (Passenger p : this.seats) {
 			str += p.toString() + "\n";
 		}
+		
 		return str + "\n";
 	}
 	
@@ -220,6 +215,11 @@ public abstract class Aircraft {
 	 * See {@link asgn2Passengers.Passenger#flyPassenger(int)}. 
 	 */
 	public void flyPassengers(int departureTime) throws PassengerException { 
+		if (departureTime == this.departureTime) {
+			//
+		} else {
+			throw new PassengerException("");
+		}
 		//going through and changing the state of each of the passengers.
 		//call method on the passenger, and make sure the departure time is correct, then log the status again
 	}
@@ -322,11 +322,7 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if isConfirmed(p); false otherwise 
 	 */
 	public boolean hasPassenger(Passenger p) {
-		if (p.isConfirmed()) {
-			return true;
-		} else {
-			return false;
-		}
+		return (p.isConfirmed());
 	}
 	
 
@@ -421,19 +417,11 @@ public abstract class Aircraft {
 	}
 	
 	private boolean capacityLessThanZero(int f, int j, int p, int y) {
-		if (f < 0 || j < 0 || p < 0 || y < 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return (f < 0 || j < 0 || p < 0 || y < 0);
 	}
 	
 	private boolean isNull(String flightCode) {
-		if (flightCode == null || flightCode == "" || flightCode == " ") {
-			return true;
-		} else {
-			return false;
-		}
+		return (flightCode == null || flightCode == "" || flightCode == " ");
 	}
 	
 }
