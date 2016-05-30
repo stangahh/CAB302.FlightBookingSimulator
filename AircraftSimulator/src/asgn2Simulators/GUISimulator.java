@@ -164,9 +164,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    layoutButtonPanel();
 	    
 	    this.getContentPane().add(container, BorderLayout.CENTER);
-	    this.getContentPane().add(chartArea, BorderLayout.CENTER);
-	    this.getContentPane().add(interactiveArea, BorderLayout.CENTER);
-	    this.getContentPane().add(buttonArea, BorderLayout.CENTER);
 	    
 	    repaint(); 
 	    this.setVisible(true);
@@ -224,15 +221,13 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    
 	    JButton chartTemp = createButton("This is where the chart goes.");
 	    
-	    //addToPanel(chartArea, ,constraints,0,0,5,1); 
-	    //addToPanel(chartArea, ,constraints,1,1,5,1);
 	    addToPanel(chartArea, chartTemp, constraints, 0,0,1,1); 
 	}
 	
 	private void layoutButtonPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		buttonArea.setLayout(layout);
-	    
+		
 	    GridBagConstraints constraints = new GridBagConstraints(); 
 	    
 	    //Buttons
