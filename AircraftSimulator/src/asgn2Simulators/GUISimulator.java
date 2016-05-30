@@ -45,7 +45,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private JButton 	runSimulation;
 	private JButton 	swapCharts;
 	
-	private JTextArea 	titleSimuation;
+	private JTextArea 	titleSimulation;
 	
 	private JTextArea 	nameRNGSeed;
 	private JTextField 	fieldRNGSeed;
@@ -113,32 +113,38 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
 	    
+	    //Main Container
 	    container = createPanel(Color.WHITE);
 	    
+	    //Sub Containers
 	    buttonArea = createPanel(Color.WHITE);
 	    chartArea = createPanel(Color.WHITE);
 	    interactiveArea = createPanel(Color.WHITE);
 	    
+	    //Buttons
 	    runSimulation = createButton("Run Simulation");
 	    swapCharts = createButton("Swap Charts");
 	    
+	    //Text Areas
 	    nameRNGSeed = createTextArea();
 	    nameDailyMean = createTextArea();
 	    nameQueueSize = createTextArea();
 	    nameCancellation = createTextArea();
-	    fieldRNGSeed = createTextField();
-	    fieldDailyMean = createTextField();
-	    fieldQueueSize = createTextField();
-	    fieldCancellation = createTextField();
-	    
 	    nameFirst = createTextArea();
 	    nameBusiness = createTextArea();
 	    namePremium = createTextArea();
 	    nameEconomy = createTextArea();
+	    
+	    //Text Fields
+	    fieldRNGSeed = createTextField();
+	    fieldDailyMean = createTextField();
+	    fieldQueueSize = createTextField();
+	    fieldCancellation = createTextField();
 	    fieldFirst = createTextField();
 	    fieldBusiness = createTextField();
 	    fieldPremium = createTextField();
 	    fieldEconomy = createTextField();
+	    
 	    
 	    container.setLayout(new BorderLayout());
 	    
@@ -152,7 +158,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    layoutButtonPanel();
 	    
 	    this.getContentPane().add(container, BorderLayout.CENTER);
-	    //more here maybe?
+//	    this.getContentPane().add(chartArea, BorderLayout.CENTER);
+//	    this.getContentPane().add(interactiveArea, BorderLayout.CENTER);
+//	    this.getContentPane().add(buttonArea, BorderLayout.CENTER);
 	    
 	    repaint(); 
 	    this.setVisible(true);
@@ -187,9 +195,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		return jtf;
 	}
 	
-	private void layoutButtonPanel() {
+	private void layoutChartPanel() {
 		GridBagLayout layout = new GridBagLayout();
-	    container.setLayout(layout);
+		chartArea.setLayout(layout);
 	    
 	    //add components to grid
 	    GridBagConstraints constraints = new GridBagConstraints(); 
@@ -197,45 +205,67 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    //Defaults
 	    constraints.fill = GridBagConstraints.NONE;
 	    constraints.anchor = GridBagConstraints.CENTER;
-	    constraints.weightx = 100;
-	    constraints.weighty = 100;
+	    constraints.weightx = 0;
+	    constraints.weighty = 0;
 	    
-	    addToPanel(buttonArea, runSimulation,constraints,0,0,4,1); 
-	    addToPanel(buttonArea, swapCharts,constraints,1,0,4,1);
+//	    addToPanel(chartArea, ,constraints,0,0,5,1); 
+//	    addToPanel(chartArea, ,constraints,1,1,5,1);
+	}
+	
+	private void layoutButtonPanel() {
+		GridBagLayout layout = new GridBagLayout();
+		buttonArea.setLayout(layout);
+	    
+	    //add components to grid
+	    GridBagConstraints constraints = new GridBagConstraints(); 
+	    
+	    //Defaults
+	    constraints.fill = GridBagConstraints.HORIZONTAL;
+	    constraints.anchor = GridBagConstraints.CENTER;
+	    constraints.weightx = 0.5;
+	    constraints.weighty = 1;
+	    
+	    addToPanel(buttonArea, runSimulation,constraints,0,0,1,2); 
+	    addToPanel(buttonArea, swapCharts,constraints,1,0,1,2);
 	}
 	
 	private void layoutInteractivePanel() {
 		GridBagLayout layout = new GridBagLayout();
-	    container.setLayout(layout);
+		interactiveArea.setLayout(layout);
 	    
 	    //add components to grid
 	    GridBagConstraints constraints = new GridBagConstraints(); 
 	    
 	    //Defaults
 	    constraints.fill = GridBagConstraints.NONE;
-	    constraints.anchor = GridBagConstraints.CENTER;
-	    constraints.weightx = 100;
-	    constraints.weighty = 100;
+	    constraints.anchor = GridBagConstraints.SOUTH;
+	    constraints.weightx = 0.5;
+	    constraints.weighty = 1;
 	    
-	    addToPanel(interactiveArea, titleSimuation, constraints, 1,0,4,1);
-	    addToPanel(interactiveArea, nameRNGSeed, constraints, 1,1,4,1);
-	    addToPanel(interactiveArea, fieldRNGSeed, constraints, 2,1,4,1);
-	    addToPanel(interactiveArea, nameDailyMean, constraints, 1,2,4,1);
-	    addToPanel(interactiveArea, fieldDailyMean, constraints, 2,2,4,1);
-	    addToPanel(interactiveArea, nameQueueSize, constraints, 1,3,4,1);
-	    addToPanel(interactiveArea, fieldQueueSize, constraints, 2,3,4,1);
-	    addToPanel(interactiveArea, nameCancellation, constraints, 1,4,4,1);
-	    addToPanel(interactiveArea, fieldCancellation, constraints, 2,4,4,1);
+//	    addToPanel(interactiveArea, titleSimulation, constraints, 1,0,4,1);
+//	    addToPanel(interactiveArea, nameRNGSeed, constraints, 1,1,4,1);
+//	    addToPanel(interactiveArea, nameDailyMean, constraints, 1,2,4,1);
+//	    addToPanel(interactiveArea, nameQueueSize, constraints, 1,3,4,1);
+//	    addToPanel(interactiveArea, nameCancellation, constraints, 1,4,4,1);
+//	    
+//	    addToPanel(interactiveArea, titleFareClasses, constraints, 4,0,4,1);
+//	    addToPanel(interactiveArea, nameFirst, constraints, 4,1,4,1);
+//	    addToPanel(interactiveArea, nameBusiness, constraints, 4,2,4,1);
+//	    addToPanel(interactiveArea, namePremium, constraints, 4,3,4,1);
+//	    addToPanel(interactiveArea, nameEconomy, constraints, 4,4,4,1);
+//	    
+//	    constraints.anchor = GridBagConstraints.LINE_START;
+//	    
+//	    addToPanel(interactiveArea, fieldQueueSize, constraints, 2,3,4,1);
+//	    addToPanel(interactiveArea, fieldDailyMean, constraints, 2,2,4,1);
+//	    addToPanel(interactiveArea, fieldRNGSeed, constraints, 2,1,4,1);
+//	    addToPanel(interactiveArea, fieldCancellation, constraints, 2,4,4,1);
+//
+//	    addToPanel(interactiveArea, fieldFirst, constraints, 5,1,4,1);
+//	    addToPanel(interactiveArea, fieldBusiness, constraints, 5,2,4,1);
+//	    addToPanel(interactiveArea, fieldPremium, constraints, 5,3,4,1);
+//	    addToPanel(interactiveArea, fieldEconomy, constraints, 5,4,4,1);
 	    
-	    addToPanel(interactiveArea, titleFareClasses, constraints, 4,0,4,1);
-	    addToPanel(interactiveArea, nameFirst, constraints, 4,1,4,1);
-	    addToPanel(interactiveArea, fieldFirst, constraints, 5,1,4,1);
-	    addToPanel(interactiveArea, nameBusiness, constraints, 4,2,4,1);
-	    addToPanel(interactiveArea, fieldBusiness, constraints, 5,2,4,1);
-	    addToPanel(interactiveArea, namePremium, constraints, 4,3,4,1);
-	    addToPanel(interactiveArea, fieldPremium, constraints, 5,3,4,1);
-	    addToPanel(interactiveArea, nameEconomy, constraints, 4,4,4,1);
-	    addToPanel(interactiveArea, fieldEconomy, constraints, 5,4,4,1);
 	}
 	
    private void addToPanel(JPanel jp, Component c, GridBagConstraints constraints, int x, int y, int w, int h) {  
