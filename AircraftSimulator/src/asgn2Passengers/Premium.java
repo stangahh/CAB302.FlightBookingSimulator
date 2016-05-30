@@ -44,7 +44,7 @@ public class Premium extends Passenger {
 		//to Business
 		Passenger upgraded = new Business();
 		upgraded.copyPassengerState(this);
-		upgraded.passID = "J(U)" + upgraded.passID;
+		upgraded.passID = "J(U)" + this.passID;
 		
 		return upgraded;
 	}

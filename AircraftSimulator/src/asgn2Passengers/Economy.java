@@ -45,7 +45,7 @@ public class Economy extends Passenger {
 		//to premium
 		Passenger upgraded = new Premium();
 		upgraded.copyPassengerState(this);
-		upgraded.passID = "P(U)" + upgraded.passID;
+		upgraded.passID = "P(U)" + this.passID;
 		
 		return upgraded;
 	}

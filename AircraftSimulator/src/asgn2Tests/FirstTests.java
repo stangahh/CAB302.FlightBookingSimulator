@@ -28,6 +28,21 @@ public class FirstTests extends First {
 		this.person = new First(2,10);
 	}
 
+	@Test (expected = PassengerException.class)
+	public void testNewPassengerBookingTimeLessThenZero() throws PassengerException {
+		First p = new First(-1, 10);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testNewPassengerDepartureTimeLessThanOrEqualZero() throws PassengerException {
+		First p = new First(0, 0);
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testNewPassengerDepartureTimeLessThanBookingTime() throws PassengerException {
+		First p = new First(5, 2);
+	}
+	
 	@Test
 	public void testBookingTime() {
 		assertEquals(2, person.getBookingTime());

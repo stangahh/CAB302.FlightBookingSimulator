@@ -44,7 +44,7 @@ public class Business extends Passenger {
 		//to first
 		Passenger upgraded = new First();
 		upgraded.copyPassengerState(this);
-		upgraded.passID = "F(U)" + upgraded.passID;
+		upgraded.passID = "F(U)" + this.passID;
 		
 		return upgraded;
 	}
