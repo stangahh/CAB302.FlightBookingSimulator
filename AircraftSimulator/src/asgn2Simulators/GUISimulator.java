@@ -164,12 +164,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    layoutButtonPanel();
 	    
 	    this.getContentPane().add(container, BorderLayout.CENTER);
-<<<<<<< Updated upstream
 	    this.getContentPane().add(chartArea, BorderLayout.CENTER);
 	    this.getContentPane().add(interactiveArea, BorderLayout.CENTER);
 	    this.getContentPane().add(buttonArea, BorderLayout.CENTER);
-=======
->>>>>>> Stashed changes
 	    
 	    repaint(); 
 	    this.setVisible(true);
@@ -227,12 +224,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    
 	    JButton chartTemp = createButton("This is where the chart goes.");
 	    
-<<<<<<< Updated upstream
 	    //addToPanel(chartArea, ,constraints,0,0,5,1); 
 	    //addToPanel(chartArea, ,constraints,1,1,5,1);
-=======
 	    addToPanel(chartArea, chartTemp, constraints, 0,0,1,1); 
->>>>>>> Stashed changes
 	}
 	
 	private void layoutButtonPanel() {
