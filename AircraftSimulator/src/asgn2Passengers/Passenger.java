@@ -339,6 +339,7 @@ public abstract class Passenger {
 				exitQueueTime = refusalTime;
 			}
 			refused = true;
+			confirmed = false;
 		}
 	}
 	

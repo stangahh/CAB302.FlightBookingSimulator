@@ -76,6 +76,7 @@ public abstract class Aircraft {
 			this.economyCapacity = economy;
 			this.capacity = first + business + premium + economy;
 			this.status = "";
+			this.seats = new ArrayList<Passenger>();
 		}
 	}
 	
@@ -90,7 +91,6 @@ public abstract class Aircraft {
 	 * @throws AircraftException if <code>Passenger</code> is not recorded in aircraft seating 
 	 */
 	public void cancelBooking(Passenger p, int cancellationTime) throws AircraftException, PassengerException {
-		//AircraftException - if Passenger is not recorded in aircraft seating
 		if (!seats.contains(p)) {
 			throw new AircraftException("Passenger not booked");
 		} else if (!p.isConfirmed()) {
@@ -104,14 +104,19 @@ public abstract class Aircraft {
 		switch (getPassengerFlightClass(p)) {
 			case "First":
 				numFirst -= 1;
+				break;
 			case "Business":
 				numBusiness -= 1;
+				break;
 			case "Premium":
 				numPremium -= 1;
+				break;
 			case "Economy":
 				numEconomy -= 1;
+				break;
 		}		
 		//Remove passenger from the seat storage for the aircraft
+		p.cancelSeat(cancellationTime);
 		seats.remove(p);
 		}
 	}
@@ -169,7 +174,7 @@ public abstract class Aircraft {
 		this.status += Log.setPassengerMsg(p,"N/Q","C");
 		
 		p.confirmSeat(confirmationTime, p.getDepartureTime());
-		//seats.add(p);
+		seats.add(p);
 	}
 	
 	/**
@@ -348,13 +353,13 @@ public abstract class Aircraft {
 	public boolean seatsAvailable(Passenger p) {
 		switch (getPassengerFlightClass(p)) {
 			case "First":
-				return (numBusiness != businessCapacity);
-			case "Business":
-				return (numEconomy != economyCapacity);
-			case "Premium":
 				return (numFirst != firstCapacity);
-			case "Economy":
+			case "Business":
+				return (numBusiness != businessCapacity);
+			case "Premium":
 				return (numPremium != premiumCapacity);
+			case "Economy":
+				return (numEconomy != economyCapacity);
 			default:
 				return false;
 		}
