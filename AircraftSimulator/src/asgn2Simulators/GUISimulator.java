@@ -32,10 +32,11 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private static final long serialVersionUID = 6717132605785602783L;
 	
 	private static final String FONT = "Arial";
-	private static final int TEXTAREA_FONT_SIZE = 12;
-	private static final int TEXTFIELD_FONT_SIZE = 12;
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 600;
+	private static final int TEXT_TITLE_FONT_SIZE = 16;
+	private static final int TEXT_FONT_SIZE = 12;
+	private static final int TEXT_FIELD_LENGTH = 10;
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 720;
 	
 	
 	private JPanel 		container;
@@ -119,57 +120,62 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    container = createPanel(Color.WHITE);
 	    
 	    //Sub Containers
-	    buttonArea = createPanel(Color.BLUE);
 	    chartArea = createPanel(Color.RED);
 	    interactiveArea = createPanel(Color.GREEN);
+	    buttonArea = createPanel(Color.BLUE);
 	    
 	    //Buttons
 	    runSimulation = createButton("Run Simulation");
 	    swapCharts = createButton("Swap Charts");
 	        
 	    //Text Areas
-	    titleSimulation = createTextArea("Simulation");
+	    titleSimulation = createTitleArea("Simulation");
 	    nameRNGSeed = createTextArea("RNG Seed");
 	    nameDailyMean = createTextArea("Daily Mean");
 	    nameQueueSize = createTextArea("Queue Size");
 	    nameCancellation = createTextArea("Cancellation");
-	    titleFareClasses = createTextArea("Fare Classes");
+	    titleFareClasses = createTitleArea("Fare Classes");
 	    nameFirst = createTextArea("First");
 	    nameBusiness = createTextArea("Business");
 	    namePremium = createTextArea("Premium");
 	    nameEconomy = createTextArea("Economy");
 	    
 	    //Text Fields
-	    fieldRNGSeed = createTextField();
-	    fieldDailyMean = createTextField();
-	    fieldQueueSize = createTextField();
-	    fieldCancellation = createTextField();
-	    fieldFirst = createTextField();
-	    fieldBusiness = createTextField();
-	    fieldPremium = createTextField();
-	    fieldEconomy = createTextField();
+	    // The "0" will be filled later with info from other classes
+	    fieldRNGSeed = createTextField("0");
+	    fieldDailyMean = createTextField("0");
+	    fieldQueueSize = createTextField("0");
+	    fieldCancellation = createTextField("0");
+	    fieldFirst = createTextField("0");
+	    fieldBusiness = createTextField("0");
+	    fieldPremium = createTextField("0");
+	    fieldEconomy = createTextField("0");
 	    
 	    
 	    container.setLayout(new BorderLayout());
 	    
-	    container.add(chartArea, BorderLayout.CENTER);
-	    //chart stuff
+	    container.add(chartArea, BorderLayout.NORTH);
+	    layoutChartPanel();
 	    
-	    container.add(interactiveArea, BorderLayout.SOUTH);
+	    container.add(interactiveArea, BorderLayout.CENTER);
 	    layoutInteractivePanel();
 	    
-	    container.add(buttonArea, BorderLayout.NORTH);
+	    container.add(buttonArea, BorderLayout.SOUTH);
 	    layoutButtonPanel();
 	    
 	    this.getContentPane().add(container, BorderLayout.CENTER);
+<<<<<<< Updated upstream
 	    this.getContentPane().add(chartArea, BorderLayout.CENTER);
 	    this.getContentPane().add(interactiveArea, BorderLayout.CENTER);
 	    this.getContentPane().add(buttonArea, BorderLayout.CENTER);
+=======
+>>>>>>> Stashed changes
 	    
 	    repaint(); 
 	    this.setVisible(true);
 	}
 	
+	/* ------------------------------- JComponents Create Methods ------------------------ */
 	private JPanel createPanel(Color c) {
 		JPanel jp = new JPanel();
 		jp.setBackground(c);
@@ -186,46 +192,57 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		JTextArea jta = new JTextArea(str); 
 		jta.setEditable(false);
 		jta.setLineWrap(true);
-		jta.setFont(new Font(FONT, Font.BOLD, TEXTAREA_FONT_SIZE));
+		jta.setFont(new Font(FONT, Font.PLAIN, TEXT_FONT_SIZE));
+		jta.setBorder(BorderFactory.createEtchedBorder());
+		return jta;
+	}
+	private JTextArea createTitleArea(String str) {
+		JTextArea jta = new JTextArea(str); 
+		jta.setEditable(false);
+		jta.setLineWrap(true);
+		jta.setFont(new Font(FONT, Font.BOLD, TEXT_TITLE_FONT_SIZE));
 		jta.setBorder(BorderFactory.createEtchedBorder());
 		return jta;
 	}
 	
-	private JTextField createTextField() {
-		JTextField jtf = new JTextField(); 
+	private JTextField createTextField(String str) {
+		JTextField jtf = new JTextField(str, TEXT_FIELD_LENGTH); 
 		jtf.setEditable(true);
-		jtf.setFont(new Font(FONT, Font.BOLD, TEXTFIELD_FONT_SIZE));
+		jtf.setFont(new Font(FONT, Font.PLAIN, TEXT_FONT_SIZE));
 		jtf.setBorder(BorderFactory.createEtchedBorder());
 		return jtf;
 	}
 	
+	/* ------------------------------- Layout Methods ----------------------------------- */
 	private void layoutChartPanel() {
+		//some way of drawing a chart
 		GridBagLayout layout = new GridBagLayout();
 		chartArea.setLayout(layout);
 	    
-	    //add components to grid
 	    GridBagConstraints constraints = new GridBagConstraints(); 
+	    constraints.weightx = 0.5;
+	    constraints.weighty = 1;
 	    
-	    //Defaults
-	    constraints.fill = GridBagConstraints.NONE;
-	    constraints.anchor = GridBagConstraints.CENTER;
-	    constraints.weightx = 0;
-	    constraints.weighty = 0;
+	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    
+	    JButton chartTemp = createButton("This is where the chart goes.");
+	    
+<<<<<<< Updated upstream
 	    //addToPanel(chartArea, ,constraints,0,0,5,1); 
 	    //addToPanel(chartArea, ,constraints,1,1,5,1);
+=======
+	    addToPanel(chartArea, chartTemp, constraints, 0,0,1,1); 
+>>>>>>> Stashed changes
 	}
 	
 	private void layoutButtonPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		buttonArea.setLayout(layout);
 	    
-	    //add components to grid
 	    GridBagConstraints constraints = new GridBagConstraints(); 
 	    
-	    //Defaults
+	    //Buttons
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
-	    constraints.anchor = GridBagConstraints.CENTER;
 	    constraints.weightx = 1;
 	    constraints.weighty = 1;
 	    
@@ -237,22 +254,14 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		GridBagLayout layout = new GridBagLayout();
 		interactiveArea.setLayout(layout);
 	    
-	    //add components to grid
 	    GridBagConstraints constraints = new GridBagConstraints(); 
-	    
-	    //Defaults
+
+	    //Titles
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.weightx = 1;
-	    constraints.weighty = 1;
 	    
-	    //Titles
 	    addToPanel(interactiveArea, titleSimulation, constraints, 		0,0,2,1);
 	    addToPanel(interactiveArea, titleFareClasses, constraints, 		2,0,2,1);
-	    
-	    constraints.fill = GridBagConstraints.NONE;
-	    constraints.anchor = GridBagConstraints.EAST;
-	    constraints.weightx = 0.5;
-	    constraints.weighty = 0.5;
 	    
 	    //Names
 	    //--------------------------------------------------------------x/y/w/h
@@ -266,9 +275,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    addToPanel(interactiveArea, namePremium, constraints, 			2,3,1,1);
 	    addToPanel(interactiveArea, nameEconomy, constraints, 			2,4,1,1);
 	    
+	    //Fields
 	    constraints.anchor = GridBagConstraints.LINE_START;
 	    
-	    //Fields
 	    addToPanel(interactiveArea, fieldRNGSeed, constraints, 			1,1,1,1);
 	    addToPanel(interactiveArea, fieldDailyMean, constraints, 		1,2,1,1);
 	    addToPanel(interactiveArea, fieldQueueSize, constraints, 		1,3,1,1);
