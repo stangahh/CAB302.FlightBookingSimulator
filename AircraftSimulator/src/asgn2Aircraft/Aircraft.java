@@ -103,25 +103,25 @@ public abstract class Aircraft {
 			
 		switch (getPassengerFlightClass(p)) {
 		case "First":
-			firstCapacity -= 1;
+			numFirst -= 1;
 		case "Business":
-			businessCapacity -= 1;
+			numBusiness -= 1;
 		case "Premium":
-			premiumCapacity -= 1;
+			numPremium -= 1;
 		case "Economy":
-			economyCapacity -= 1;
+			numEconomy -= 1;
 		}
 			
 			//Decrement the counts
 //			String pClass = p.getPassID();
 //			if (pClass.contains("J:")) {
-//				businessCapacity -= 1;
+//				numBusiness -= 1;
 //			} else if (pClass.contains("Y:")) {
-//				economyCapacity -= 1;
+//				numEconomy -= 1;
 //			} else if (pClass.contains("F:")) {
-//				firstCapacity -= 1;
+//				numFirst -= 1;
 //			} else if (pClass.contains("P:")) {
-//				premiumCapacity -= 1;
+//				numPremium -= 1;
 //			}
 			// IS THERE A BETTER WAY TO DO THIS?!
 		
@@ -207,6 +207,7 @@ public abstract class Aircraft {
 		this.status += Log.setPassengerMsg(p,"N/Q","C");
 		
 		p.confirmSeat(confirmationTime, p.getDepartureTime());
+		//seats.add(p);
 	}
 	
 	/**
@@ -254,8 +255,11 @@ public abstract class Aircraft {
 	public void flyPassengers(int departureTime) throws PassengerException { 
 		if (departureTime == this.departureTime) {
 			//
+			for (Passenger p : this.seats) {
+				p.flyPassenger(departureTime);
+			}
 		} else {
-			throw new PassengerException("");
+			throw new PassengerException("Invalid Departure Time");
 		}
 		//going through and changing the state of each of the passengers.
 		//call method on the passenger, and make sure the departure time is correct, then log the status again
@@ -433,13 +437,19 @@ public abstract class Aircraft {
 		//if I upgrade a passenger from business to first, i need to remember that
 		//this will create an opening in business.
 		
-		for (Passenger pass : seats) {
-			if (canUpgradeToFirst(pass)) {
-				pass.upgrade();
-			} else if (canUpgradeToBusiness(pass)) {
-				pass.upgrade();
-			} else if (canUpgradeToPremium(pass)) {
-				pass.upgrade();
+		for (Passenger p : seats) {
+			if (canUpgradeToFirst(p)) {
+				p.upgrade();
+				numFirst += 1;
+				numBusiness -= 1;
+			} else if (canUpgradeToBusiness(p)) {
+				p.upgrade();
+				numBusiness += 1;
+				numPremium -= 1;
+			} else if (canUpgradeToPremium(p)) {
+				p.upgrade();
+				numPremium += 1;
+				numEconomy -= 1;
 			}
 		}
 	}

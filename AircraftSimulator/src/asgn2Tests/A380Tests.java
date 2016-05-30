@@ -101,19 +101,20 @@ public class A380Tests {
 	
 	@Test (expected = PassengerException.class)
 	public void testConfirmBookingExceptionConfirmedPassenger() throws AircraftException, PassengerException {
-		fail("Not yet implemented");
+		plane.confirmBooking(passenger, 1);
 		plane.confirmBooking(passenger, 1);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testConfirmBookingExceptionRefusedPassenger() throws AircraftException, PassengerException {
-		fail("Not yet implemented");
+		passenger.refusePassenger(1);
 		plane.confirmBooking(passenger, 1);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testConfirmBookingExceptionFlownPassenger() throws AircraftException, PassengerException {
-		fail("Not yet implemented");
+		passenger.confirmSeat(1, passenger.getDepartureTime());
+		passenger.flyPassenger(passenger.getDepartureTime());
 		plane.confirmBooking(passenger, 1);
 	}
 	
@@ -155,39 +156,80 @@ public class A380Tests {
 	}
 	
 	@Test
-	public void testFlightEmpty() {
-		fail("Not yet implemented");
+	public void testFlightEmptyTrue() throws AircraftException {
+		A380 emptyFlight = new A380("A380", 14, 10, 10, 10, 10);
+		assertTrue(emptyFlight.flightEmpty());
 	}
 	
 	@Test
-	public void testFlightFull() {
-		fail("Not yet implemented");
+	public void testFlightEmptyFalse() throws AircraftException, PassengerException {
+		plane.confirmBooking(passenger, 1);
+		assertFalse(this.plane.flightEmpty());
 	}
 	
 	@Test
-	public void testFlyPassengers() {
-		fail("Not yet implemented");
+	public void testFlightFull() throws AircraftException, PassengerException {
+		A380 fullFlight = new A380("A380", 14, 1, 0, 0, 0);
+		fullFlight.confirmBooking(this.passenger, 1);
+		assertTrue(fullFlight.flightFull());
 	}
 	
+	@Test
+	public void testFlyPassengers() throws PassengerException, AircraftException {
+		plane.confirmBooking(passenger, 1);
+		this.plane.flyPassengers(this.passenger.getDepartureTime());
+		assertTrue(this.passenger.isFlown());
+	}
+	
+	@Test (expected = PassengerException.class)
+	public void testFlyPassengersWrongDepartureTime() throws PassengerException {
+		plane.flyPassengers(3);
+	}
+	
+	//DO WE NEED THIS ISN'T THIS JUST A GETTER?!
 	@Test
 	public void testGetPassengersDeepCopy() {
 		fail("Not yet implemented");
 	}
 	
 	@Test
-	public void testHasPassenger() {
-		fail("Not yet implemented");
+	public void testHasPassenger() throws AircraftException, PassengerException {
+		plane.confirmBooking(passenger, 1);
+		assertTrue(plane.hasPassenger(passenger));
 	}
 	
 	@Test
-	public void testSeatsAvailable() {
-		fail("Not yet implemented");
+	public void testSeatsAvailableTrue() {
+		assertTrue(plane.seatsAvailable(passenger));
 	}
 	
 	@Test
-	public void testUpgradeBookings() {
-		fail("Not yet implemented");
+	public void testSeatsAvailableFalse() throws AircraftException {
+		A380 noSeats = new A380("A380", 14, 0, 0, 0, 0);
+		assertFalse(noSeats.seatsAvailable(passenger));
 	}
 	
-
+	@Test
+	public void testUpgradeBookingsEconomyToPremium() throws PassengerException, AircraftException {
+		Economy e = new Economy(1, 14);
+		plane.confirmBooking(e, 1);
+		plane.upgradeBookings();
+		assertEquals(1, plane.getNumPremium());
+	}
+	
+	@Test
+	public void testUpgradeBookingsPremiumToBusiness() throws PassengerException, AircraftException {
+		Premium p = new Premium(1, 14);
+		plane.confirmBooking(p, 1);
+		plane.upgradeBookings();
+		assertEquals(1, plane.getNumBusiness());
+	}
+	
+	@Test
+	public void testUpgradeBookingsBusinessToFirst() throws PassengerException, AircraftException {
+		Business b = new Business(1, 14);
+		plane.confirmBooking(b, 1);
+		plane.upgradeBookings();
+		assertEquals(1, plane.getNumFirst());
+	}
 }
