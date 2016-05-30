@@ -125,6 +125,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    runSimulation = createButton("Run Simulation");
 	    swapCharts = createButton("Swap Charts");
 	    
+	    titleSimulation = createTextArea();
+	    titleFareClasses = createTextArea();
+	    
 	    //Text Areas
 	    nameRNGSeed = createTextArea();
 	    nameDailyMean = createTextArea();
@@ -158,9 +161,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    layoutButtonPanel();
 	    
 	    this.getContentPane().add(container, BorderLayout.CENTER);
-//	    this.getContentPane().add(chartArea, BorderLayout.CENTER);
-//	    this.getContentPane().add(interactiveArea, BorderLayout.CENTER);
-//	    this.getContentPane().add(buttonArea, BorderLayout.CENTER);
+	    this.getContentPane().add(chartArea, BorderLayout.CENTER);
+	    this.getContentPane().add(interactiveArea, BorderLayout.CENTER);
+	    this.getContentPane().add(buttonArea, BorderLayout.CENTER);
 	    
 	    repaint(); 
 	    this.setVisible(true);
@@ -208,8 +211,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    constraints.weightx = 0;
 	    constraints.weighty = 0;
 	    
-//	    addToPanel(chartArea, ,constraints,0,0,5,1); 
-//	    addToPanel(chartArea, ,constraints,1,1,5,1);
+	    //addToPanel(chartArea, ,constraints,0,0,5,1); 
+	    //addToPanel(chartArea, ,constraints,1,1,5,1);
 	}
 	
 	private void layoutButtonPanel() {
@@ -242,29 +245,29 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    constraints.weightx = 0.5;
 	    constraints.weighty = 1;
 	    
-//	    addToPanel(interactiveArea, titleSimulation, constraints, 1,0,4,1);
-//	    addToPanel(interactiveArea, nameRNGSeed, constraints, 1,1,4,1);
-//	    addToPanel(interactiveArea, nameDailyMean, constraints, 1,2,4,1);
-//	    addToPanel(interactiveArea, nameQueueSize, constraints, 1,3,4,1);
-//	    addToPanel(interactiveArea, nameCancellation, constraints, 1,4,4,1);
-//	    
-//	    addToPanel(interactiveArea, titleFareClasses, constraints, 4,0,4,1);
-//	    addToPanel(interactiveArea, nameFirst, constraints, 4,1,4,1);
-//	    addToPanel(interactiveArea, nameBusiness, constraints, 4,2,4,1);
-//	    addToPanel(interactiveArea, namePremium, constraints, 4,3,4,1);
-//	    addToPanel(interactiveArea, nameEconomy, constraints, 4,4,4,1);
-//	    
-//	    constraints.anchor = GridBagConstraints.LINE_START;
-//	    
-//	    addToPanel(interactiveArea, fieldQueueSize, constraints, 2,3,4,1);
-//	    addToPanel(interactiveArea, fieldDailyMean, constraints, 2,2,4,1);
-//	    addToPanel(interactiveArea, fieldRNGSeed, constraints, 2,1,4,1);
-//	    addToPanel(interactiveArea, fieldCancellation, constraints, 2,4,4,1);
-//
-//	    addToPanel(interactiveArea, fieldFirst, constraints, 5,1,4,1);
-//	    addToPanel(interactiveArea, fieldBusiness, constraints, 5,2,4,1);
-//	    addToPanel(interactiveArea, fieldPremium, constraints, 5,3,4,1);
-//	    addToPanel(interactiveArea, fieldEconomy, constraints, 5,4,4,1);
+	    addToPanel(interactiveArea, titleSimulation, constraints, 1,0,4,1);
+	    addToPanel(interactiveArea, nameRNGSeed, constraints, 1,1,4,1);
+	    addToPanel(interactiveArea, nameDailyMean, constraints, 1,2,4,1);
+	    addToPanel(interactiveArea, nameQueueSize, constraints, 1,3,4,1);
+	    addToPanel(interactiveArea, nameCancellation, constraints, 1,4,4,1);
+	    
+	    addToPanel(interactiveArea, titleFareClasses, constraints, 4,0,4,1);
+	    addToPanel(interactiveArea, nameFirst, constraints, 4,1,4,1);
+	    addToPanel(interactiveArea, nameBusiness, constraints, 4,2,4,1);
+	    addToPanel(interactiveArea, namePremium, constraints, 4,3,4,1);
+	    addToPanel(interactiveArea, nameEconomy, constraints, 4,4,4,1);
+	    
+	    constraints.anchor = GridBagConstraints.LINE_START;
+	    
+	    addToPanel(interactiveArea, fieldQueueSize, constraints, 2,3,4,1);
+	    addToPanel(interactiveArea, fieldDailyMean, constraints, 2,2,4,1);
+	    addToPanel(interactiveArea, fieldRNGSeed, constraints, 2,1,4,1);
+	    addToPanel(interactiveArea, fieldCancellation, constraints, 2,4,4,1);
+
+	    addToPanel(interactiveArea, fieldFirst, constraints, 5,1,4,1);
+	    addToPanel(interactiveArea, fieldBusiness, constraints, 5,2,4,1);
+	    addToPanel(interactiveArea, fieldPremium, constraints, 5,3,4,1);
+	    addToPanel(interactiveArea, fieldEconomy, constraints, 5,4,4,1);
 	    
 	}
 	
