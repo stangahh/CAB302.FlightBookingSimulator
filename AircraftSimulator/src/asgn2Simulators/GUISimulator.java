@@ -32,6 +32,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private static final long serialVersionUID = 6717132605785602783L;
 	
 	private static final String FONT = "Arial";
+	private static final int TEXTAREA_FONT_SIZE = 12;
+	private static final int TEXTFIELD_FONT_SIZE = 12;
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
 	
@@ -85,7 +87,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
+//	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource(); 
@@ -117,23 +119,25 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    container = createPanel(Color.WHITE);
 	    
 	    //Sub Containers
-	    buttonArea = createPanel(Color.WHITE);
-	    chartArea = createPanel(Color.WHITE);
-	    interactiveArea = createPanel(Color.WHITE);
+	    buttonArea = createPanel(Color.BLUE);
+	    chartArea = createPanel(Color.RED);
+	    interactiveArea = createPanel(Color.GREEN);
 	    
 	    //Buttons
 	    runSimulation = createButton("Run Simulation");
 	    swapCharts = createButton("Swap Charts");
 	    
 	    //Text Areas
-	    nameRNGSeed = createTextArea();
-	    nameDailyMean = createTextArea();
-	    nameQueueSize = createTextArea();
-	    nameCancellation = createTextArea();
-	    nameFirst = createTextArea();
-	    nameBusiness = createTextArea();
-	    namePremium = createTextArea();
-	    nameEconomy = createTextArea();
+	    titleSimulation = createTextArea("Simulation");
+	    nameRNGSeed = createTextArea("RNG Seed");
+	    nameDailyMean = createTextArea("Daily Mean");
+	    nameQueueSize = createTextArea("Queue Size");
+	    nameCancellation = createTextArea("Cancellation");
+	    titleFareClasses = createTextArea("Fare Classes");
+	    nameFirst = createTextArea("First");
+	    nameBusiness = createTextArea("Business");
+	    namePremium = createTextArea("Premium");
+	    nameEconomy = createTextArea("Economy");
 	    
 	    //Text Fields
 	    fieldRNGSeed = createTextField();
@@ -178,11 +182,11 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		return jb; 
 	}
 	
-	private JTextArea createTextArea() {
-		JTextArea jta = new JTextArea(); 
+	private JTextArea createTextArea(String str) {
+		JTextArea jta = new JTextArea(str); 
 		jta.setEditable(false);
 		jta.setLineWrap(true);
-		jta.setFont(new Font(FONT, Font.BOLD, 24));
+		jta.setFont(new Font(FONT, Font.BOLD, TEXTAREA_FONT_SIZE));
 		jta.setBorder(BorderFactory.createEtchedBorder());
 		return jta;
 	}
@@ -190,7 +194,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private JTextField createTextField() {
 		JTextField jtf = new JTextField(); 
 		jtf.setEditable(true);
-		jtf.setFont(new Font(FONT, Font.BOLD, 24));
+		jtf.setFont(new Font(FONT, Font.BOLD, TEXTFIELD_FONT_SIZE));
 		jtf.setBorder(BorderFactory.createEtchedBorder());
 		return jtf;
 	}
@@ -222,11 +226,11 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    //Defaults
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.anchor = GridBagConstraints.CENTER;
-	    constraints.weightx = 0.5;
+	    constraints.weightx = 1;
 	    constraints.weighty = 1;
 	    
-	    addToPanel(buttonArea, runSimulation,constraints,0,0,1,2); 
-	    addToPanel(buttonArea, swapCharts,constraints,1,0,1,2);
+	    addToPanel(buttonArea, runSimulation, constraints, 				0,0,1,1); 
+	    addToPanel(buttonArea, swapCharts, constraints, 				1,0,1,1);
 	}
 	
 	private void layoutInteractivePanel() {
@@ -237,34 +241,43 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    GridBagConstraints constraints = new GridBagConstraints(); 
 	    
 	    //Defaults
-	    constraints.fill = GridBagConstraints.NONE;
-	    constraints.anchor = GridBagConstraints.SOUTH;
-	    constraints.weightx = 0.5;
+	    constraints.fill = GridBagConstraints.HORIZONTAL;
+	    constraints.weightx = 1;
 	    constraints.weighty = 1;
 	    
-//	    addToPanel(interactiveArea, titleSimulation, constraints, 1,0,4,1);
-//	    addToPanel(interactiveArea, nameRNGSeed, constraints, 1,1,4,1);
-//	    addToPanel(interactiveArea, nameDailyMean, constraints, 1,2,4,1);
-//	    addToPanel(interactiveArea, nameQueueSize, constraints, 1,3,4,1);
-//	    addToPanel(interactiveArea, nameCancellation, constraints, 1,4,4,1);
-//	    
-//	    addToPanel(interactiveArea, titleFareClasses, constraints, 4,0,4,1);
-//	    addToPanel(interactiveArea, nameFirst, constraints, 4,1,4,1);
-//	    addToPanel(interactiveArea, nameBusiness, constraints, 4,2,4,1);
-//	    addToPanel(interactiveArea, namePremium, constraints, 4,3,4,1);
-//	    addToPanel(interactiveArea, nameEconomy, constraints, 4,4,4,1);
-//	    
-//	    constraints.anchor = GridBagConstraints.LINE_START;
-//	    
-//	    addToPanel(interactiveArea, fieldQueueSize, constraints, 2,3,4,1);
-//	    addToPanel(interactiveArea, fieldDailyMean, constraints, 2,2,4,1);
-//	    addToPanel(interactiveArea, fieldRNGSeed, constraints, 2,1,4,1);
-//	    addToPanel(interactiveArea, fieldCancellation, constraints, 2,4,4,1);
-//
-//	    addToPanel(interactiveArea, fieldFirst, constraints, 5,1,4,1);
-//	    addToPanel(interactiveArea, fieldBusiness, constraints, 5,2,4,1);
-//	    addToPanel(interactiveArea, fieldPremium, constraints, 5,3,4,1);
-//	    addToPanel(interactiveArea, fieldEconomy, constraints, 5,4,4,1);
+	    //Titles
+	    addToPanel(interactiveArea, titleSimulation, constraints, 		0,0,2,1);
+	    addToPanel(interactiveArea, titleFareClasses, constraints, 		2,0,2,1);
+	    
+	    constraints.fill = GridBagConstraints.NONE;
+	    constraints.anchor = GridBagConstraints.EAST;
+	    constraints.weightx = 0.5;
+	    constraints.weighty = 0.5;
+	    
+	    //Names
+	    //--------------------------------------------------------------x/y/w/h
+	    addToPanel(interactiveArea, nameRNGSeed, constraints, 			0,1,1,1);
+	    addToPanel(interactiveArea, nameDailyMean, constraints, 		0,2,1,1);
+	    addToPanel(interactiveArea, nameQueueSize, constraints, 		0,3,1,1);
+	    addToPanel(interactiveArea, nameCancellation, constraints, 		0,4,1,1);
+	    
+	    addToPanel(interactiveArea, nameFirst, constraints, 			2,1,1,1);
+	    addToPanel(interactiveArea, nameBusiness, constraints, 			2,2,1,1);
+	    addToPanel(interactiveArea, namePremium, constraints, 			2,3,1,1);
+	    addToPanel(interactiveArea, nameEconomy, constraints, 			2,4,1,1);
+	    
+	    constraints.anchor = GridBagConstraints.LINE_START;
+	    
+	    //Fields
+	    addToPanel(interactiveArea, fieldRNGSeed, constraints, 			1,1,1,1);
+	    addToPanel(interactiveArea, fieldDailyMean, constraints, 		1,2,1,1);
+	    addToPanel(interactiveArea, fieldQueueSize, constraints, 		1,3,1,1);
+	    addToPanel(interactiveArea, fieldCancellation, constraints, 	1,4,1,1);
+
+	    addToPanel(interactiveArea, fieldFirst, constraints, 			3,1,1,1);
+	    addToPanel(interactiveArea, fieldBusiness, constraints, 		3,2,1,1);
+	    addToPanel(interactiveArea, fieldPremium, constraints, 			3,3,1,1);
+	    addToPanel(interactiveArea, fieldEconomy, constraints, 			3,4,1,1);
 	    
 	}
 	
