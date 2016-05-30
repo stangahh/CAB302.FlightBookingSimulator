@@ -30,16 +30,19 @@ public class FirstTests extends First {
 
 	@Test (expected = PassengerException.class)
 	public void testNewPassengerBookingTimeLessThenZero() throws PassengerException {
+		@SuppressWarnings("unused")
 		First p = new First(-1, 10);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testNewPassengerDepartureTimeLessThanOrEqualZero() throws PassengerException {
+		@SuppressWarnings("unused")
 		First p = new First(0, 0);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testNewPassengerDepartureTimeLessThanBookingTime() throws PassengerException {
+		@SuppressWarnings("unused")
 		First p = new First(5, 2);
 	}
 	
