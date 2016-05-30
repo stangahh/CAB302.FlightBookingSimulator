@@ -126,10 +126,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    //Buttons
 	    runSimulation = createButton("Run Simulation");
 	    swapCharts = createButton("Swap Charts");
-	    
-	    titleSimulation = createTextArea();
-	    titleFareClasses = createTextArea();
-	    
+	        
 	    //Text Areas
 	    titleSimulation = createTextArea("Simulation");
 	    nameRNGSeed = createTextArea("RNG Seed");
