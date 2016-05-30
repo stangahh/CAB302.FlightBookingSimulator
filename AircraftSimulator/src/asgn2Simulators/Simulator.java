@@ -152,27 +152,17 @@ public class Simulator {
 	 */
 	public Passenger createPassenger(int bookingTime, int departureTime) throws PassengerException {
 		double testValue = rng.nextDouble();
-		
-		double busTest = this.firstProb + this.businessProb;
-		double premTest = busTest + this.premiumProb;
-		
 		double busTest = this.firstProb + this.businessProb;
 		double premTest = busTest + this.premiumProb;
 		
 		if (testValue >= (1.0 - this.firstProb)) {
-			return new First(bookingTime, departureTime);
+			return new First(bookingTime,departureTime);
 		} else if (testValue >= (1.0 - busTest)) {
-
-			return new Business(bookingTime, departureTime); 
-		} else if (testValue >= premTest) {
-			return new Premium(bookingTime, departureTime); 
-
 			return new Business(bookingTime,departureTime); 
 		} else if (testValue >= (1.0 - premTest)) {
-			return new Premium(bookingTime, departureTime); 
-
+			return new Premium(bookingTime,departureTime); 
 		} else {
-			return new Economy(bookingTime, departureTime);
+			return new Economy(bookingTime,departureTime);
 		}
 	}
 

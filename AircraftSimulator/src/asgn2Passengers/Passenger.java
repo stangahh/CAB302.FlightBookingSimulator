@@ -399,7 +399,17 @@ public abstract class Passenger {
 	 * @param <code>Passenger</code> state to transfer
 	 */
 	protected void copyPassengerState(Passenger p) {
+		this.bookingTime = p.bookingTime;
+		this.confirmationTime = p.confirmationTime;
+		this.departureTime = p.departureTime;
+		this.enterQueueTime = p.enterQueueTime;
+		this.exitQueueTime = p.exitQueueTime;
 		
+		this.confirmed = p.confirmed;
+		this.flown = p.flown;
+		this.inQueue = p.inQueue;
+		this.newState = p.newState;
+		//I have no clue what to do here
 	}
 	
 	//Various private helper methods to check arguments and throw exceptions

@@ -42,5 +42,10 @@ public class Premium extends Passenger {
 	@Override
 	public Passenger upgrade() {
 		//to Business
+		Passenger upgraded = new First();
+		upgraded.copyPassengerState(this);
+		upgraded.passID = "B(U)" + upgraded.passID;
+		
+		return upgraded;
 	}
 }
