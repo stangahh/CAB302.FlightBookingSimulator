@@ -102,31 +102,17 @@ public abstract class Aircraft {
 			this.status += Log.setPassengerMsg(p,"C","N");
 			
 		switch (getPassengerFlightClass(p)) {
-		case "First":
-			numFirst -= 1;
-		case "Business":
-			numBusiness -= 1;
-		case "Premium":
-			numPremium -= 1;
-		case "Economy":
-			numEconomy -= 1;
-		}
-			
-			//Decrement the counts
-//			String pClass = p.getPassID();
-//			if (pClass.contains("J:")) {
-//				numBusiness -= 1;
-//			} else if (pClass.contains("Y:")) {
-//				numEconomy -= 1;
-//			} else if (pClass.contains("F:")) {
-//				numFirst -= 1;
-//			} else if (pClass.contains("P:")) {
-//				numPremium -= 1;
-//			}
-			// IS THERE A BETTER WAY TO DO THIS?!
-		
-			//Remove passenger from the seat storage for the aircraft
-			seats.remove(p);
+			case "First":
+				numFirst -= 1;
+			case "Business":
+				numBusiness -= 1;
+			case "Premium":
+				numPremium -= 1;
+			case "Economy":
+				numEconomy -= 1;
+		}		
+		//Remove passenger from the seat storage for the aircraft
+		seats.remove(p);
 		}
 	}
 
@@ -150,59 +136,35 @@ public abstract class Aircraft {
 		
 		//Somewhat of a clone of cancelBooking (inversed), relies on polymorphism
 		switch (getPassengerFlightClass(p)) {
-		case "First":
-			if (numFirst == firstCapacity) {
-				throw new AircraftException(noSeatsAvailableMsg(p));
-			} else {
-				numFirst += 1;
-			}
-		case "Business":
-			if (numBusiness == businessCapacity) {
-				throw new AircraftException(noSeatsAvailableMsg(p));
-			} else {
-				numBusiness += 1;
-			}
-		case "Premium":
-			if (numPremium == premiumCapacity) {
-				throw new AircraftException(noSeatsAvailableMsg(p));
-			} else {
-				numPremium += 1;
-			}
-		case "Economy":
-			if (numEconomy == economyCapacity) {
-				throw new AircraftException(noSeatsAvailableMsg(p));
-			} else {
-				numEconomy += 1;
-			}
+			case "First":
+				if (numFirst == firstCapacity) {
+					throw new AircraftException(noSeatsAvailableMsg(p));
+				} else {
+					numFirst += 1;
+				}
+				break;
+			case "Business":
+				if (numBusiness == businessCapacity) {
+					throw new AircraftException(noSeatsAvailableMsg(p));
+				} else {
+					numBusiness += 1;
+				}
+				break;
+			case "Premium":
+				if (numPremium == premiumCapacity) {
+					throw new AircraftException(noSeatsAvailableMsg(p));
+				} else {
+					numPremium += 1;
+				}
+				break;
+			case "Economy":
+				if (numEconomy == economyCapacity) {
+					throw new AircraftException(noSeatsAvailableMsg(p));
+				} else {
+					numEconomy += 1;
+				}
+				break;
 		}
-		
-//		String pClass = p.getPassID();
-//		if (pClass.contains("J:")) {
-//			if (numBusiness == businessCapacity) {
-//				throw new AircraftException(noSeatsAvailableMsg(p));
-//			} else {
-//				numBusiness += 1;
-//			}			
-//		} else if (pClass.contains("Y:")) {
-//			if (numEconomy == economyCapacity) {
-//				throw new AircraftException(noSeatsAvailableMsg(p));
-//			} else {
-//				numEconomy += 1;
-//			}
-//		} else if (pClass.contains("F:")) {
-//			if (numFirst == firstCapacity) {
-//				throw new AircraftException(noSeatsAvailableMsg(p));
-//			} else {
-//				numFirst += 1;
-//			}
-//		} else if (pClass.contains("P:")) {
-//			if (numPremium == premiumCapacity) {
-//				throw new AircraftException(noSeatsAvailableMsg(p));
-//			} else {
-//				numPremium += 1;
-//			}
-//		}
-		//PROBABLY A BETTER WAY OF DOING THIS?!
 		
 		this.status += Log.setPassengerMsg(p,"N/Q","C");
 		
@@ -254,10 +216,11 @@ public abstract class Aircraft {
 	 */
 	public void flyPassengers(int departureTime) throws PassengerException { 
 		if (departureTime == this.departureTime) {
-			//
+			
 			for (Passenger p : this.seats) {
 				p.flyPassenger(departureTime);
 			}
+			
 		} else {
 			throw new PassengerException("Invalid Departure Time");
 		}
@@ -384,30 +347,17 @@ public abstract class Aircraft {
 	 */
 	public boolean seatsAvailable(Passenger p) {
 		switch (getPassengerFlightClass(p)) {
-		case "First":
-			return (numBusiness != businessCapacity);
-		case "Business":
-			return (numEconomy != economyCapacity);
-		case "Premium":
-			return (numFirst != firstCapacity);
-		case "Economy":
-			return (numPremium != premiumCapacity);
-		default:
-			return false;
+			case "First":
+				return (numBusiness != businessCapacity);
+			case "Business":
+				return (numEconomy != economyCapacity);
+			case "Premium":
+				return (numFirst != firstCapacity);
+			case "Economy":
+				return (numPremium != premiumCapacity);
+			default:
+				return false;
 		}
-		
-//		String pClass = p.getPassID();
-//		if (pClass.contains("J:")) {
-//			return (numBusiness != businessCapacity);
-//		} else if (pClass.contains("Y:")) {
-//			return (numEconomy != economyCapacity);
-//		} else if (pClass.contains("F:")) {
-//			return (numFirst != firstCapacity);
-//		} else if (pClass.contains("P:")) {
-//			return (numPremium != premiumCapacity);
-//		} else {
-//			return false;
-//		}
 	}
 
 	/* 
@@ -507,6 +457,7 @@ public abstract class Aircraft {
 	
 	private String getPassengerFlightClass(Passenger p) {
 		String pClass = p.getPassID();
+		
 		if (pClass.contains("F:")) {
 			return "First";
 		} else if (pClass.contains("J:")) {
@@ -516,6 +467,7 @@ public abstract class Aircraft {
 		} else if (pClass.contains("Y:")) {
 			return "Economy";
 		}
+		
 		return null;
 	}
 	
