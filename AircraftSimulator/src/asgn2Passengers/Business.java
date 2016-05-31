@@ -24,7 +24,6 @@ public class Business extends Passenger {
 		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
 			throw new PassengerException("Invalid booking");
 		} else {
-			//Stuff here
 			this.passID = "J:" + this.passID;
 		}
 	}
@@ -41,7 +40,6 @@ public class Business extends Passenger {
 
 	@Override
 	public Passenger upgrade() {
-		//to first
 		Passenger upgraded = new First();
 		upgraded.copyPassengerState(this);
 		upgraded.passID = "F(U)" + this.passID;

@@ -85,8 +85,31 @@ public class A380Tests {
 	}
 	
 	@Test
-	public void testCancelBooking() {
-		fail("Not yet implemented");
+	public void testCancelBookingValid() throws AircraftException, PassengerException {
+		plane.confirmBooking(passenger, 5);
+		plane.cancelBooking(passenger, 10);
+		assertFalse(passenger.isConfirmed());
+		assertTrue(passenger.isNew());
+		assertEquals(10, passenger.getBookingTime());
+		assertEquals(0, plane.getNumFirst());
+		assertEquals(0, plane.getPassengers().size());
+	}
+	
+	@Test (expected = AircraftException.class)
+	public void testCancelBookingDoesntContainPassenger() throws AircraftException, PassengerException {
+		plane.cancelBooking(passenger, 5);
+	}
+	
+	// DONT THINK THIS CAN BE TESTED?
+//	@Test (expected = AircraftException.class)
+//	public void testCancelBookingPassengerNotConfirmed() throws AircraftException, PassengerException {
+//		plane.cancelBooking(passenger, 5);
+//	}
+	
+	@Test (expected = PassengerException.class)
+	public void testCancelBookingCancellationTimeLessThanZero() throws AircraftException, PassengerException {
+		plane.confirmBooking(passenger, 5);
+		plane.cancelBooking(passenger, -1);
 	}
 	
 	@Test (expected = PassengerException.class)
@@ -150,6 +173,7 @@ public class A380Tests {
 		assertEquals(orig + 1, plane.getNumEconomy());
 	}
 	
+	//ITS SUPPLIED SO DO WE NEED TO TEST IT?
 	@Test
 	public void testFinalState() {
 		fail("Not yet implemented");

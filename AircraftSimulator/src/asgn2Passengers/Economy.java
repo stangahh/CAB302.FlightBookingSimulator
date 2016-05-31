@@ -24,16 +24,9 @@ public class Economy extends Passenger {
 		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
 			throw new PassengerException("Invalid booking");
 		} else {
-			//Stuff here
 			this.passID = "Y:" + this.passID;
 		}
 	}
-	
-//	/**
-//	 * Simple constructor to support {@link asgn2Passengers.Passenger#upgrade()} in other subclasses
-//	 */
-//	protected Economy(){}
-	//Shouldn't this have a no args constructor too? It didnt until now
 	
 	@Override
 	public String noSeatsMsg() {
@@ -42,7 +35,6 @@ public class Economy extends Passenger {
 
 	@Override
 	public Passenger upgrade() {
-		//to premium
 		Passenger upgraded = new Premium();
 		upgraded.copyPassengerState(this);
 		upgraded.passID = "P(U)" + this.passID;

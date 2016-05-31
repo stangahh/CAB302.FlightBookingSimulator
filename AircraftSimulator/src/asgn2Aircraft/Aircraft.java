@@ -100,24 +100,25 @@ public abstract class Aircraft {
 		} else {
 			//Update of status string for the aircraft (see below)
 			this.status += Log.setPassengerMsg(p,"C","N");
+		
+			//Remove passenger from the seat storage for the aircraft
+			p.cancelSeat(cancellationTime);	
 			
-		switch (getPassengerFlightClass(p)) {
-			case "First":
-				numFirst -= 1;
-				break;
-			case "Business":
-				numBusiness -= 1;
-				break;
-			case "Premium":
-				numPremium -= 1;
-				break;
-			case "Economy":
-				numEconomy -= 1;
-				break;
-		}		
-		//Remove passenger from the seat storage for the aircraft
-		p.cancelSeat(cancellationTime);
-		seats.remove(p);
+			switch (getPassengerFlightClass(p)) {
+				case "First":
+					numFirst -= 1;
+					break;
+				case "Business":
+					numBusiness -= 1;
+					break;
+				case "Premium":
+					numPremium -= 1;
+					break;
+				case "Economy":
+					numEconomy -= 1;
+					break;
+			}		
+			seats.remove(p);
 		}
 	}
 
@@ -131,15 +132,7 @@ public abstract class Aircraft {
 	 * OR confirmationTime OR departureTime is invalid. See {@link asgn2Passengers.Passenger#confirmSeat(int, int)}
 	 * @throws AircraftException if no seats available in <code>Passenger</code> fare class. 
 	 */
-	public void confirmBooking(Passenger p, int confirmationTime) throws AircraftException, PassengerException { 
-		//Change to just calling confirmSeat from the Passenger class???
-//		if (confirmationTime < 0 ) { //|| confirmationTime > p.getDepartureTime()) {
-//			throw new PassengerException("Invalid times");
-//		} else if (p.isConfirmed() || p.isRefused() || p.isFlown()) {
-//			throw new PassengerException("Not currently in queue or a new booking");
-//		}
-		p.confirmSeat(confirmationTime, p.getDepartureTime());
-		
+	public void confirmBooking(Passenger p, int confirmationTime) throws AircraftException, PassengerException { 			
 		//Somewhat of a clone of cancelBooking (inversed), relies on polymorphism
 		switch (getPassengerFlightClass(p)) {
 			case "First":
@@ -171,6 +164,8 @@ public abstract class Aircraft {
 				}
 				break;
 		}
+		
+		p.confirmSeat(confirmationTime, p.getDepartureTime());
 		
 		this.status += Log.setPassengerMsg(p,"N/Q","C");
 		seats.add(p);
