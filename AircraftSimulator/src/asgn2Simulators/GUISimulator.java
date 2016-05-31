@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -93,14 +94,83 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource(); 
-		
+			
 		if (src == runSimulation) {
 			//start simulation
+			checkTextValues();
+			
 		} else if (src == swapCharts) {
 			//change chart
 		}
 	}
 
+	private void checkTextValues() {
+		String RNGSeedValue = fieldRNGSeed.getText();
+		String dailyMeanValue = fieldDailyMean.getText();
+		String queueSizeValue = fieldQueueSize.getText();
+		String cancellationValue = fieldCancellation.getText();
+		String firstValue = fieldFirst.getText();
+		String businessValue = fieldBusiness.getText();
+		String premiumValue = fieldPremium.getText();
+		String economyValue = fieldEconomy.getText();
+				
+		String errorMessage = "There are errors in the following text fields: \n";
+		Boolean errorFound = false;
+		Boolean classError = false;
+		
+		if (!RNGSeedValue.matches("^[0-9]*$")) {
+			errorMessage += "\nSeed value";
+			errorFound = true;
+		} 
+		if (!dailyMeanValue.matches("^[0-9]+([,.][0-9]+)?$")) {
+			errorMessage += "\nDaily mean";
+			errorFound = true;
+		} 
+		if (!queueSizeValue.matches("^[0-9]*$")) {
+			errorMessage += "\nQueue size";
+			errorFound = true;
+		} 
+		if (!cancellationValue.matches("^[0-9]+([,.][0-9]+)?$")) {
+			errorMessage += "\nCancellation value";
+			errorFound = true;
+		} 
+		if (!firstValue.matches("^[0-9]+([,.][0-9]+)?$")) {
+			errorMessage += "\nFirst value";
+			classError = true;
+			errorFound = true;
+		} 
+		if (!businessValue.matches("^[0-9]+([,.][0-9]+)?$")) {
+			errorMessage += "\nBusiness value";
+			classError = true;
+			errorFound = true;
+		}
+		if (!premiumValue.matches("^[0-9]+([,.][0-9]+)?$")) {
+			errorMessage += "\nPremium value";
+			classError = true;
+			errorFound = true;
+		} 
+		if (!economyValue.matches("^[0-9]+([,.][0-9]+)?$")) {
+			errorMessage += "\nEconomy value";
+			classError = true;
+			errorFound = true;
+		}
+		if (!classError) {
+			double totalClassProb = Double.parseDouble(firstValue) + Double.parseDouble(businessValue) + Double.parseDouble(premiumValue) + Double.parseDouble(economyValue);
+			if (totalClassProb != 1.0) {
+				if (errorFound) {
+					errorMessage += "\nAnd total probabily of classes doesn't equal 1";
+				} else {
+					errorMessage += "\nThe total probability of classes doesn't equal 1";
+				}
+			}
+		}
+
+		if (errorFound) {
+			JOptionPane.showMessageDialog(this, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
+	
 	/**
 	 * @param args
 	 */
@@ -142,15 +212,14 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    nameEconomy = createTextArea("Economy");
 	    
 	    //Text Fields
-	    // The "0" will be filled later with info from other classes
-	    fieldRNGSeed = createTextField("0");
-	    fieldDailyMean = createTextField("0");
-	    fieldQueueSize = createTextField("0");
-	    fieldCancellation = createTextField("0");
-	    fieldFirst = createTextField("0");
-	    fieldBusiness = createTextField("0");
-	    fieldPremium = createTextField("0");
-	    fieldEconomy = createTextField("0");
+	    fieldRNGSeed = createTextField(String.valueOf(Constants.DEFAULT_SEED));
+	    fieldDailyMean = createTextField(String.valueOf(Constants.DEFAULT_DAILY_BOOKING_MEAN));
+	    fieldQueueSize = createTextField(String.valueOf(Constants.DEFAULT_MAX_QUEUE_SIZE));
+	    fieldCancellation = createTextField(String.valueOf(Constants.DEFAULT_CANCELLATION_PROB));
+	    fieldFirst = createTextField(String.valueOf(Constants.DEFAULT_FIRST_PROB));
+	    fieldBusiness = createTextField(String.valueOf(Constants.DEFAULT_BUSINESS_PROB));
+	    fieldPremium = createTextField(String.valueOf(Constants.DEFAULT_PREMIUM_PROB));
+	    fieldEconomy = createTextField(String.valueOf(Constants.DEFAULT_ECONOMY_PROB));
 	    
 	    
 	    container.setLayout(new BorderLayout());
