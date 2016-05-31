@@ -29,13 +29,14 @@ import javax.swing.SwingUtilities;
  * @author Megan Hunter, Jesse Stanger, hogan
  *
  */
+@SuppressWarnings("serial")
 public class GUISimulator extends JFrame implements ActionListener, Runnable {
-	private static final long serialVersionUID = 6717132605785602783L;
 	
 	private static final String FONT = "Arial";
 	private static final int TEXT_TITLE_FONT_SIZE = 30;
 	private static final int TEXT_FONT_SIZE = 20;
 	private static final int TEXT_FIELD_LENGTH = 10;
+	
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 720;
 	
@@ -218,7 +219,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		chartArea.setLayout(layout);
 	    
 	    GridBagConstraints constraints = new GridBagConstraints(); 
-	    constraints.weightx = 0.5;
+	    constraints.weightx = 1;
 	    constraints.weighty = 1;
 	    
 	    constraints.fill = GridBagConstraints.BOTH;
@@ -294,5 +295,5 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
       constraints.gridheight = h;
       jp.add(c, constraints);
    }
-	
+
 }

@@ -64,17 +64,17 @@ public class DTSCTest extends ApplicationFrame {
         final JButton run = new JButton(STOP);
         run.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String cmd = e.getActionCommand();
-                if (STOP.equals(cmd)) {
-                    timer.stop();
-                    run.setText(START);
-                } else {
-                    timer.start();
-                    run.setText(STOP);
-                }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String cmd = e.getActionCommand();
+            if (STOP.equals(cmd)) {
+                timer.stop();
+                run.setText(START);
+            } else {
+                timer.start();
+                run.setText(STOP);
             }
+        }
         });
 
         final JComboBox<String> combo = new JComboBox<String>();
