@@ -165,7 +165,7 @@ public abstract class Aircraft {
 				break;
 		}
 		
-		p.confirmSeat(confirmationTime, p.getDepartureTime());
+		p.confirmSeat(confirmationTime, this.departureTime);
 		
 		this.status += Log.setPassengerMsg(p,"N/Q","C");
 		seats.add(p);
