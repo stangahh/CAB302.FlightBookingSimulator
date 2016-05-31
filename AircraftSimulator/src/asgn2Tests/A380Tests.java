@@ -173,12 +173,6 @@ public class A380Tests {
 		assertEquals(orig + 1, plane.getNumEconomy());
 	}
 	
-	//ITS SUPPLIED SO DO WE NEED TO TEST IT?
-	@Test
-	public void testFinalState() {
-		fail("Not yet implemented");
-	}
-	
 	@Test
 	public void testFlightEmptyTrue() throws AircraftException {
 		A380 emptyFlight = new A380("A380", 14, 10, 10, 10, 10);
@@ -210,10 +204,10 @@ public class A380Tests {
 		plane.flyPassengers(3);
 	}
 	
-	//DO WE NEED THIS ISN'T THIS JUST A GETTER?!
 	@Test
-	public void testGetPassengersDeepCopy() {
-		fail("Not yet implemented");
+	public void testGetPassengersDeepCopy() throws PassengerException, AircraftException {
+		plane.confirmBooking(passenger, 5);
+		assertEquals(passenger, plane.getPassengers().get(0));
 	}
 	
 	@Test

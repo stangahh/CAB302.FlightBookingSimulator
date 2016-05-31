@@ -294,7 +294,10 @@ public abstract class Aircraft {
 	 * @return <code>List<Passenger></code> object containing the passengers.  
 	 */
 	public List<Passenger> getPassengers() {
-		return new ArrayList<Passenger>(seats);
+		List<Passenger> copy = new ArrayList<Passenger>();
+		copy = this.seats;
+		
+		return copy;
 	}
 	
 	/**
