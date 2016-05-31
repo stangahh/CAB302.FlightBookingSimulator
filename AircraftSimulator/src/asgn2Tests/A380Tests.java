@@ -206,7 +206,7 @@ public class A380Tests {
 	}
 	
 	@Test
-	public void testGetPassengersDeepCopy() throws PassengerException, AircraftException {
+	public void testGetPassengersCopyWithSameValues() throws PassengerException, AircraftException {
 		plane.confirmBooking(passenger, 5);
 		assertEquals(passenger, plane.getPassengers().get(0));
 	}
