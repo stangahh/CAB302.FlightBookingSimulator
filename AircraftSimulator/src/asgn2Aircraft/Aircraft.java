@@ -133,11 +133,12 @@ public abstract class Aircraft {
 	 */
 	public void confirmBooking(Passenger p, int confirmationTime) throws AircraftException, PassengerException { 
 		//Change to just calling confirmSeat from the Passenger class???
-		if (confirmationTime < 0 || confirmationTime > p.getDepartureTime()) {
-			throw new PassengerException("Invalid times");
-		} else if (p.isConfirmed() || p.isRefused() || p.isFlown()) {
-			throw new PassengerException("Not currently in queue or a new booking");
-		}
+//		if (confirmationTime < 0 ) { //|| confirmationTime > p.getDepartureTime()) {
+//			throw new PassengerException("Invalid times");
+//		} else if (p.isConfirmed() || p.isRefused() || p.isFlown()) {
+//			throw new PassengerException("Not currently in queue or a new booking");
+//		}
+		p.confirmSeat(confirmationTime, p.getDepartureTime());
 		
 		//Somewhat of a clone of cancelBooking (inversed), relies on polymorphism
 		switch (getPassengerFlightClass(p)) {
@@ -172,8 +173,6 @@ public abstract class Aircraft {
 		}
 		
 		this.status += Log.setPassengerMsg(p,"N/Q","C");
-		
-		p.confirmSeat(confirmationTime, p.getDepartureTime());
 		seats.add(p);
 	}
 	
