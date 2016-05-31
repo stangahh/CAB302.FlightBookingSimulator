@@ -282,8 +282,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    addToPanel(interactiveArea, fieldPremium, constraints, 			9,4,3,1);
 	    addToPanel(interactiveArea, fieldEconomy, constraints, 			9,5,3,1);
 	    
-	    addToPanel(interactiveArea, runSimulation, constraints, 		12,0,8,3); 
-	    addToPanel(interactiveArea, swapCharts, constraints, 			12,3,8,3);
+	    addToPanel(interactiveArea, runSimulation, constraints, 		12,1,8,3);
+	    addToPanel(interactiveArea, swapCharts, constraints, 			12,4,8,3);
 	    
 	}
 	
