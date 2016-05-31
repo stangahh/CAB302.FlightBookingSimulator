@@ -400,16 +400,16 @@ public abstract class Passenger {
 	 * @param <code>Passenger</code> state to transfer
 	 */
 	protected void copyPassengerState(Passenger p) {
-		p.bookingTime = this.getBookingTime();
-		p.confirmationTime = this.getConfirmationTime();
-		p.departureTime = this.getDepartureTime();
-		p.enterQueueTime = this.getEnterQueueTime();
-		p.exitQueueTime = this.getExitQueueTime();
+		this.bookingTime = p.getBookingTime();
+		this.confirmationTime = p.getConfirmationTime();
+		this.departureTime = p.getDepartureTime();
+		this.enterQueueTime = p.getEnterQueueTime();
+		this.exitQueueTime = p.getExitQueueTime();
 		
-		p.confirmed = this.isConfirmed();
-		p.flown = this.isFlown();
-		p.inQueue = this.isQueued();
-		p.newState = this.isNew();
+		this.confirmed = p.isConfirmed();
+		this.flown = p.isFlown();
+		this.inQueue = p.isQueued();
+		this.newState = p.isNew();
 	}
 	
 	//Various private helper methods to check arguments and throw exceptions
