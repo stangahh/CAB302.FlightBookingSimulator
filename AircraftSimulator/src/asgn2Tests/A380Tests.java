@@ -100,11 +100,12 @@ public class A380Tests {
 		plane.cancelBooking(passenger, 5);
 	}
 	
-	// DONT THINK THIS CAN BE TESTED?
-//	@Test (expected = AircraftException.class)
-//	public void testCancelBookingPassengerNotConfirmed() throws AircraftException, PassengerException {
-//		plane.cancelBooking(passenger, 5);
-//	}
+	@Test (expected = PassengerException.class)
+	public void testCancelBookingPassengerNotConfirmed() throws AircraftException, PassengerException {
+		plane.confirmBooking(passenger, 5);
+		passenger.queuePassenger(6, passenger.getDepartureTime());
+		plane.cancelBooking(passenger, 7);
+	}
 	
 	@Test (expected = PassengerException.class)
 	public void testCancelBookingCancellationTimeLessThanZero() throws AircraftException, PassengerException {

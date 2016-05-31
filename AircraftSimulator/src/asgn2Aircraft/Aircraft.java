@@ -93,33 +93,28 @@ public abstract class Aircraft {
 	public void cancelBooking(Passenger p, int cancellationTime) throws AircraftException, PassengerException {
 		if (!seats.contains(p)) {
 			throw new AircraftException("Passenger not booked");
-		} else if (!p.isConfirmed()) {
-			throw new PassengerException("Passenger not confirmed");
-		} else if (cancellationTime < 0) {
-			throw new PassengerException("Cancellation time invalid");
-		} else {
-			//Update of status string for the aircraft (see below)
-			this.status += Log.setPassengerMsg(p,"C","N");
+		} 
+		//Update of status string for the aircraft (see below)
+		this.status += Log.setPassengerMsg(p,"C","N");
+	
+		//Remove passenger from the seat storage for the aircraft
+		p.cancelSeat(cancellationTime);	
 		
-			//Remove passenger from the seat storage for the aircraft
-			p.cancelSeat(cancellationTime);	
-			
-			switch (getPassengerFlightClass(p)) {
-				case "First":
-					numFirst -= 1;
-					break;
-				case "Business":
-					numBusiness -= 1;
-					break;
-				case "Premium":
-					numPremium -= 1;
-					break;
-				case "Economy":
-					numEconomy -= 1;
-					break;
-			}		
-			seats.remove(p);
-		}
+		switch (getPassengerFlightClass(p)) {
+			case "First":
+				numFirst -= 1;
+				break;
+			case "Business":
+				numBusiness -= 1;
+				break;
+			case "Premium":
+				numPremium -= 1;
+				break;
+			case "Economy":
+				numEconomy -= 1;
+				break;
+		}		
+		seats.remove(p);
 	}
 
 	/**
