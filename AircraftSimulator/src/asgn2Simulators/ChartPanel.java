@@ -25,6 +25,7 @@ import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
 import asgn2Simulators.Constants;
+import asgn2Simulators.Simulator;
 
 @SuppressWarnings("serial")
 public class ChartPanel extends JFrame {

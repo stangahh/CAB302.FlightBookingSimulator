@@ -16,12 +16,18 @@ import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -43,11 +49,16 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 720;
 	
-	
+	public static Boolean textOutput = false;
+		
 	private JPanel 		container;
 	
 	private JPanel 		chartArea;
 	private JPanel 		interactiveArea;
+	
+	private JPanel		textArea;
+	private JTextArea	logText;
+	private JScrollPane	textScroll;
 
 	private JButton 	runSimulation;
 	private JButton 	swapCharts;
@@ -89,11 +100,14 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	public void run() {
 		switch (checkOutputVersion()) {
 		case 0:
+			textOutput = false;
 			createGUI();
 			//System.out.println("THIS WILL DO GUI STUFF");
 			break;
 		case 1:
-			System.out.println("THIS WILL DO TEXT OUTPUT STUFF");
+			textOutput = true;
+			createGUI();
+			//System.out.println("THIS WILL DO TEXT OUTPUT STUFF");
 			break;
 		}
 		//checkOutputVersion();
@@ -115,10 +129,48 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		if (src == runSimulation) {
 			//start simulation
 			checkTextValues();
+			if (textOutput) {
+				String logString = null;
+				try {
+					@SuppressWarnings("resource")
+					BufferedReader br = new BufferedReader(new FileReader(getLatestFilefromDir(System.getProperty("user.dir"))));
+					StringBuilder sb = new StringBuilder();
+					String line = br.readLine();
+					
+					while (line != null) {
+						sb.append(line);
+						sb.append(System.lineSeparator());
+						line = br.readLine();
+					}
+					logString = sb.toString();
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				logText.setText(logString);
+			}
 			
 		} else if (src == swapCharts) {
 			//change chart
 		}
+	}
+	
+	//I GOT THIS FROM STACK OVERFLOW
+	private File getLatestFilefromDir(String path){
+	    File directory = new File(path);
+	    File[] files = directory.listFiles();
+	    if (files == null || files.length == 0) {
+	        return null;
+	    }
+
+	    File lastModifiedFile = files[0];
+	    for (int i = 1; i < files.length; i++) {
+	       if (lastModifiedFile.lastModified() < files[i].lastModified()) {
+	           lastModifiedFile = files[i];
+	       }
+	    }
+	    return lastModifiedFile;
 	}
 	
 	/**
@@ -136,6 +188,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		setSize(WIDTH, HEIGHT);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
+	    setResizable(false);
 	    
 	    //Main Panel
 	    container = createPanel(Color.WHITE);
@@ -147,6 +200,11 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    
 	    interactiveArea = createPanel(Color.CYAN);
 	    
+	    textArea = createPanel(Color.WHITE);
+	    logText = createTextArea("");
+	    textScroll = new JScrollPane(logText);
+	    textScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	    	    
 	    //Buttons
 	    runSimulation = createButton("Run Simulation");
 	    swapCharts = createButton("Swap Charts");
@@ -175,8 +233,13 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    
 //	    container.add(new ChartPanel("Simulator"), BorderLayout.NORTH);
 	    container.add(interactiveArea, BorderLayout.SOUTH);
-	    
+	    	    
 	    layoutInteractivePanel();
+	    if (textOutput) {
+	    	container.add(textArea, BorderLayout.CENTER);
+	    	layoutTextPanel();
+	    }
+	   
 	    
 	    this.getContentPane().add(container, BorderLayout.CENTER);
 	    repaint(); 
@@ -223,6 +286,18 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	}
 	
 	/* ------------------------------- Layout Methods ----------------------------------- */
+	
+	private void layoutTextPanel() {
+		GridBagLayout layout = new GridBagLayout();  
+	    textArea.setLayout(layout);  
+	      
+	    GridBagConstraints constraints = new GridBagConstraints();    
+	    constraints.fill = GridBagConstraints.BOTH;  
+	    constraints.weightx = 1;  
+	    constraints.weighty = 1;  
+	        
+	    addToPanel(textArea, textScroll, constraints, 0,0,1,1);  
+	}
 	
 	private void layoutInteractivePanel() {
 		GridBagLayout layout = new GridBagLayout();
