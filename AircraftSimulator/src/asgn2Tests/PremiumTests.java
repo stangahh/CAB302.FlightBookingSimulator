@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package asgn2Tests;
 
@@ -19,7 +19,7 @@ import asgn2Passengers.Premium;
 public class PremiumTests extends Premium {
 
 	Passenger person;
-	
+
 	/**
 	 * @throws java.lang.Exception
 	 */

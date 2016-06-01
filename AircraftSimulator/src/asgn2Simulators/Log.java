@@ -1,8 +1,8 @@
 /**
- * 
- * This file is part of the AircraftSimulator Project, written as 
- * part of the assessment for CAB302, semester 1, 2016. 
- * 
+ *
+ * This file is part of the AircraftSimulator Project, written as
+ * part of the assessment for CAB302, semester 1, 2016.
+ *
  */
 package asgn2Simulators;
 
@@ -19,23 +19,23 @@ import asgn2Passengers.Passenger;
 import asgn2Passengers.Premium;
 
 /**
- * Class to support logging for the Aircraft Simulator 
- *  
+ * Class to support logging for the Aircraft Simulator
+ *
  * @author hogan
  *
  */
 public class Log {
-	
-	//Controls logging of detailed status information 
-	public static final boolean SAVE_STATUS = false; 
-	
+
+	//Controls logging of detailed status information
+	public static final boolean SAVE_STATUS = false;
+
 	/**
 	 * Helper to set Passenger transition messages
-	 * 
+	 *
 	 * @param p <code>Passenger</code> making a transition (uses F,J,P,Y)
 	 * @param source <code>String</code> holding starting state (uses N,Q,C) - {New,Queued,Confirmed}
 	 * @param target <code>String</code> holding finishing state (uses Q,C,R,F) - (Queued,Confirmed,Refused,Flown)
-	 * @return <code>String</code> containing transition in the form: |(F|J|P|Y):(N|Q|C)>(Q|C|R|F)| 
+	 * @return <code>String</code> containing transition in the form: |(F|J|P|Y):(N|Q|C)>(Q|C|R|F)|
 	 */
 	public static String setPassengerMsg(Passenger p, String source, String target) {
 		String str = "";
@@ -48,14 +48,14 @@ public class Log {
 		} else {
 			str += "Y";
 		}
-		return "|"+str+":"+source+">"+target+"|";
+		return "|" + str + ":" + source + ">" + target + "|";
 	}
-	
+
 	/**
-	 * Helper to set Passenger upgrade messages. 
-	 * 
-	 * @param p <code>Passenger</code> to be upgraded 
-	 * @return <code>String</code> containing transition in the form: |(J|P|Y)>(F|J|P)| 
+	 * Helper to set Passenger upgrade messages.
+	 *
+	 * @param p <code>Passenger</code> to be upgraded
+	 * @return <code>String</code> containing transition in the form: |(J|P|Y)>(F|J|P)|
 	 */
 	public static String setUpgradeMsg(Passenger p) {
 		String str = "";
@@ -66,55 +66,55 @@ public class Log {
 		} else {
 			str += "Y>P";
 		}
-		return "|U:"+str+"|";
+		return "|U:" + str + "|";
 	}
-	
+
 	private BufferedWriter writer = null;
 	private BufferedWriter detWriter = null;
-	
+
 	/**
-	 * Constructor establishes log files based on the current time in the canonical directory 
+	 * Constructor establishes log files based on the current time in the canonical directory
 	 *
 	 * @throws IOException if the log files or BufferedWriters cannot be created
 	 */
 	public Log () throws IOException {
-		//File management based on http://stackoverflow.com/questions/15754523/how-to-write-text-file-java 
-        File logFile = new File(getLogTime());
+		//File management based on http://stackoverflow.com/questions/15754523/how-to-write-text-file-java
+		File logFile = new File(getLogTime());
 
-        // This will output the full path where the file will be written to...
-        System.out.println(logFile.getCanonicalPath());
-        this.writer = new BufferedWriter(new FileWriter(logFile));
-        
-        if (Log.SAVE_STATUS) {
-	        File detFile = new File(getLogTime()+"Detail");
-	        this.detWriter = new BufferedWriter(new FileWriter(detFile));
-        }
+		// This will output the full path where the file will be written to...
+		System.out.println(logFile.getCanonicalPath());
+		this.writer = new BufferedWriter(new FileWriter(logFile));
+
+		if (Log.SAVE_STATUS) {
+			File detFile = new File(getLogTime() + "Detail");
+			this.detWriter = new BufferedWriter(new FileWriter(detFile));
+		}
 	}
-	
+
 	/**
-	 * Log final state information and clean up 
-	 * 
-	 * @param sim <code>Simulator</code> being used 
-	 * @throws IOException on write or closure failures 
+	 * Log final state information and clean up
+	 *
+	 * @param sim <code>Simulator</code> being used
+	 * @throws IOException on write or closure failures
 	 */
 	public void finalise(Simulator sim) throws IOException {
-		String time = getLogTime(); 
+		String time = getLogTime();
 		writer.write("\n" + time + ": End of Simulation\n");
 		writer.write(sim.finalState());
 		writer.close();
-		
+
 		if (Log.SAVE_STATUS) {
 			detWriter.write("\n" + time + ": End of Simulation\n");
-			detWriter.close(); 
+			detWriter.close();
 		}
 	}
-	
+
 	/**
 	 * Log initial state of the simulation and aircraft
-	 * Note we grab aircraft from first valid schedule 
-	 * 
-	 * @param sim <code>Simulator</code> providing parameters 
-	 * @throws IOException on write failures 
+	 * Note we grab aircraft from first valid schedule
+	 *
+	 * @param sim <code>Simulator</code> providing parameters
+	 * @throws IOException on write failures
 	 * @throws SimulationException See {@link asgn2Simulators.Simulator#getFlights(int)}
 	 */
 	public void initialEntry(Simulator sim) throws IOException, SimulationException {
@@ -123,51 +123,51 @@ public class Log {
 		String capacities = sim.getFlights(Constants.FIRST_FLIGHT).initialState();
 		writer.write(capacities);
 	}
-	
+
 	/**
-	 * Log summary entry for each time step 
-	 * Note: Aircraft bookings appear only once Flights have begun 
-	 * 
-	 * @param time <code>int</code> holding current simulation time step 
-	 * @param sim <code>Simulator</code> controlling simulation 
+	 * Log summary entry for each time step
+	 * Note: Aircraft bookings appear only once Flights have begun
+	 *
+	 * @param time <code>int</code> holding current simulation time step
+	 * @param sim <code>Simulator</code> controlling simulation
 	 * @throws SimulationException See {@link asgn2Simulators.Simulator#getSummary(int, boolean)}
-	 * @throws IOException on write failures 
+	 * @throws IOException on write failures
 	 */
 	public void logEntry(int time, Simulator sim) throws IOException, SimulationException {
 		boolean flying = (time >= Constants.FIRST_FLIGHT);
 		writer.write(sim.getSummary(time, flying));
 	}
-	
+
 	/**
-	 * Log Queue and Refused Transitions for each time step. 
-	 * Logging controlled by {@link #SAVE_STATUS} 
-	 * 
-	 * @param time <code>int</code> holding current simulation time step 
-	 * @param sim <code>Simulator</code> controlling simulation 
-	 * @throws IOException on write failures 
+	 * Log Queue and Refused Transitions for each time step.
+	 * Logging controlled by {@link #SAVE_STATUS}
+	 *
+	 * @param time <code>int</code> holding current simulation time step
+	 * @param sim <code>Simulator</code> controlling simulation
+	 * @throws IOException on write failures
 	 */
 	public void logQREntries(int time, Simulator sim) throws IOException {
 		if (Log.SAVE_STATUS) {
 			detWriter.write(sim.getStatus(time));
 		}
 	}
-	
+
 	/**
-	 * Log Aircraft Transitions for each time step. 
-	 * Logging controlled by {@link #SAVE_STATUS} 
-	 * 
-	 * @param time <code>int</code> holding current simulation time step 
-	 * @param sim <code>Simulator</code> controlling simulation 
-	 * @throws IOException on write failures 
+	 * Log Aircraft Transitions for each time step.
+	 * Logging controlled by {@link #SAVE_STATUS}
+	 *
+	 * @param time <code>int</code> holding current simulation time step
+	 * @param sim <code>Simulator</code> controlling simulation
+	 * @throws IOException on write failures
 	 * @throws SimulationException See {@link Simulator#getFlights(int)}
 	 */
 	public void logFlightEntries(int time, Simulator sim) throws IOException, SimulationException {
 		if (Log.SAVE_STATUS) {
-			Flights flights = sim.getFlights(time); 
+			Flights flights = sim.getFlights(time);
 			detWriter.write(flights.getStatus(time));
 		}
 	}
-	
+
 	/**
 	 * Helper returning Log Time format for filename
 	 * @return filename String yyyyMMdd_HHmmss

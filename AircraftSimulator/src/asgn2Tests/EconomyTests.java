@@ -12,7 +12,7 @@ import asgn2Passengers.PassengerException;
 public class EconomyTests {
 
 	Passenger person;
-	
+
 	@Before
 	public  void setUpBeforeClass() throws PassengerException {
 		person = new Economy(2, 10);
