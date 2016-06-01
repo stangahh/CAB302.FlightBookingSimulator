@@ -18,9 +18,19 @@ We have both agreed that the Summary of Contribution appropriately reflects each
 
 Statement of Completeness:
 - Completed all Aircraft and Passenger classes
+
 - Tested for all methods (that we could think of) in Aircraft and Passenger classes
+
 - GUI runs
+
 - Error/Validation handling is present for the GUI text input
-- The text output is present (but takes output from log files)
-- Ability to input arguments into the console is not present
-- Chart doesn't update after each simulation
+
+- The text output is present
+
+- Ability to input arguments into the console is not present, but you can customise inputs in the GUI.
+    - Log files and chart reflects changes in GUI inputs
+
+- There is an alternative commented main method, where we attempted to write the code for console imports, but couldnt finish.
+
+- 'Swap Chart' button does nothing. There is no second chart to choose from.
+
