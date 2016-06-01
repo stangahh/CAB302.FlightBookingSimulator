@@ -68,7 +68,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		
 	private JPanel 		container;
 	
-	private JPanel 		chartArea;
 	private JPanel 		interactiveArea;
 	
 	private JPanel		textArea;
@@ -112,7 +111,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		super(arg0);
 		try {
 			sim = new Simulator();
-			runSimulation();
+			log = new Log();
+			SR = new SimulationRunner(this.sim, this.log);
+			SR.runSimulation();
 		} catch (SimulationException | AircraftException | PassengerException | IOException e1) {
 			e1.printStackTrace();
 			System.exit(-1);
@@ -127,8 +128,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	 */
 	@Override
 	public void run() {
-		
-		
 		
 		switch (checkOutputVersion()) {
 		case 0:
@@ -164,6 +163,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 					printLogOutput();
 				}
 				try {
+					
 					sim = new Simulator(
 							Integer.parseInt(fieldRNGSeed.getText()),
 							Integer.parseInt(fieldQueueSize.getText()),
@@ -178,10 +178,13 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 					log = new Log();
 					SR = new SimulationRunner(this.sim, this.log);
 					SR.runSimulation();
+			        
 				} catch (SimulationException | AircraftException | PassengerException | IOException e1) {
 					e1.printStackTrace();
 					System.exit(-1);
 				}
+				
+				
 			} 			
 		} else if (src == swapCharts) {
 			//change chart
@@ -249,8 +252,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    container.setLayout(new BorderLayout());
 	    
 	    //Sub Panels
-	    chartArea = createPanel(Color.LIGHT_GRAY);
-	    chartArea.setLayout(new BorderLayout());
 	    JFreeChart chart = createChart(createTimeSeriesData());
 	    
 	    interactiveArea = createPanel(Color.CYAN);
@@ -479,9 +480,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	}
 	
 	private TimeSeriesCollection createTimeSeriesData() {
-		TimeSeriesCollection tsc = new TimeSeriesCollection(); 
+		TimeSeriesCollection tsc = new TimeSeriesCollection();
 		TimeSeries bookTotal = new TimeSeries("Total Bookings");
-		TimeSeries econTotal = new TimeSeries("Economy"); 
+		TimeSeries econTotal = new TimeSeries("Economy");
 		TimeSeries premTotal = new TimeSeries("Premium");
 		TimeSeries busTotal = new TimeSeries("Business");
 		TimeSeries firstTotal = new TimeSeries("First");
@@ -495,7 +496,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			
 			int economy = 	this.sim.getDailyBookings();
 			int premium = 	this.sim.getDailyBookings();
-			int business = 	this.sim.getDailyBookings(); 
+			int business = 	this.sim.getDailyBookings();
 			int first = 	this.sim.getDailyBookings();
 			
 			cal.set(2016, 0, i, 6, 0);
@@ -528,28 +529,5 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
        range.setAutoRange(true);
        return result;
    }
-   
-   public void runSimulation() throws AircraftException, PassengerException, SimulationException, IOException {
-	    sim.createSchedule();
-		
-		//Main simulation loop 
-		for (int time = 0; time <= Constants.DURATION; time++) {
-			sim.resetStatus(time); 
-			sim.rebookCancelledPassengers(time); 
-			sim.generateAndHandleBookings(time);
-			sim.processNewCancellations(time);
-			
-			if (time >= Constants.FIRST_FLIGHT) {
-				sim.processUpgrades(time);
-				sim.processQueue(time);
-				sim.flyPassengers(time);
-				sim.updateTotalCounts(time); 
-			} else {
-				sim.processQueue(time);
-			}
-			
-		}
-		sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
-	}
 
 }
