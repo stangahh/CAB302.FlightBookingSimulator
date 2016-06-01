@@ -44,6 +44,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 
 import asgn2Aircraft.AircraftException;
+import asgn2Aircraft.Bookings;
 import asgn2Passengers.PassengerException;
 
 /**
@@ -106,8 +107,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	/**
 	 * @param arg0
 	 * @throws HeadlessException
+	 * @throws SimulationException 
 	 */
-	public GUISimulator(String arg0) throws HeadlessException {
+	public GUISimulator(String arg0) throws HeadlessException, SimulationException {
 		super(arg0);
 		try {
 			sim = new Simulator();
@@ -132,12 +134,22 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		switch (checkOutputVersion()) {
 		case 0:
 			textOutput = false;
-			createGUI();
+			try {
+				createGUI();
+			} catch (SimulationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//System.out.println("THIS WILL DO GUI STUFF");
 			break;
 		case 1:
 			textOutput = true;
-			createGUI();
+			try {
+				createGUI();
+			} catch (SimulationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//System.out.println("THIS WILL DO TEXT OUTPUT STUFF");
 			break;
 		}
@@ -192,46 +204,63 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	}
 	
 	private void printLogOutput() {
+//		String logString = null;
+//		try {
+//			@SuppressWarnings("resource")
+//			BufferedReader br = new BufferedReader(new FileReader(getLatestFilefromDir(System.getProperty("user.dir"))));
+//			StringBuilder sb = new StringBuilder();
+//			String line = br.readLine();
+//			
+//			while (line != null) {
+//				sb.append(line);
+//				sb.append(System.lineSeparator());
+//				line = br.readLine();
+//			}
+//			logString = sb.toString();
+//		} catch (FileNotFoundException e1) {
+//			e1.printStackTrace();
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
+//		logText.setText(logString);
 		String logString = null;
-		try {
-			@SuppressWarnings("resource")
-			BufferedReader br = new BufferedReader(new FileReader(getLatestFilefromDir(System.getProperty("user.dir"))));
-			StringBuilder sb = new StringBuilder();
-			String line = br.readLine();
-			
-			while (line != null) {
-				sb.append(line);
-				sb.append(System.lineSeparator());
-				line = br.readLine();
-			}
-			logString = sb.toString();
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		logText.setText(logString);
+		
+		logString = "Simulator [meanDailyBookings = " + fieldDailyMean.getText() + ", sdDailyBookings = " + 0.33 * Double.parseDouble(fieldDailyMean.getText())
+				+ ", seed = " + fieldRNGSeed.getText() + ", firstProb = " + fieldFirst.getText() + ", businessProb = "
+				+ fieldBusiness.getText() + ", premiumProb = " + fieldPremium.getText() 
+				+ ", economyProb = " + fieldEconomy.getText() + ", maxQueueSize = " + fieldQueueSize.getText() 
+				+ ", cancellationProb = " + fieldCancellation.getText() + "]";
+		
+		logString += "\n\nFinal Totals: [F" + sim.getTotalFirst()
+					+ ":J" + sim.getTotalBusiness()
+					+ ":P" + sim.getTotalPremium()
+					+ ":Y" + sim.getTotalEconomy()
+					+ ":T" + sim.getTotalFlown()
+					+ ":E" + sim.getTotalEmpty()
+					+ ":R" + sim.numRefused() +"]\n";
+		logText.setText(logString);		
 	}
 	
 	//I GOT THIS FROM STACK OVERFLOW
-	private File getLatestFilefromDir(String path){
-	    File directory = new File(path);
-	    File[] files = directory.listFiles();
-	    if (files == null || files.length == 0) {
-	        return null;
-	    }
-
-	    File lastModifiedFile = files[0];
-	    for (int i = 1; i < files.length; i++) {
-	       if (lastModifiedFile.lastModified() < files[i].lastModified()) {
-	           lastModifiedFile = files[i];
-	       }
-	    }
-	    return lastModifiedFile;
-	}
+//	private File getLatestFilefromDir(String path){
+//	    File directory = new File(path);
+//	    File[] files = directory.listFiles();
+//	    if (files == null || files.length == 0) {
+//	        return null;
+//	    }
+//
+//	    File lastModifiedFile = files[0];
+//	    for (int i = 1; i < files.length; i++) {
+//	       if (lastModifiedFile.lastModified() < files[i].lastModified()) {
+//	           lastModifiedFile = files[i];
+//	       }
+//	    }
+//	    return lastModifiedFile;
+//	}
 	
 	/**
 	 * @param args
+	 * @throws SimulationException 
 	 */
 //	public static void main(String[] args) {
 //		//Use this temporarily to help try out the simulator. 
@@ -241,7 +270,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 //        SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
 //	}
 
-	private void createGUI() {
+	private void createGUI() throws SimulationException {
 		setSize(WIDTH, HEIGHT);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
@@ -479,7 +508,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		
 	}
 	
-	private TimeSeriesCollection createTimeSeriesData() {
+	private TimeSeriesCollection createTimeSeriesData() throws SimulationException {
 		TimeSeriesCollection tsc = new TimeSeriesCollection();
 		TimeSeries bookTotal = new TimeSeries("Total Bookings");
 		TimeSeries econTotal = new TimeSeries("Economy");
@@ -491,22 +520,27 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		Calendar cal = GregorianCalendar.getInstance();
 		
 	    
+		
 		//These lines are important 
 		for (int i = 0; i <= Constants.DURATION; i++) {
-			
-			int economy = 	this.sim.getDailyBookings();
-			int premium = 	this.sim.getDailyBookings();
-			int business = 	this.sim.getDailyBookings();
-			int first = 	this.sim.getDailyBookings();
-			
-			cal.set(2016, 0, i, 6, 0);
-			Date timePoint = cal.getTime();
-			
-			bookTotal.add(new Day(timePoint), economy+premium+business+first);
-			econTotal.add(new Day(timePoint), economy);
-			premTotal.add(new Day(timePoint), premium);
-			busTotal.add(new Day(timePoint), business);
-			firstTotal.add(new Day(timePoint), first);
+			if (i >= Constants.FIRST_FLIGHT) {
+				Flights flights = sim.getFlights(i);
+				Bookings counts = flights.getCurrentCounts();
+							
+				int economy = 	counts.getNumEconomy();
+				int premium = 	counts.getNumPremium();
+				int business = 	counts.getNumBusiness();
+				int first = 	counts.getNumFirst();
+				
+				cal.set(2016, 0, i, 6, 0);
+				Date timePoint = cal.getTime();
+				
+				bookTotal.add(new Day(timePoint), economy+premium+business+first);
+				econTotal.add(new Day(timePoint), economy);
+				premTotal.add(new Day(timePoint), premium);
+				busTotal.add(new Day(timePoint), business);
+				firstTotal.add(new Day(timePoint), first);
+			}
 		}
         
 		//Collection

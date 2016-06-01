@@ -6,14 +6,14 @@
  */
 package asgn2Simulators;
 
-import java.io.BufferedReader;
+//import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+//import java.io.InputStreamReader;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import org.jfree.ui.RefineryUtilities;
+//import org.jfree.ui.RefineryUtilities;
 
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.PassengerException;
@@ -42,8 +42,8 @@ public class SimulationRunner {
 		//default: GUI
 		
 		final int NUM_ARGS = 9; 
-		Boolean errors = true;
-		Boolean missing = false;
+//		Boolean errors = true;
+//		Boolean missing = false;
 		Simulator s = null; 
 		Log l = null; 
 		
