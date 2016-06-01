@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -26,7 +27,7 @@ import org.jfree.ui.RefineryUtilities;
 import asgn2Simulators.Constants;
 
 @SuppressWarnings("serial")
-public class ChartPanel extends ApplicationFrame {
+public class ChartPanel extends JFrame {
 	
 	private static final String CHART_TITLE = "Random Bookings";
 
@@ -68,7 +69,7 @@ public class ChartPanel extends ApplicationFrame {
 		
 	    
 		//These lines are important 
-		for (int i = 0; i <= 10; i++) {
+		for (int i = 0; i <= Constants.DURATION; i++) {
 			cal.set(2016, 0, i, 6, 0);
 			Date timePoint = cal.getTime();
 			

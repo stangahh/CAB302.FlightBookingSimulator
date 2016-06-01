@@ -91,7 +91,7 @@ public abstract class Aircraft {
 	 * @throws AircraftException if <code>Passenger</code> is not recorded in aircraft seating 
 	 */
 	public void cancelBooking(Passenger p, int cancellationTime) throws AircraftException, PassengerException {
-		if (!seats.contains(p)) {
+		if (!this.seats.contains(p)) {
 			throw new AircraftException("Passenger not booked");
 		} 
 		//Update of status string for the aircraft (see below)
@@ -102,16 +102,16 @@ public abstract class Aircraft {
 		
 		switch (getPassengerFlightClass(p)) {
 			case "First":
-				numFirst -= 1;
+				this.numFirst -= 1;
 				break;
 			case "Business":
-				numBusiness -= 1;
+				this.numBusiness -= 1;
 				break;
 			case "Premium":
-				numPremium -= 1;
+				this.numPremium -= 1;
 				break;
 			case "Economy":
-				numEconomy -= 1;
+				this.numEconomy -= 1;
 				break;
 		}		
 		seats.remove(p);
@@ -131,31 +131,31 @@ public abstract class Aircraft {
 		//Somewhat of a clone of cancelBooking (inversed), relies on polymorphism
 		switch (getPassengerFlightClass(p)) {
 			case "First":
-				if (numFirst == firstCapacity) {
+				if (this.numFirst == this.firstCapacity) {
 					throw new AircraftException(noSeatsAvailableMsg(p));
 				} else {
-					numFirst += 1;
+					this.numFirst += 1;
 				}
 				break;
 			case "Business":
-				if (numBusiness == businessCapacity) {
+				if (this.numBusiness == this.businessCapacity) {
 					throw new AircraftException(noSeatsAvailableMsg(p));
 				} else {
-					numBusiness += 1;
+					this.numBusiness += 1;
 				}
 				break;
 			case "Premium":
-				if (numPremium == premiumCapacity) {
+				if (this.numPremium == this.premiumCapacity) {
 					throw new AircraftException(noSeatsAvailableMsg(p));
 				} else {
-					numPremium += 1;
+					this.numPremium += 1;
 				}
 				break;
 			case "Economy":
-				if (numEconomy == economyCapacity) {
+				if (this.numEconomy == this.economyCapacity) {
 					throw new AircraftException(noSeatsAvailableMsg(p));
 				} else {
-					numEconomy += 1;
+					this.numEconomy += 1;
 				}
 				break;
 		}
@@ -187,7 +187,7 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft empty; false otherwise 
 	 */
 	public boolean flightEmpty() {		
-		return (getNumPassengers() == 0);
+		return (this.getNumPassengers() == 0);
 	}
 	
 	/**
@@ -196,7 +196,7 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft full; false otherwise 
 	 */
 	public boolean flightFull() {
-		return (getNumPassengers() == capacity);
+		return (this.getNumPassengers() == this.capacity);
 	}
 	
 	/**
@@ -242,7 +242,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Business Class passengers 
 	 */
 	public int getNumBusiness() {
-		return numBusiness;
+		return this.numBusiness;
 	}
 	
 	
@@ -252,7 +252,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Economy Class passengers 
 	 */
 	public int getNumEconomy() {
-		return numEconomy;
+		return this.numEconomy;
 	}
 
 	/**
@@ -261,7 +261,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of First Class passengers 
 	 */
 	public int getNumFirst() {
-		return numFirst;
+		return this.numFirst;
 	}
 
 	/**
@@ -270,7 +270,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Confirmed passengers 
 	 */
 	public int getNumPassengers() {
-		return getNumFirst() + getNumBusiness() + getNumPremium() + getNumEconomy();
+		return this.getNumFirst() + this.getNumBusiness() + this.getNumPremium() + this.getNumEconomy();
 	}
 	
 	/**
@@ -279,7 +279,7 @@ public abstract class Aircraft {
 	 * @return <code>int</code> number of Premium Economy Class passengers
 	 */
 	public int getNumPremium() {
-		return numPremium;
+		return this.numPremium;
 	}
 	
 	/**
@@ -342,13 +342,13 @@ public abstract class Aircraft {
 	public boolean seatsAvailable(Passenger p) {
 		switch (getPassengerFlightClass(p)) {
 			case "First":
-				return (numFirst != firstCapacity);
+				return (this.numFirst != this.firstCapacity);
 			case "Business":
-				return (numBusiness != businessCapacity);
+				return (this.numBusiness != this.businessCapacity);
 			case "Premium":
-				return (numPremium != premiumCapacity);
+				return (this.numPremium != this.premiumCapacity);
 			case "Economy":
-				return (numEconomy != economyCapacity);
+				return (this.numEconomy != this.economyCapacity);
 			default:
 				return false;
 		}
@@ -361,10 +361,10 @@ public abstract class Aircraft {
 	@Override
 	public String toString() {
 		return aircraftIDString() + " Count: " + this.seats.size() 
-				+ " [F: " + numFirst
-				+ " J: " + numBusiness 
-				+ " P: " + numPremium 
-				+ " Y: " + numEconomy 
+				+ " [F: " + this.numFirst
+				+ " J: " + this.numBusiness 
+				+ " P: " + this.numPremium 
+				+ " Y: " + this.numEconomy 
 			    + "]";
 	}
 
@@ -381,20 +381,20 @@ public abstract class Aircraft {
 		//if I upgrade a passenger from business to first, i need to remember that
 		//this will create an opening in business.
 		
-		for (Passenger p : seats) {
-			if (canUpgradeToFirst(p)) {
-				p.upgrade();
-				numFirst += 1;
-				numBusiness -= 1;
+		for (Passenger p : this.seats) {
+			if (canUpgradeToPremium(p)) {
+				p = p.upgrade();
+				this.numPremium += 1;
+				this.numEconomy -= 1;
 			} else if (canUpgradeToBusiness(p)) {
-				p.upgrade();
-				numBusiness += 1;
-				numPremium -= 1;
-			} else if (canUpgradeToPremium(p)) {
-				p.upgrade();
-				numPremium += 1;
-				numEconomy -= 1;
-			}
+				p = p.upgrade();
+				this.numBusiness += 1;
+				this.numPremium -= 1;
+			} else if (canUpgradeToFirst(p)) {
+				p = p.upgrade();
+				this.numFirst += 1;
+				this.numBusiness -= 1;
+			} 
 		}
 	}
 
@@ -434,31 +434,31 @@ public abstract class Aircraft {
 	}
 	
 	private int getAvailFirst() {
-		return firstCapacity - getNumFirst();
+		return this.firstCapacity - this.getNumFirst();
 	}
 	
 	private int getAvailBusiness() {
-		return businessCapacity - getNumBusiness();
+		return this.businessCapacity - this.getNumBusiness();
 	}
 	
 	private int getAvailPremium() {
-		return premiumCapacity - getNumPremium();
+		return this.premiumCapacity - this.getNumPremium();
 	}
 	
 	private int getAvailEconomy() {
-		return economyCapacity - getNumEconomy();
+		return this.economyCapacity - this.getNumEconomy();
 	}
 	
 	private String getPassengerFlightClass(Passenger p) {
 		String pClass = p.getPassID();
 		
-		if (pClass.contains("F:")) {
+		if (pClass.contains("F")) {
 			return "First";
-		} else if (pClass.contains("J:")) {
+		} else if (pClass.contains("J")) {
 			return "Business";
-		} else if (pClass.contains("P:")) {
+		} else if (pClass.contains("P")) {
 			return "Premium";
-		} else if (pClass.contains("Y:")) {
+		} else if (pClass.contains("Y")) {
 			return "Economy";
 		}
 		
@@ -466,15 +466,15 @@ public abstract class Aircraft {
 	}
 	
 	private boolean canUpgradeToFirst(Passenger p) {
-		return (getPassengerFlightClass(p) == "Business" && getAvailFirst() > 0);
+		return (this.getPassengerFlightClass(p) == "Business" && this.getAvailFirst() > 0);
 	}
 	
 	private boolean canUpgradeToBusiness(Passenger p) {
-		return (getPassengerFlightClass(p) == "Premium" && getAvailBusiness() > 0);
+		return (this.getPassengerFlightClass(p) == "Premium" && this.getAvailBusiness() > 0);
 	}
 	
 	private boolean canUpgradeToPremium(Passenger p) {
-		return (getPassengerFlightClass(p) == "Economy" && getAvailPremium() > 0);
+		return (this.getPassengerFlightClass(p) == "Economy" && this.getAvailPremium() > 0);
 	}
 	
 }

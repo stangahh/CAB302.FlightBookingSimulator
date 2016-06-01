@@ -26,6 +26,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import org.jfree.chart.ChartFactory;
+
 /**
  * @author Megan Hunter, Jesse Stanger, hogan
  *
@@ -192,8 +194,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    container = createPanel(Color.WHITE);
 	    
 	    //Sub Containers
-	    chartArea = createPanel(Color.RED);
-	    interactiveArea = createPanel(Color.GREEN);
+	    chartArea = createPanel(Color.LIGHT_GRAY);
+	    interactiveArea = createPanel(Color.CYAN);
 	    //buttonArea = createPanel(Color.BLUE);
 	    
 	    //Buttons
@@ -225,8 +227,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    
 	    container.setLayout(new BorderLayout());
 	    
-	    container.add(chartArea, BorderLayout.CENTER);
-	    layoutChartPanel();
+	    ChartPanel chartTest = new ChartPanel("Test");
+	    container.add(chartTest, BorderLayout.CENTER);
+	    //layoutChartPanel();
 	    
 	    //container.add(buttonArea, BorderLayout.CENTER);
 	    //layoutButtonPanel();
@@ -282,21 +285,23 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	}
 	
 	/* ------------------------------- Layout Methods ----------------------------------- */
-	private void layoutChartPanel() {
-		//some way of drawing a chart
-		GridBagLayout layout = new GridBagLayout();
-		chartArea.setLayout(layout);
-	    
-	    GridBagConstraints constraints = new GridBagConstraints(); 
-	    constraints.weightx = 1;
-	    constraints.weighty = 1;
-	    
-	    constraints.fill = GridBagConstraints.BOTH;
-	    
-	    JButton chartTemp = createButton("This is where the chart goes.");
-	    
-	    addToPanel(chartArea, chartTemp, constraints, 0,0,1,1); 
-	}
+//	private void layoutChartPanel() {
+//		//some way of drawing a chart
+//		GridBagLayout layout = new GridBagLayout();
+//		chartArea.setLayout(layout);
+//	    
+//	    GridBagConstraints constraints = new GridBagConstraints(); 
+//	    constraints.weightx = 1;
+//	    constraints.weighty = 1;
+//	    
+//	    constraints.fill = GridBagConstraints.BOTH;
+//	    
+//	    //JButton chartTemp = createButton("This is where the chart goes.");
+//	    	    
+//	    ChartPanel chartTest = new ChartPanel("Something");
+//	    
+//	    //addToPanel(chartArea, chartTest, constraints, 0,0,1,1); 
+//	}
 	
 //	private void layoutButtonPanel() {
 //		GridBagLayout layout = new GridBagLayout();

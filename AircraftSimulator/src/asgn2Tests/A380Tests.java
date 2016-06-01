@@ -234,6 +234,7 @@ public class A380Tests {
 		plane.confirmBooking(e, 1);
 		plane.upgradeBookings();
 		assertEquals(1, plane.getNumPremium());
+		assertEquals(0,plane.getNumEconomy());
 	}
 	
 	@Test
@@ -242,6 +243,7 @@ public class A380Tests {
 		plane.confirmBooking(p, 1);
 		plane.upgradeBookings();
 		assertEquals(1, plane.getNumBusiness());
+		assertEquals(0, plane.getNumPremium());
 	}
 	
 	@Test
@@ -250,5 +252,6 @@ public class A380Tests {
 		plane.confirmBooking(b, 1);
 		plane.upgradeBookings();
 		assertEquals(1, plane.getNumFirst());
+		assertEquals(0, plane.getNumBusiness());
 	}
 }

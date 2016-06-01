@@ -410,6 +410,7 @@ public abstract class Passenger {
 		this.flown = p.isFlown();
 		this.inQueue = p.isQueued();
 		this.newState = p.isNew();
+		this.refused = p.isRefused();
 	}
 	
 	//Various private helper methods to check arguments and throw exceptions
