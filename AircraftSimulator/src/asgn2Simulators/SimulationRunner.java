@@ -36,16 +36,12 @@ public class SimulationRunner {
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) {
-		
-		//Provided is the text output version (apparently). 
-		//We need to be able to choose between text output and GUI output.
-		//default: GUI
-		
 		final int NUM_ARGS = 9; 
+		Simulator s = null; 
+		Log l = null;
+		
 //		Boolean errors = true;
 //		Boolean missing = false;
-		Simulator s = null; 
-		Log l = null; 
 		
 //		System.out.println("Please enter 'gui' or 'nogui':");
 //		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -90,7 +86,6 @@ public class SimulationRunner {
 		try {
 			switch (args.length) {
 				case NUM_ARGS: {
-//					System.out.println("SUCCESS");
 					s = createSimulatorUsingArgs(args); 
 //					if (userGUIInput.toLowerCase().contains("gui")) {
 						JFrame.setDefaultLookAndFeelDecorated(true);
@@ -113,20 +108,20 @@ public class SimulationRunner {
 			        printErrorAndExit(); 
 				}
 			}
-			l = new Log();
-		} catch (SimulationException | IOException e1) {
+			//l = new Log();
+		} catch (SimulationException e1) {
 			e1.printStackTrace();
 			System.exit(-1);
 		}
 	
 		//Run the simulation 
-		SimulationRunner sr = new SimulationRunner(s, l);
-		try {
-			sr.runSimulation();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(-1);
-		} 
+//		SimulationRunner sr = new SimulationRunner(s, l);
+//		try {
+//			sr.runSimulation();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.exit(-1);
+//		} 
 	}
 	/**
 	 * Helper to process args for Simulator  

@@ -78,6 +78,24 @@ public class FirstTests extends First {
 		assertEquals(5, person.getBookingTime());
 	}
 	
+	@Test
+	public void testCancelSeatCancellationEqualsDepartureTime() throws PassengerException {
+		person.confirmSeat(3, person.getDepartureTime());
+		person.cancelSeat(10);
+	}
+	
+	@Test
+	public void testCancelSeatLowerBoundaryZero() throws PassengerException {
+		Passenger person2 = new First(0,10);
+		person2.confirmSeat(0, person2.getDepartureTime());
+		person2.cancelSeat(0);
+		
+		assertTrue(person2.isNew());
+		assertFalse(person2.isConfirmed());
+		assertEquals(0, person2.getBookingTime());
+		
+	}
+	
 	@Test (expected = PassengerException.class)
 	public void testCancelSeatPassengerIsNew() throws PassengerException {
 		person.cancelSeat(5);
@@ -103,15 +121,15 @@ public class FirstTests extends First {
 	
 	@Test (expected = PassengerException.class)
 	public void testCancelSeatTimeLessThanZero() throws PassengerException {
+		person.confirmSeat(3, person.getDepartureTime());
 		person.cancelSeat(-1);
 	}
 	
 	@Test (expected = PassengerException.class)
 	public void testCancelSeatTimeGreaterThanDeparture() throws PassengerException {
+		person.confirmSeat(3, person.getDepartureTime());
 		person.cancelSeat(11);
 	}
-	
-	//Cancellation time for boundaries? 0 and 10?
 	
 	@Test
 	public void testConfirmSeatValid() throws PassengerException {
@@ -209,7 +227,11 @@ public class FirstTests extends First {
 		person.flyPassenger(-1);
 	}
 	
-	//FlyPassenger departure time = 0?
+	@Test (expected = PassengerException.class)
+	public void testFlyPassengerDepartureTimeZeroBoundary() throws PassengerException {
+		person.confirmSeat(5, person.getDepartureTime());
+		person.flyPassenger(0);
+	}
 	
 	@Test
 	public void testQueuePassengerValid() throws PassengerException {

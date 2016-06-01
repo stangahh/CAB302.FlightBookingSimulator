@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -116,7 +117,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			log = new Log();
 			SR = new SimulationRunner(this.sim, this.log);
 			SR.runSimulation();
-		} catch (SimulationException | AircraftException | PassengerException | IOException e1) {
+		} catch (SimulationException | IOException | AircraftException | PassengerException e1) {
 			e1.printStackTrace();
 			System.exit(-1);
 		}
@@ -140,7 +141,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 				e.printStackTrace();
 				System.exit(-1);
 			}
-			//System.out.println("THIS WILL DO GUI STUFF");
 			break;
 		case 1:
 			textOutput = true;
@@ -150,7 +150,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 				e.printStackTrace();
 				System.exit(-1);
 			}
-			//System.out.println("THIS WILL DO TEXT OUTPUT STUFF");
 			break;
 		}
 	}
@@ -191,10 +190,12 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 					SR = new SimulationRunner(this.sim, this.log);
 					SR.runSimulation();
 					
-					JFreeChart chart = createChart(createTimeSeriesData());
-					ChartPanel CP = new ChartPanel(chart);
-			    	container.add(CP, BorderLayout.CENTER);
-			    	container.validate();
+					if (!textOutput) {
+						JFreeChart chart = createChart(createTimeSeriesData());
+						ChartPanel CP = new ChartPanel(chart);
+				    	container.add(CP, BorderLayout.CENTER);
+				    	container.validate();
+					}
 			        
 				} catch (SimulationException | AircraftException | PassengerException | IOException e1) {
 					e1.printStackTrace();
@@ -229,8 +230,11 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 //		}
 //		logText.setText(logString);
 		String logString = null;
+		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		
-		logString = "Simulator [meanDailyBookings = " + fieldDailyMean.getText() + ", sdDailyBookings = " + 0.33 * Double.parseDouble(fieldDailyMean.getText())
+		logString = timeLog + ": Start of Simulation\n\n";
+		
+		logString += "Simulator [meanDailyBookings = " + fieldDailyMean.getText() + ", sdDailyBookings = " + 0.33 * Double.parseDouble(fieldDailyMean.getText())
 				+ ", seed = " + fieldRNGSeed.getText() + ", firstProb = " + fieldFirst.getText() + ", businessProb = "
 				+ fieldBusiness.getText() + ", premiumProb = " + fieldPremium.getText() 
 				+ ", economyProb = " + fieldEconomy.getText() + ", maxQueueSize = " + fieldQueueSize.getText() 
@@ -243,6 +247,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 					+ ":T" + sim.getTotalFlown()
 					+ ":E" + sim.getTotalEmpty()
 					+ ":R" + sim.numRefused() +"]\n";
+		
 		logText.setText(logString);		
 	}
 	
@@ -524,8 +529,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		
 		//Base time, data set up - the calendar is needed for the time points
 		Calendar cal = GregorianCalendar.getInstance();
-		
-	    
 		
 		//These lines are important 
 		for (int i = 0; i <= Constants.DURATION; i++) {

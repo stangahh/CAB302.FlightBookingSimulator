@@ -24,7 +24,6 @@ public class First extends Passenger {
 		if (bookingTime < 0 || departureTime <= 0 || departureTime < bookingTime) {
 			throw new PassengerException("Invalid booking");
 		} else {
-			//Stuff here
 			this.passID = "F:" + this.passID;
 		}
 	}
@@ -41,8 +40,6 @@ public class First extends Passenger {
 
 	@Override
 	public Passenger upgrade() {
-		//return unchanged current object (passenger)
 		return this;
-		//DOES THAT WORK LOL?
 	}
 }
