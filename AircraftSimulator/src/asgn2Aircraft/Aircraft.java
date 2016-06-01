@@ -381,20 +381,28 @@ public abstract class Aircraft {
 		//if I upgrade a passenger from business to first, i need to remember that
 		//this will create an opening in business.
 		
-		for (Passenger p : this.seats) {
-			if (canUpgradeToPremium(p)) {
+		for (Passenger p : this.getPassengers()) {
+			if (canUpgradeToFirst(p)) {
+				seats.remove(p);
 				p = p.upgrade();
-				this.numPremium += 1;
-				this.numEconomy -= 1;
-			} else if (canUpgradeToBusiness(p)) {
-				p = p.upgrade();
-				this.numBusiness += 1;
-				this.numPremium -= 1;
-			} else if (canUpgradeToFirst(p)) {
-				p = p.upgrade();
+				seats.add(p);
 				this.numFirst += 1;
 				this.numBusiness -= 1;
-			} 
+			}
+			if (canUpgradeToBusiness(p)) {
+				seats.remove(p);
+				p = p.upgrade();
+				seats.add(p);
+				this.numBusiness += 1;
+				this.numPremium -= 1;
+			}
+			if (canUpgradeToPremium(p)) {
+				seats.remove(p);
+				p = p.upgrade();
+				seats.add(p);
+				this.numPremium += 1;
+				this.numEconomy -= 1;
+			}
 		}
 	}
 

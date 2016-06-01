@@ -254,4 +254,60 @@ public class A380Tests {
 		assertEquals(1, plane.getNumFirst());
 		assertEquals(0, plane.getNumBusiness());
 	}
+	
+	@Test
+	public void testUpgradeBookingsMultipleEconomyPassengers() throws PassengerException, AircraftException {
+		Economy e = new Economy(1, 14);
+		Economy e2 = new Economy(1, 14);
+		Economy e3 = new Economy(1, 14);
+		plane.confirmBooking(e, 1);
+		plane.confirmBooking(e2, 1);
+		plane.confirmBooking(e3, 1);
+		plane.upgradeBookings();
+		assertEquals(3, plane.getNumPremium());
+		assertEquals(0, plane.getNumEconomy());
+	}
+	
+	@Test
+	public void testUpgradeBookingsMultipleDifferentPassengers() throws PassengerException, AircraftException {
+		Economy e = new Economy(1, 14);
+		Economy e2 = new Economy(1, 14);
+		Premium p = new Premium(1, 14);
+		Premium p2 = new Premium(1, 14);
+		Business b = new Business(1, 14);
+		Business b2 = new Business(1, 14);
+		plane.confirmBooking(e, 1);
+		plane.confirmBooking(e2, 1);
+		plane.confirmBooking(p, 1);
+		plane.confirmBooking(p2, 1);
+		plane.confirmBooking(b, 1);
+		plane.confirmBooking(b2, 1);
+		plane.upgradeBookings();
+		assertEquals(2, plane.getNumFirst());
+		assertEquals(2, plane.getNumBusiness());
+		assertEquals(2, plane.getNumPremium());
+		assertEquals(0, plane.getNumEconomy());
+	}
+	
+	@Test
+	public void testUpgradeBookingsTwice() throws PassengerException, AircraftException {
+		Economy e = new Economy(1, 14);
+		Economy e2 = new Economy(1, 14);
+		Premium p = new Premium(1, 14);
+		Premium p2 = new Premium(1, 14);
+		Business b = new Business(1, 14);
+		Business b2 = new Business(1, 14);
+		plane.confirmBooking(e, 1);
+		plane.confirmBooking(e2, 1);
+		plane.confirmBooking(p, 1);
+		plane.confirmBooking(p2, 1);
+		plane.confirmBooking(b, 1);
+		plane.confirmBooking(b2, 1);
+		plane.upgradeBookings();
+		plane.upgradeBookings();
+		assertEquals(4, plane.getNumFirst());
+		assertEquals(2, plane.getNumBusiness());
+		assertEquals(0, plane.getNumPremium());
+		assertEquals(0, plane.getNumEconomy());
+	}
 }
