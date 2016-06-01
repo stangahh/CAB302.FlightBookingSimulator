@@ -1,4 +1,4 @@
-s/**
+/**
  *
  */
 package asgn2Passengers;

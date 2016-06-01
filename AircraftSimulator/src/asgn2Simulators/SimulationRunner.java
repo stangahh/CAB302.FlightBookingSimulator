@@ -38,7 +38,6 @@ public class SimulationRunner {
 	public static void main(String[] args) {
 		final int NUM_ARGS = 9;
 		Simulator s = null;
-		Log l = null;
 
 //		Boolean errors = true;
 //		Boolean missing = false;
@@ -108,21 +107,91 @@ public class SimulationRunner {
 				printErrorAndExit();
 			}
 			}
-			//l = new Log();
 		} catch (SimulationException e1) {
 			e1.printStackTrace();
 			System.exit(-1);
 		}
+	}
 
-		//Run the simulation
-//		SimulationRunner sr = new SimulationRunner(s, l);
+//----- MAIN METHOD WHICH STARTED TO IMPLEMENT ARGUMENT INPUT IN CONSOLE ------------------------//	
+//	public static void main(String[] args) {
+//		final int NUM_ARGS = 9;
+//		Simulator s = null;
+//
+//		Boolean errors = true;
+//		Boolean missing = false;
+//
+//		System.out.println("Please enter 'gui' or 'nogui':");
+//		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+//		String userGUIInput = reader.readLine();
+//		while (errors) {
+//			System.out.println("Please enter 'default' or 9 arguments for \nseed, maxQueueSize, "
+//					+ "meanBookings, sdBookings, firstProb, businessProb, premiumProb, economyProb, "
+//					+ "cancelProb \nseparated by commas:");
+//			BufferedReader reader2 = new BufferedReader(new InputStreamReader(System.in));
+//			String userArgInput = reader2.readLine();
+//
+//			if (userArgInput.toLowerCase() != "default") {
+//				args = userArgInput.split(",");
+//			}
+//			if (args.length <= 1) {
+//				missing = true;
+//			}
+//			if (!userArgInput.matches("^[0-9]+([,.][0-9]+)?$")) {
+//				missing = true;
+//			}
+//
+//			if (!missing) {
+//				for (int i = 0; i < args.length; i++) {
+//					if (Integer.parseInt(args[i]) < 0) {
+//						errors = true;
+//						break;
+//					}
+//				}
+//				if ((Integer.parseInt(args[4]) + Integer.parseInt(args[5]) +
+//						Integer.parseInt(args[6]) + Integer.parseInt(args[7]))!= 1) {
+//					errors = true;
+//				}
+//			} else {
+//				errors = false;
+//			}
+//
+//			if (errors) {
+//				System.out.println("Invalid argument input, please try again.");
+//			}
+//		}
+//
 //		try {
-//			sr.runSimulation();
-//		} catch (Exception e) {
-//			e.printStackTrace();
+//			switch (args.length) {
+//			case NUM_ARGS: {
+//				s = createSimulatorUsingArgs(args);
+//					if (userGUIInput.toLowerCase().contains("gui")) {
+//				JFrame.setDefaultLookAndFeelDecorated(true);
+//				SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
+//					}
+//				break;
+//			}
+//			
+//			case 1: {
+//				s = new Simulator();
+//					if (userGUIInput.toLowerCase().contains("gui")) {
+//				JFrame.setDefaultLookAndFeelDecorated(true);
+//				SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
+//					}
+//				break;
+//			}
+//			default: {
+//				JFrame.setDefaultLookAndFeelDecorated(true);
+//				SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
+//				printErrorAndExit();
+//			}
+//			}
+//		} catch (SimulationException e1) {
+//			e1.printStackTrace();
 //			System.exit(-1);
 //		}
-	}
+//	}
+	
 	/**
 	 * Helper to process args for Simulator
 	 *
