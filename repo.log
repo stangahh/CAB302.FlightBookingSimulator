@@ -1,0 +1,699 @@
+* 90ffe4b : Added unfinished code for console Input in SimulationRunner's main method
+* 76865eb : Full A Style Format
+* 9000bd6 : Remove Comments, Cleanup & Format asgn2Passengers, added a few more tests and changed the Simulation Runner to only create one log file
+* e06d87a : Remove Comments, Cleanup & Format asgn2Aircraft.
+* d5deb6a : Remove asgn2Examples
+* 0aece71 : GUI updates on button press!
+* bb06867 : Graph now displays the propor data (but still doesn't update with changed inputs)
+* 9472505 : Delete unused ChartPanel.java
+* 75cdfed : Removed chartArea and GUISimulator#runSimulation
+* a3a6f66 : Added statement.txt
+* 7193f17 : Simulation Running works when editing the input fields
+* d294e1e : Attempted to add text input from console
+* ee18a0c : Temp changed Chart's TimeSeriesData. Added Simulator creation to GUISimulator.
+* 1ed0377 : Added the graph to the GUI :^)
+* 897f69c : Added the text panel showing the log output if textOutput is selected and the simulation is run
+* d5477d4 : Change method access
+* 97d71f5 : Added an option for GUI output or text output and FINALLY FIXED THE LOGS
+* 8f91d44 : Commit revert: staged wrong file. This is now fix seatsAvailable and change upgradeBookings
+* 07ee9c3 : Revert "fix seatsAvailable and change upgradeBookings"
+* 64aaa3d : fix seatsAvailable and change upgradeBookings
+* 741d4f9 : Changes to Aircraft and adding tests for upgrade (still not fixed)
+* 51fd16a : Tried to add ChartPanel to GUISimulator but didnt get anywhere really
+* e127a2e : Tried to solve the differences in log files and begin to insert the chart into the GUI
+* feb9714 : Fixed the update method
+*   3966948 : Merged branch master into master
+|\  
+| *   05c57ef : Merged branch master into master
+| |\  
+| * | 0008365 : Implemented error Checking of values in GUI text fields
+* | | 238697b : Initial asgn2Simulator#ChartPanel commit
+| |/  
+|/|   
+* | 8d58d34 : Added JFreeChart Examples
+* | 374636d : Small Fixes
+|/  
+* 6c4f7c1 : Fixed an exception which couldn't be reached in Aircraft
+*   96bdd2a : Merged branch master into master
+|\  
+| * c35ed03 : Make Run button larger than Swap
+* | dd878c4 : Fixed Aircraft Tests
+|/  
+* c0254ce : Fixed the problem with throwing exceptions from Simulation (added log file)
+* e35ae95 : Added cancelBooking tests and cleaned up some code
+* d3a8aeb : Changes to some value setting in Passenger and GUI formatting
+* be6994a : Bugfixes in Aircraft and Passenger
+* 6ac06b0 : Bugfixes and formatting in Aircraft
+* 45bc473 : More Merge Fail fixes
+* 7f0e650 : Remove GitKraken Junk :(
+* 3c4a9f8 : Auto stash for revert of "Merge remote-tracking branch 'refs/remotes/origin/master'"
+* 59281c3 : Fixes from merge
+*   e9c65e5 : Merge remote-tracking branch 'refs/remotes/origin/master'
+|\  
+| * 4d5a4b9 : Fixed GUISimulator + UI Improvements
+* | e9f4453 : Bugfix in GUISimulator
+|/  
+* d9061a8 : More work on the GUI. Temp disabled interactiveArea
+*   53a87d9 : Merged branch master into master
+|\  
+| * 2546c97 : Altered some methods iand added more tests for Aircraft
+* | dbe250b : First work on GUI - Doesnt compile yet. Send help.
+|/  
+* 2dfc0a3 : Supress Warnings in FirstTests + remove unused import
+* 4d82d5c : Fixed upgrade method and added tests for it for each Passenger subclass
+* 543d18f : Bugfix passenger subclasses
+* 4c328aa : Added the upgrade and copy methods (not 100% sure) and more tests in FirstTests
+* d7e24ba : ConfirmBooking tests
+* 2b1ba8a : Bugfix confirmBooking
+* 9a18ddc : Aircraft.java Overhaul (UNTESTED)
+* fd8c573 : Passenger Refactor + Clean
+* 7e92fd5 : Passenger Subclass Updates
+* c404a1c : New A380 test + Refactoring + Cleanup
+*   d1a2128 : Merged branch master into master
+|\  
+| * b1acd03 : Very minimal changes (finishing up for the night)
+* | b8f9f67 : Refactoring + A380TestsWIP
+|/  
+*   a3922ab : Merge remote-tracking branch 'refs/remotes/origin/master'
+|\  
+| * f0c02f5 : Completed some of the methods in Aircraft and minor changes in FirstTests
+* | 96677a3 : More A380Tests + B747 done
+* | b8dd2c9 : Progress on A380 tests + Bugfix Aircraft helper method
+|/  
+*   580bafd : Merged branch master into master
+|\  
+| * 61cdeb7 : Fixed firstTests creation of Passengers in each test and made small changes to the A380Tests
+* | 65e14f0 : A380 implementation
+|/  
+* 0665e3c : Implemented Aircraft Constructor, started A380Tests
+*   dd1d319 : Merged branch master into master
+|\  
+| * 0dab636 : updated Simulator.toString() to include maxQueueSize, cancelProb
+* | 60f2c7d : getPassengers + Removed weird git tags from prev remote merge
+* | bd8d6c8 : Code Quality (again)
+* |   f9f530f : Merge remote-tracking branch 'refs/remotes/JimsMaster/master'
+|\ \  
+| |/  
+| * 9cf799c : Restore Constants.SAVE_STATUS to false.
+| * 2efdda1 : Bug fix: createPassenger; final state of queue, cancelled; doc update
+* | 0ba1a1e : Code quality + notes
+* |   d66ee63 : Merge remote-tracking branch 'refs/remotes/JimsMaster/master'
+|\ \  
+| |/  
+| * 28a5b5f : Part 2 Release; asgn2Simulators package, Major javadoc update
+| * f0cbc8a : fix to name getNumEconomy
+* | 8f61ebe : Mild refactoring and code quality
+* | 3fa9768 : Implemented trivial methods#Aircraft. Commented remaining methods.
+* | 7a03353 : Fixed all the @BeforeClass tests to @Before. Added some test cases for Passenger (there are still some issues) and an extra exception handler in confirmSeat.
+* | 8eb64c5 : Added the exceptions to each of the passenger classes (and changed part of the passenger constructor)
+* | 25cb0db : Wrote code for most of the methods in the Passenger class - all getters are complete. Some exception handling may need to be changed, as well as the wasConfirmed and wasQueued methods (not 100% sure if they do what they're meant to)
+* | 928a609 : Created the test files required (I think I've got all of them, from reading the specifications)
+|/  
+* a54e38b : Fixed typo in Passenger.confirmSeat; Regenerated javadoc
+* 1532a03 : javadoc: POSTs on key methods; Fix Aircraft.upgradeBookings()
+* d8baff1 : Initial release of Passenger, Aircraft for studentscommit 90ffe4b4145fd3218fbb5d4843407dbb4176a6e9
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 02:52:53 2016 +1000
+
+    Added unfinished code for console Input in SimulationRunner's main method
+
+commit 76865ebc32064da3d8dca6af7039e1a1ae0f4ef0
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Thu Jun 2 02:44:52 2016 +1000
+
+    Full A Style Format
+
+commit 9000bd6b94801ed0bc118f95a53be5b4ef2102b8
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 02:41:46 2016 +1000
+
+    Remove Comments, Cleanup & Format asgn2Passengers, added a few more tests and changed the Simulation Runner to only create one log file
+
+commit e06d87aed7d37752c073da5815b2b7f90567582e
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Thu Jun 2 02:37:18 2016 +1000
+
+    Remove Comments, Cleanup & Format asgn2Aircraft.
+
+commit d5deb6ab500f488637f568a9449dd1736ee0247f
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Thu Jun 2 02:36:44 2016 +1000
+
+    Remove asgn2Examples
+
+commit 0aece71452a021dd3075255ce254192a30c71ead
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Thu Jun 2 02:02:16 2016 +1000
+
+    GUI updates on button press!
+
+commit bb068677ea61448481e0cab174914366ab879f90
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 01:53:54 2016 +1000
+
+    Graph now displays the propor data (but still doesn't update with changed inputs)
+
+commit 94725054e39ebd76bdc6570f31f077f1e7f04d79
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Thu Jun 2 01:22:45 2016 +1000
+
+    Delete unused ChartPanel.java
+
+commit 75cdfed85ef8b480ff2596005810bac1f319268c
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Thu Jun 2 01:15:18 2016 +1000
+
+    Removed chartArea and GUISimulator#runSimulation
+
+commit a3a6f6682f6381d8a612ed9f80de2e8cfa52ed5c
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 01:11:00 2016 +1000
+
+    Added statement.txt
+
+commit 7193f172a40d50b8ea88a37a718cde6d8caba8c9
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 00:48:37 2016 +1000
+
+    Simulation Running works when editing the input fields
+
+commit d294e1e356fb0d1a4554d458bf9367ff78126468
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 00:33:46 2016 +1000
+
+    Attempted to add text input from console
+
+commit ee18a0cf49e73e4cb07388c437a275218f2c7460
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Thu Jun 2 00:14:45 2016 +1000
+
+    Temp changed Chart's TimeSeriesData. Added Simulator creation to GUISimulator.
+
+commit 1ed0377a030527c65597b2a0eefc4f270cb1d66e
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Wed Jun 1 22:32:32 2016 +1000
+
+    Added the graph to the GUI :^)
+
+commit 897f69cbb58c4e8f2602d6d46752f0050b02e61b
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Wed Jun 1 22:04:36 2016 +1000
+
+    Added the text panel showing the log output if textOutput is selected and the simulation is run
+
+commit d5477d4e535c7a8c897265eea6ed0ac0d9ec59e2
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Wed Jun 1 18:53:21 2016 +1000
+
+    Change method access
+
+commit 97d71f56576b126381ef73cc6eb3f625b7cd653c
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Wed Jun 1 18:19:04 2016 +1000
+
+    Added an option for GUI output or text output and FINALLY FIXED THE LOGS
+
+commit 8f91d44fc609c477739c43987eea7f344adbbabc
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Wed Jun 1 16:13:06 2016 +1000
+
+    Commit revert: staged wrong file. This is now fix seatsAvailable and change upgradeBookings
+    
+    P.S. still have 3 too many economy passengers.
+
+commit 07ee9c3db7f08570c03b19841f7f2567f0a044d9
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Wed Jun 1 16:08:50 2016 +1000
+
+    Revert "fix seatsAvailable and change upgradeBookings"
+    
+    This reverts commit 64aaa3d25490a75ea34909ed2e1a075345bb7a85.
+
+commit 64aaa3d25490a75ea34909ed2e1a075345bb7a85
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Wed Jun 1 16:08:50 2016 +1000
+
+    fix seatsAvailable and change upgradeBookings
+    
+    P.S. still have 3 too many economy passengers.
+
+commit 741d4f93a90ee587cf2d23cf4140271feb071d48
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Wed Jun 1 15:28:05 2016 +1000
+
+    Changes to Aircraft and adding tests for upgrade (still not fixed)
+
+commit 51fd16afa0d425b52eb5bcece9a582a6651a072c
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Wed Jun 1 15:25:34 2016 +1000
+
+    Tried to add ChartPanel to GUISimulator but didnt get anywhere really
+    
+    So now Megan is gonna give it a shot
+
+commit e127a2e32ef4b61258bdc502ef2a2d151aac8d80
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Wed Jun 1 14:35:26 2016 +1000
+
+    Tried to solve the differences in log files and begin to insert the chart into the GUI
+
+commit feb9714ff94014e08da874d17504a96de1503c7d
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Tue May 31 23:08:11 2016 +1000
+
+    Fixed the update method
+
+commit 3966948c61d5f6c6ae3db3e56e48f665e91f77ea
+Merge: 238697b 05c57ef
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Tue May 31 22:08:30 2016 +1000
+
+    Merged branch master into master
+
+commit 238697b68864399d5495b66e92a3fb3f85831801
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Tue May 31 22:08:08 2016 +1000
+
+    Initial asgn2Simulator#ChartPanel commit
+
+commit 05c57efc858fcd978a38f8a41d7db315637c13cb
+Merge: 0008365 8d58d34
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Tue May 31 21:16:03 2016 +1000
+
+    Merged branch master into master
+
+commit 0008365ae6e658eaabf4d0e9714671145809b7b2
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Tue May 31 21:15:46 2016 +1000
+
+    Implemented error Checking of values in GUI text fields
+
+commit 8d58d34bb371ba153a73fed88017ee58afaea3b6
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Tue May 31 20:54:37 2016 +1000
+
+    Added JFreeChart Examples
+
+commit 374636d10e086458f29d0de5fe39cffdecfd1e91
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Tue May 31 20:53:05 2016 +1000
+
+    Small Fixes
+
+commit 6c4f7c19e1adb17e73e4067e1d3dc46c4d42bb80
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Tue May 31 19:37:13 2016 +1000
+
+    Fixed an exception which couldn't be reached in Aircraft
+
+commit 96bdd2a1bc2675e99ad3d7c5776175c1ebcc19cf
+Merge: dd878c4 c35ed03
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Tue May 31 19:31:27 2016 +1000
+
+    Merged branch master into master
+
+commit dd878c41fecd4c05f9b94955cbe7e01e6286f3ac
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Tue May 31 19:31:20 2016 +1000
+
+    Fixed Aircraft Tests
+
+commit c35ed039846c091ce4c672ca01a2c1eaf29d4bc2
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Tue May 31 19:10:10 2016 +1000
+
+    Make Run button larger than Swap
+
+commit c0254ce35f823fb0df1c9616d55cbab85cd1f0a9
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Tue May 31 19:09:59 2016 +1000
+
+    Fixed the problem with throwing exceptions from Simulation (added log file)
+
+commit e35ae954f4cf5f3b74927ce2a8c22755cc82b343
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Tue May 31 19:00:56 2016 +1000
+
+    Added cancelBooking tests and cleaned up some code
+
+commit d3a8aeb9c1b90708b5518edf1f089247fb858a37
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Tue May 31 17:37:17 2016 +1000
+
+    Changes to some value setting in Passenger and GUI formatting
+
+commit be6994a3e00cad1a81106ab47c5efb11622ee5a0
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Mon May 30 21:40:00 2016 +1000
+
+    Bugfixes in Aircraft and Passenger
+
+commit 6ac06b025575c902e4f389b98130b1a73a5226c9
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Mon May 30 20:18:37 2016 +1000
+
+    Bugfixes and formatting in Aircraft
+
+commit 45bc473331b63a2b3ee9f7672c4821893e22e111
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Mon May 30 19:41:35 2016 +1000
+
+    More Merge Fail fixes
+
+commit 7f0e6502d33a1805133b79734caf881c8be933e5
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Mon May 30 19:36:12 2016 +1000
+
+    Remove GitKraken Junk :(
+    
+    I think im merging incorrectly, and creating junk in the files. This commit removes the junk.
+
+commit 3c4a9f85fac1c1f7d87f72bd7e410ce7974eb880
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Mon May 30 19:32:06 2016 +1000
+
+    Auto stash for revert of "Merge remote-tracking branch 'refs/remotes/origin/master'"
+
+commit 59281c3f4f0a7d9bf40efd66d4c639b2fe3c5b7f
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Mon May 30 18:47:38 2016 +1000
+
+    Fixes from merge
+
+commit e9c65e595351de509df40fffca4aa232f3830377
+Merge: e9f4453 4d5a4b9
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Mon May 30 18:41:04 2016 +1000
+
+    Merge remote-tracking branch 'refs/remotes/origin/master'
+    
+    Conflicts:
+    	AircraftSimulator/src/asgn2Simulators/GUISimulator.java
+
+commit 4d5a4b935c564314a842e0fa3c49bf2ce2087cb8
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Mon May 30 18:23:01 2016 +1000
+
+    Fixed GUISimulator + UI Improvements
+
+commit e9f4453fced739af8a1e7eb53930a97197cae25c
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Mon May 30 17:55:15 2016 +1000
+
+    Bugfix in GUISimulator
+
+commit d9061a863c88662e56985d185ba40c0d99d79b93
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Mon May 30 17:11:08 2016 +1000
+
+    More work on the GUI. Temp disabled interactiveArea
+
+commit 53a87d986b5dee4de612dcf2cf76ee487f6b61fc
+Merge: dbe250b 2546c97
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Mon May 30 16:33:58 2016 +1000
+
+    Merged branch master into master
+
+commit dbe250bf3bd329cb03560b9244bb33dea8f8890c
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Mon May 30 16:33:42 2016 +1000
+
+    First work on GUI - Doesnt compile yet. Send help.
+    
+    Also included example GUI from Practical.
+
+commit 2546c975e1a733c53f5570d956347656a946cad9
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Mon May 30 15:53:52 2016 +1000
+
+    Altered some methods iand added more tests for Aircraft
+
+commit 2dfc0a312b75429acfadf258eda6d565b58c2047
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Mon May 30 15:00:56 2016 +1000
+
+    Supress Warnings in FirstTests + remove unused import
+
+commit 4d82d5ce4db89436be4332d7b82ecd158527cddd
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Mon May 30 14:57:28 2016 +1000
+
+    Fixed upgrade method and added tests for it for each Passenger subclass
+
+commit 543d18f35390a169195771921c31936f0be3150e
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Mon May 30 14:32:37 2016 +1000
+
+    Bugfix passenger subclasses
+    
+    Nice one Meg :P
+
+commit 4c328aa2e4713460aacd2e2e8c19381f1993b84c
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Mon May 30 14:10:13 2016 +1000
+
+    Added the upgrade and copy methods (not 100% sure) and more tests in FirstTests
+
+commit d7e24ba30473f16a45de1bbfba0ef4977f3b5cf7
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sun May 29 23:40:07 2016 +1000
+
+    ConfirmBooking tests
+
+commit 2b1ba8aabfe3f29491224bf68c914f458d635760
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sun May 29 23:17:18 2016 +1000
+
+    Bugfix confirmBooking
+
+commit 9a18ddcb6b040a6d82c85a5c28fe855555d1cefd
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sun May 29 23:03:06 2016 +1000
+
+    Aircraft.java Overhaul (UNTESTED)
+
+commit fd8c5736277c1c78a0646e2268f06c45181e055d
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sun May 29 22:27:02 2016 +1000
+
+    Passenger Refactor + Clean
+
+commit 7e92fd595685a3bb115196a0118a8a2d7bb8e336
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sun May 29 22:24:18 2016 +1000
+
+    Passenger Subclass Updates
+
+commit c404a1ce48df64ca787f79bf35c6f639511f313f
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sun May 29 21:56:43 2016 +1000
+
+    New A380 test + Refactoring + Cleanup
+
+commit d1a21282c0a44eb6bd6da7110a0e6f14c6cb6177
+Merge: b8f9f67 b1acd03
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sun May 29 01:15:47 2016 +1000
+
+    Merged branch master into master
+
+commit b8f9f67eabfbfa1992490fee0b54f0da42ab8c31
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sun May 29 01:15:41 2016 +1000
+
+    Refactoring + A380TestsWIP
+
+commit b1acd03e36fa919e009e3f8c91c0ca035566e212
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Sun May 29 01:10:27 2016 +1000
+
+    Very minimal changes (finishing up for the night)
+
+commit a3922abc82d64ead00a065bba5494285b4d116d4
+Merge: 96677a3 f0c02f5
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sun May 29 00:47:37 2016 +1000
+
+    Merge remote-tracking branch 'refs/remotes/origin/master'
+    
+    Conflicts:
+    	AircraftSimulator/src/asgn2Aircraft/Aircraft.java
+
+commit f0c02f54f87059b1a09673e61b204d7ee033d923
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Sun May 29 00:45:06 2016 +1000
+
+    Completed some of the methods in Aircraft and minor changes in FirstTests
+
+commit 96677a340d84b6642ca0e3d75084e84d4d75ecd2
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sun May 29 00:44:00 2016 +1000
+
+    More A380Tests + B747 done
+
+commit b8dd2c9a39edf516a571ecba83cf802700b7af0f
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sun May 29 00:16:21 2016 +1000
+
+    Progress on A380 tests + Bugfix Aircraft helper method
+
+commit 580bafddf15348975b3f7e4aab4d9d704423ae4a
+Merge: 65e14f0 61cdeb7
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sat May 28 23:30:09 2016 +1000
+
+    Merged branch master into master
+
+commit 61cdeb7fc9dee3b6e61226d4ddbed8af4f851ea6
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Sat May 28 23:21:32 2016 +1000
+
+    Fixed firstTests creation of Passengers in each test and made small changes to the A380Tests
+
+commit 65e14f016a48190513470d9ffab120cebb4445f6
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sat May 28 23:20:58 2016 +1000
+
+    A380 implementation
+
+commit 0665e3cc8320bb3bd15a534ef65d0a1c9f50e363
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sat May 28 21:48:39 2016 +1000
+
+    Implemented Aircraft Constructor, started A380Tests
+
+commit dd1d3191da7cefd785a2a3e807830d5c031532d6
+Merge: 60f2c7d 0dab636
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Fri May 27 12:08:59 2016 +1000
+
+    Merged branch master into master
+
+commit 0dab6367f87ce2767d3a712865f1fab734cfee38
+Author: James M. Hogan <j.hogan@qut.edu.au>
+Date:   Wed May 25 21:25:58 2016 +1000
+
+    updated Simulator.toString() to include maxQueueSize, cancelProb
+
+commit 60f2c7dae9e5b884c837d9f339448d7075c13e75
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Wed May 25 20:30:20 2016 +1000
+
+    getPassengers + Removed weird git tags from prev remote merge
+
+commit bd8d6c83f5e90eb2469836d37001c8b620fdb4df
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Wed May 25 15:59:49 2016 +1000
+
+    Code Quality (again)
+
+commit f9f530ff14d9f1c670e00b23ddb6f1c073b485bc
+Merge: 0ba1a1e 9cf799c
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Wed May 25 15:57:35 2016 +1000
+
+    Merge remote-tracking branch 'refs/remotes/JimsMaster/master'
+    
+    Conflicts:
+    	AircraftSimulator/src/asgn2Simulators/Simulator.java
+
+commit 9cf799c486bf6a9ab8fda21efd7d68191f1064a4
+Author: James M. Hogan <j.hogan@qut.edu.au>
+Date:   Wed May 25 00:06:15 2016 +1000
+
+    Restore Constants.SAVE_STATUS to false.
+
+commit 2efdda1e53d692af74f2c0b108075746a40915d8
+Author: James M. Hogan <j.hogan@qut.edu.au>
+Date:   Wed May 25 00:03:33 2016 +1000
+
+    Bug fix: createPassenger; final state of queue, cancelled; doc update
+
+commit 0ba1a1ed3adcf2f7c63b9afb03a5169a7dc2a877
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sat May 21 15:01:05 2016 +1000
+
+    Code quality + notes
+    
+    Some small code quality changes to Jim's code, plus a few notes from listening to podcasts.
+
+commit d66ee6374a004cf010fc8cde43ba02a93717baaa
+Merge: 8f61ebe 28a5b5f
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Sat May 21 14:05:07 2016 +1000
+
+    Merge remote-tracking branch 'refs/remotes/JimsMaster/master'
+    
+    Conflicts (resolved):
+    	AircraftSimulator/src/asgn2Aircraft/Aircraft.java
+
+commit 28a5b5f2ab7fa81822ccb3b3e992074378800455
+Author: James M. Hogan <j.hogan@qut.edu.au>
+Date:   Fri May 20 22:35:56 2016 +1000
+
+    Part 2 Release; asgn2Simulators package, Major javadoc update
+
+commit 8f61ebeb5ecb43e65f071e3343972c34a897bb95
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Mon May 16 21:59:23 2016 +1000
+
+    Mild refactoring and code quality
+
+commit 3fa97681c6cf726177013a739bde14658d406918
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Mon May 16 20:18:18 2016 +1000
+
+    Implemented trivial methods#Aircraft. Commented remaining methods.
+    
+    Implemented trivial methods#Aircraft. Also added pseudocode/comments to the remaining methods.
+
+commit 7a0335301ea9c16af881cf9cac8ba87d175b6ac1
+Author: Megan Hunter <mnhunter@outlook.com>
+Date:   Mon May 16 15:47:21 2016 +1000
+
+    Fixed all the @BeforeClass tests to @Before. Added some test cases for Passenger (there are still some issues) and an extra exception handler in confirmSeat.
+
+commit 8eb64c5ff6b141e8c98726e91a1795d17468c4e1
+Author: Megan Hunter <mnhunter@outlook.com>
+Date:   Mon May 16 14:47:52 2016 +1000
+
+    Added the exceptions to each of the passenger classes (and changed part of the passenger constructor)
+
+commit 25cb0dbf1fdcd785840240841fe3fbc8c36b43b3
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Sun May 15 23:13:25 2016 +1000
+
+    Wrote code for most of the methods in the Passenger class - all getters are complete. Some exception handling may need to be changed, as well as the wasConfirmed and wasQueued methods (not 100% sure if they do what they're meant to)
+
+commit 928a609a66689595b797d4886a0d2d6fa32ba019
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Sun May 15 22:17:40 2016 +1000
+
+    Created the test files required (I think I've got all of them, from reading the specifications)
+
+commit f0cbc8ace3f627cafe62ab0dd21e88dde328dd34
+Author: James M. Hogan <j.hogan@qut.edu.au>
+Date:   Sun May 15 11:07:05 2016 +1000
+
+    fix to name getNumEconomy
+
+commit a54e38bf29ab90c258086e408391072120465b85
+Author: James M. Hogan <j.hogan@qut.edu.au>
+Date:   Thu May 12 13:10:12 2016 +1000
+
+    Fixed typo in Passenger.confirmSeat; Regenerated javadoc
+
+commit 1532a031449ab4a2bab5c7cb344edeb96e75d1ec
+Author: James M. Hogan <j.hogan@qut.edu.au>
+Date:   Thu May 12 10:35:21 2016 +1000
+
+    javadoc: POSTs on key methods; Fix Aircraft.upgradeBookings()
+
+commit d8baff101b14ee95f5b342bac4c869a09b64feea
+Author: James M. Hogan <j.hogan@qut.edu.au>
+Date:   Mon May 9 22:24:23 2016 +1000
+
+    Initial release of Passenger, Aircraft for students
