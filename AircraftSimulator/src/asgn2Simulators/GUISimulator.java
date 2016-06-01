@@ -87,7 +87,22 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	 */
 	@Override
 	public void run() {
-		createGUI(); 
+		switch (checkOutputVersion()) {
+		case 0:
+			createGUI();
+			//System.out.println("THIS WILL DO GUI STUFF");
+			break;
+		case 1:
+			System.out.println("THIS WILL DO TEXT OUTPUT STUFF");
+			break;
+		}
+		//checkOutputVersion();
+		//createGUI(); 
+	}
+	
+	public int checkOutputVersion() {
+		Object[] options = {"GUI output", "Text output"};
+		return JOptionPane.showOptionDialog(null, "Which output version do you want to use?", "Output Version", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 	}
 	
 	/* (non-Javadoc)
@@ -109,13 +124,13 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		//Use this temporarily to help try out the simulator. 
-		//We will not be using this main as the final executable main method. 
-		//Instead the main we will use is a modified main() in SimulationRunner.java.
-		JFrame.setDefaultLookAndFeelDecorated(true);
-        SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
-	}
+//	public static void main(String[] args) {
+//		//Use this temporarily to help try out the simulator. 
+//		//We will not be using this main as the final executable main method. 
+//		//Instead the main we will use is a modified main() in SimulationRunner.java.
+//		JFrame.setDefaultLookAndFeelDecorated(true);
+//        SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
+//	}
 
 	private void createGUI() {
 		setSize(WIDTH, HEIGHT);

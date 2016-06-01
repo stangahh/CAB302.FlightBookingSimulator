@@ -373,21 +373,24 @@ public abstract class Aircraft {
 	 * by upgrades to First), and then finally, we do the same for Economy, upgrading 
 	 * where possible to Premium.  
 	 */
-	public void upgradeBookings() { 
-		//if I upgrade a passenger from business to first, i need to remember that
-		//this will create an opening in business.
-		
+	public void upgradeBookings() { 		
 		for (Passenger p : this.getPassengers()) {
 			if (canUpgradeToFirst(p)) {
 				seats.set(seats.indexOf(p), p.upgrade());
 				this.numFirst += 1;
 				this.numBusiness -= 1;
 			}
+		}
+		
+		for (Passenger p : this.getPassengers()) {
 			if (canUpgradeToBusiness(p)) {
 				seats.set(seats.indexOf(p), p.upgrade());
 				this.numBusiness += 1;
 				this.numPremium -= 1;
 			}
+		}
+		
+		for (Passenger p : this.getPassengers()) {
 			if (canUpgradeToPremium(p)) {
 				seats.set(seats.indexOf(p), p.upgrade());
 				this.numPremium += 1;

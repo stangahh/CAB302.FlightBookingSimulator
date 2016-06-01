@@ -8,6 +8,9 @@ package asgn2Simulators;
 
 import java.io.IOException;
 
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.PassengerException;
 
@@ -44,10 +47,13 @@ public class SimulationRunner {
 				}
 				case 0: {
 					s = new Simulator(); 
+					JFrame.setDefaultLookAndFeelDecorated(true);
+			        SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
 					break;
 				}
 				default: {
-					//Launch GUI
+					JFrame.setDefaultLookAndFeelDecorated(true);
+			        SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
 					printErrorAndExit(); 
 				}
 			}
