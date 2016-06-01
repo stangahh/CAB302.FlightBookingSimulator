@@ -137,8 +137,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			try {
 				createGUI();
 			} catch (SimulationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				System.exit(-1);
 			}
 			//System.out.println("THIS WILL DO GUI STUFF");
 			break;
@@ -147,8 +147,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			try {
 				createGUI();
 			} catch (SimulationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				System.exit(-1);
 			}
 			//System.out.println("THIS WILL DO TEXT OUTPUT STUFF");
 			break;
@@ -190,6 +190,11 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 					log = new Log();
 					SR = new SimulationRunner(this.sim, this.log);
 					SR.runSimulation();
+					
+					JFreeChart chart = createChart(createTimeSeriesData());
+					ChartPanel CP = new ChartPanel(chart);
+			    	container.add(CP, BorderLayout.CENTER);
+			    	container.validate();
 			        
 				} catch (SimulationException | AircraftException | PassengerException | IOException e1) {
 					e1.printStackTrace();
@@ -319,6 +324,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    container.add(interactiveArea, BorderLayout.SOUTH);
 	    	    
 	    layoutInteractivePanel();
+	    
 	    if (textOutput) {
 	    	container.add(textArea, BorderLayout.CENTER);
 	    	layoutTextPanel();
