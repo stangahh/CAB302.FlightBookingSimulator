@@ -143,8 +143,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		}
 	}
 	
-	
-	
 	private int checkOutputVersion() {
 		Object[] options = {"GUI output", "Text output"};
 		return JOptionPane.showOptionDialog(null, "Which output version do you want to use?", "Output Version", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
