@@ -1,0 +1,26 @@
+Megan Hunter	n9154507
+Jesse Stanger	n9162259
+
+
+Summary of Contribution:
+Megan:
+- Passenger class
+- Passenger tests 
+- 50% of GUI
+
+Jesse:
+- Aircraft class
+- Aircraft tests
+- 50% of GUI
+
+We have both agreed that the Summary of Contribution appropriately reflects each of our individual contribution to the assignment. Our contributions were distributed equally with each of us helping the other with our classes/tests when needed.
+
+
+Statement of Completeness:
+- Completed all Aircraft and Passenger classes
+- Tested for all methods (that we could think of) in Aircraft and Passenger classes
+- GUI runs
+- Error/Validation handling is present for the GUI text input
+- The text output is present (but takes output from log files)
+- Ability to input arguments into the console is not present
+- Chart doesn't update after each simulation
