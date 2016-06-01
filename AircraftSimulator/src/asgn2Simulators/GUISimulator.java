@@ -9,7 +9,6 @@ package asgn2Simulators;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -24,7 +23,6 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -34,7 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -45,7 +42,9 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.ui.RefineryUtilities;
+
+import asgn2Aircraft.AircraftException;
+import asgn2Passengers.PassengerException;
 
 /**
  * @author Megan Hunter, Jesse Stanger, hogan
@@ -54,6 +53,9 @@ import org.jfree.ui.RefineryUtilities;
 @SuppressWarnings("serial")
 public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	
+	public static final int WIDTH = 1024;
+	public static final int HEIGHT = 768;
+	
 	private static final String CHART_TITLE = "Random Bookings";
 	
 	private static final String FONT = "Arial";
@@ -61,11 +63,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private static final int TEXT_FONT_SIZE = 20;
 	private static final int TEXT_FIELD_LENGTH = 10;
 	
-	public static final int WIDTH = 1280;
-	public static final int HEIGHT = 720;
-	
-	public static Boolean textOutput = false;
-	public static Boolean fieldError = false;
+	private static Boolean textOutput = false;
+	private static Boolean fieldError = false;
 		
 	private JPanel 		container;
 	
@@ -101,12 +100,22 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private JTextArea	nameEconomy;
 	private JTextField 	fieldEconomy;
 	
+	private Simulator sim = null;
+	private Log log; 
+	
 	/**
 	 * @param arg0
 	 * @throws HeadlessException
 	 */
 	public GUISimulator(String arg0) throws HeadlessException {
 		super(arg0);
+		try {
+			sim = new Simulator();
+			runSimulation();
+		} catch (SimulationException | AircraftException | PassengerException | IOException e1) {
+			e1.printStackTrace();
+			System.exit(-1);
+		}
 		final TimeSeriesCollection dataset = createTimeSeriesData(); 
         JFreeChart chart = createChart(dataset);
         this.add(new org.jfree.chart.ChartPanel(chart), BorderLayout.CENTER);
@@ -117,6 +126,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	 */
 	@Override
 	public void run() {
+		
+		
+		
 		switch (checkOutputVersion()) {
 		case 0:
 			textOutput = false;
@@ -151,8 +163,24 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			if (!fieldError)
 				if (textOutput) {
 					printLogOutput();
-				} else {
-					//DRAW THE CHART UP HERE
+				}
+			
+				try {
+					sim = new Simulator(
+							Integer.parseInt(fieldRNGSeed.getText()),
+							Integer.parseInt(fieldQueueSize.getText()),
+							Double.parseDouble(fieldDailyMean.getText()),
+							Double.parseDouble(fieldCancellation.getText()),
+							Double.parseDouble(fieldFirst.getText()),
+							Double.parseDouble(fieldBusiness.getText()),
+							Double.parseDouble(fieldPremium.getText()),
+							Double.parseDouble(fieldEconomy.getText()),
+							Constants.DEFAULT_CANCELLATION_PROB
+							);
+					runSimulation();
+				} catch (SimulationException | AircraftException | PassengerException | IOException e1) {
+					e1.printStackTrace();
+					System.exit(-1);
 				}
 			
 		} else if (src == swapCharts) {
@@ -460,16 +488,16 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		
 		//Base time, data set up - the calendar is needed for the time points
 		Calendar cal = GregorianCalendar.getInstance();
-		Random rng = new Random(250); 
-		
-		int economy = 0;
-		int premium = 1;
-		int business = 2; 
-		int first = 3; 
 		
 	    
 		//These lines are important 
 		for (int i = 0; i <= Constants.DURATION; i++) {
+			
+			int economy = 	this.sim.getDailyBookings();
+			int premium = 	this.sim.getDailyBookings();
+			int business = 	this.sim.getDailyBookings(); 
+			int first = 	this.sim.getDailyBookings();
+			
 			cal.set(2016, 0, i, 6, 0);
 			Date timePoint = cal.getTime();
 			
@@ -500,5 +528,28 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
        range.setAutoRange(true);
        return result;
    }
+   
+   public void runSimulation() throws AircraftException, PassengerException, SimulationException, IOException {
+	    sim.createSchedule();
+		
+		//Main simulation loop 
+		for (int time = 0; time <= Constants.DURATION; time++) {
+			sim.resetStatus(time); 
+			sim.rebookCancelledPassengers(time); 
+			sim.generateAndHandleBookings(time);
+			sim.processNewCancellations(time);
+			
+			if (time >= Constants.FIRST_FLIGHT) {
+				sim.processUpgrades(time);
+				sim.processQueue(time);
+				sim.flyPassengers(time);
+				sim.updateTotalCounts(time); 
+			} else {
+				sim.processQueue(time);
+			}
+			
+		}
+		sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
+	}
 
 }
