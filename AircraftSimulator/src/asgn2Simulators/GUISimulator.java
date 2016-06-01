@@ -101,6 +101,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private JTextField 	fieldEconomy;
 	
 	private Simulator sim = null;
+	private SimulationRunner SR = null;
 	private Log log; 
 	
 	/**
@@ -158,29 +159,30 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		if (src == runSimulation) {
 			//start simulation
 			checkTextValues();
-			if (!fieldError)
+			if (!fieldError) {
 				if (textOutput) {
 					printLogOutput();
 				}
-			
 				try {
 					sim = new Simulator(
 							Integer.parseInt(fieldRNGSeed.getText()),
 							Integer.parseInt(fieldQueueSize.getText()),
 							Double.parseDouble(fieldDailyMean.getText()),
-							Double.parseDouble(fieldCancellation.getText()),
+							0.33 * Double.parseDouble(fieldDailyMean.getText()),
 							Double.parseDouble(fieldFirst.getText()),
 							Double.parseDouble(fieldBusiness.getText()),
 							Double.parseDouble(fieldPremium.getText()),
 							Double.parseDouble(fieldEconomy.getText()),
-							Constants.DEFAULT_CANCELLATION_PROB
+							Double.parseDouble(fieldCancellation.getText())
 							);
-					runSimulation();
+					log = new Log();
+					SR = new SimulationRunner(this.sim, this.log);
+					SR.runSimulation();
 				} catch (SimulationException | AircraftException | PassengerException | IOException e1) {
 					e1.printStackTrace();
 					System.exit(-1);
 				}
-			
+			} 			
 		} else if (src == swapCharts) {
 			//change chart
 		}
