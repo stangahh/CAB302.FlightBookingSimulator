@@ -21,6 +21,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -33,6 +37,15 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.ui.RefineryUtilities;
 
 /**
  * @author Megan Hunter, Jesse Stanger, hogan
@@ -40,6 +53,8 @@ import org.jfree.chart.ChartFactory;
  */
 @SuppressWarnings("serial")
 public class GUISimulator extends JFrame implements ActionListener, Runnable {
+	
+	private static final String CHART_TITLE = "Random Bookings";
 	
 	private static final String FONT = "Arial";
 	private static final int TEXT_TITLE_FONT_SIZE = 30;
@@ -50,6 +65,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	public static final int HEIGHT = 720;
 	
 	public static Boolean textOutput = false;
+	public static Boolean fieldError = false;
 		
 	private JPanel 		container;
 	
@@ -91,6 +107,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	 */
 	public GUISimulator(String arg0) throws HeadlessException {
 		super(arg0);
+		final TimeSeriesCollection dataset = createTimeSeriesData(); 
+        JFreeChart chart = createChart(dataset);
+        this.add(new org.jfree.chart.ChartPanel(chart), BorderLayout.CENTER);
 	}
 
 	/* (non-Javadoc)
@@ -110,9 +129,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			//System.out.println("THIS WILL DO TEXT OUTPUT STUFF");
 			break;
 		}
-		//checkOutputVersion();
-		//createGUI(); 
 	}
+	
+	
 	
 	private int checkOutputVersion() {
 		Object[] options = {"GUI output", "Text output"};
@@ -129,31 +148,38 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		if (src == runSimulation) {
 			//start simulation
 			checkTextValues();
-			if (textOutput) {
-				String logString = null;
-				try {
-					@SuppressWarnings("resource")
-					BufferedReader br = new BufferedReader(new FileReader(getLatestFilefromDir(System.getProperty("user.dir"))));
-					StringBuilder sb = new StringBuilder();
-					String line = br.readLine();
-					
-					while (line != null) {
-						sb.append(line);
-						sb.append(System.lineSeparator());
-						line = br.readLine();
-					}
-					logString = sb.toString();
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
+			if (!fieldError)
+				if (textOutput) {
+					printLogOutput();
+				} else {
+					//DRAW THE CHART UP HERE
 				}
-				logText.setText(logString);
-			}
 			
 		} else if (src == swapCharts) {
 			//change chart
 		}
+	}
+	
+	private void printLogOutput() {
+		String logString = null;
+		try {
+			@SuppressWarnings("resource")
+			BufferedReader br = new BufferedReader(new FileReader(getLatestFilefromDir(System.getProperty("user.dir"))));
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine();
+			
+			while (line != null) {
+				sb.append(line);
+				sb.append(System.lineSeparator());
+				line = br.readLine();
+			}
+			logString = sb.toString();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		logText.setText(logString);
 	}
 	
 	//I GOT THIS FROM STACK OVERFLOW
@@ -197,6 +223,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    //Sub Panels
 	    chartArea = createPanel(Color.LIGHT_GRAY);
 	    chartArea.setLayout(new BorderLayout());
+	    JFreeChart chart = createChart(createTimeSeriesData());
 	    
 	    interactiveArea = createPanel(Color.CYAN);
 	    
@@ -231,13 +258,16 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    fieldPremium = createTextField(String.valueOf(Constants.DEFAULT_PREMIUM_PROB));
 	    fieldEconomy = createTextField(String.valueOf(Constants.DEFAULT_ECONOMY_PROB));
 	    
-//	    container.add(new ChartPanel("Simulator"), BorderLayout.NORTH);
 	    container.add(interactiveArea, BorderLayout.SOUTH);
 	    	    
 	    layoutInteractivePanel();
 	    if (textOutput) {
 	    	container.add(textArea, BorderLayout.CENTER);
 	    	layoutTextPanel();
+	    } else {
+	    	ChartPanel CP = new ChartPanel(chart);
+	    	container.add(CP, BorderLayout.CENTER);
+	    	container.validate();
 	    }
 	   
 	    
@@ -413,8 +443,62 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 
 		if (errorFound) {
 			JOptionPane.showMessageDialog(this, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
+			fieldError = true;
+		} else {
+			fieldError = false;
 		}
 		
 	}
+	
+	private TimeSeriesCollection createTimeSeriesData() {
+		TimeSeriesCollection tsc = new TimeSeriesCollection(); 
+		TimeSeries bookTotal = new TimeSeries("Total Bookings");
+		TimeSeries econTotal = new TimeSeries("Economy"); 
+		TimeSeries premTotal = new TimeSeries("Premium");
+		TimeSeries busTotal = new TimeSeries("Business");
+		TimeSeries firstTotal = new TimeSeries("First");
+		
+		//Base time, data set up - the calendar is needed for the time points
+		Calendar cal = GregorianCalendar.getInstance();
+		Random rng = new Random(250); 
+		
+		int economy = 0;
+		int premium = 1;
+		int business = 2; 
+		int first = 3; 
+		
+	    
+		//These lines are important 
+		for (int i = 0; i <= Constants.DURATION; i++) {
+			cal.set(2016, 0, i, 6, 0);
+			Date timePoint = cal.getTime();
+			
+			bookTotal.add(new Day(timePoint), economy+premium+business+first);
+			econTotal.add(new Day(timePoint), economy);
+			premTotal.add(new Day(timePoint), premium);
+			busTotal.add(new Day(timePoint), business);
+			firstTotal.add(new Day(timePoint), first);
+		}
+        
+		//Collection
+		tsc.addSeries(bookTotal);
+		tsc.addSeries(econTotal);
+		tsc.addSeries(premTotal);
+		tsc.addSeries(busTotal);
+		tsc.addSeries(firstTotal);
+		
+		return tsc; 
+	}
+	
+   private JFreeChart createChart(final XYDataset dataset) {
+       final JFreeChart result = ChartFactory.createTimeSeriesChart(
+    		   CHART_TITLE, "Days", "Passengers", dataset, true, true, false);
+       final XYPlot plot = result.getXYPlot();
+       ValueAxis domain = plot.getDomainAxis();
+       domain.setAutoRange(true);
+       ValueAxis range = plot.getRangeAxis();
+       range.setAutoRange(true);
+       return result;
+   }
 
 }

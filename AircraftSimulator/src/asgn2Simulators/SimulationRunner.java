@@ -11,6 +11,8 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import org.jfree.ui.RefineryUtilities;
+
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.PassengerException;
 
@@ -49,12 +51,12 @@ public class SimulationRunner {
 					s = new Simulator(); 
 					JFrame.setDefaultLookAndFeelDecorated(true);
 			        SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
-					break;
+			        break;
 				}
 				default: {
 					JFrame.setDefaultLookAndFeelDecorated(true);
 			        SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
-					printErrorAndExit(); 
+			        printErrorAndExit(); 
 				}
 			}
 			l = new Log();
