@@ -1,27 +1,27 @@
 /**
- * 
- * This file is part of the AircraftSimulator Project, written as 
- * part of the assessment for CAB302, semester 1, 2016. 
- * 
+ *
+ * This file is part of the AircraftSimulator Project, written as
+ * part of the assessment for CAB302, semester 1, 2016.
+ *
  */
 package asgn2Aircraft;
 
 /**
- * Simple record type to hold the Passenger number information from an Aircraft and to make 
- * it available for reporting. 
- * 
- * @author hogan
+ * Simple record type to hold the Passenger number information from an Aircraft and to make
+ * it available for reporting.
+ *
+ * @author Megan Hunter, Jesse Stanger, hogan
  *
  */
 public class Bookings {
-	
+
 	private int numFirst;
-	private int numBusiness; 
+	private int numBusiness;
 	private int numPremium;
 	private int numEconomy;
 	private int total;
 	private int available;
-	
+
 
 	/**
 	 * @param numFirst <code>int</code> number of First Class passengers
@@ -42,7 +42,7 @@ public class Bookings {
 
 	/**
 	 * Simple getter for number of First passengers
-	 *  
+	 *
 	 * @return <code>int</code> number of First Class passengers
 	 */
 	public int getNumFirst() {
@@ -51,7 +51,7 @@ public class Bookings {
 
 	/**
 	 * Simple setter for number of First Class passengers
-	 *  
+	 *
 	 * @param numFirst <code>int</code> number of First Class passengers
 	 */
 	public void setNumFirst(int numFirst) {
@@ -61,7 +61,7 @@ public class Bookings {
 
 	/**
 	 * Simple getter for number of Business Class passengers
-	 *  
+	 *
 	 * @return <code>int</code> number of Business Class passengers
 	 */
 	public int getNumBusiness() {
@@ -70,7 +70,7 @@ public class Bookings {
 
 	/**
 	 * Simple setter for number of Business Class passengers
-	 *  
+	 *
 	 * @param numBusiness <code>int</code> number of Business Class passengers
 	 */
 	public void setNumBusiness(int numBusiness) {
@@ -80,7 +80,7 @@ public class Bookings {
 
 	/**
 	 * Simple getter for number of Premium Economy Class passengers
-	 *  
+	 *
 	 * @return <code>int</code> number of Premium Economy Class passengers
 	 */
 	public int getNumPremium() {
@@ -89,7 +89,7 @@ public class Bookings {
 
 	/**
 	 * Simple setter for number of Premium Economy Class passengers
-	 *  
+	 *
 	 * @param numPremium <code>int</code> number of Premium Economy Class passengers
 	 */
 	public void setNumPremium(int numPremium) {
@@ -98,7 +98,7 @@ public class Bookings {
 
 	/**
 	 * Simple getter for number of Economy Class passengers
-	 *  
+	 *
 	 * @return <code>int</code> number of Economy Class passengers
 	 */
 	public int getNumEconomy() {
@@ -107,7 +107,7 @@ public class Bookings {
 
 	/**
 	 * Simple setter for number of Economy Class passengers
-	 *  
+	 *
 	 * @param numEconomy <code>int</code> number of Economy Class passengers
 	 */
 	public void setNumEconomy(int numEconomy) {
@@ -116,7 +116,7 @@ public class Bookings {
 
 	/**
 	 * Simple getter for total number of passengers
-	 *  
+	 *
 	 * @return <code>int</code> total number of passengers
 	 */
 	public int getTotal() {
@@ -125,7 +125,7 @@ public class Bookings {
 
 	/**
 	 * Simple setter for total number of passengers
-	 *  
+	 *
 	 * @param total <code>int</code> total number of passengers
 	 */
 	public void setTotal(int total) {
@@ -134,7 +134,7 @@ public class Bookings {
 
 	/**
 	 * Simple getter for number of seats available
-	 *  
+	 *
 	 * @return <code>int</code> number of seats available
 	 */
 	public int getAvailable() {
@@ -142,12 +142,12 @@ public class Bookings {
 	}
 
 	/**
-	 * Simple setter for number of seats available 
-	 *  
+	 * Simple setter for number of seats available
+	 *
 	 * @param available <code>int</code> number of seats available
 	 */
 	public void setAvailable(int available) {
 		this.available = available;
 	}
-	
+
 }
