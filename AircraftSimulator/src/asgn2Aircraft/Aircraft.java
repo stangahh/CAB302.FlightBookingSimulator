@@ -10,12 +10,8 @@ package asgn2Aircraft;
 import java.util.ArrayList;
 import java.util.List;
 
-import asgn2Passengers.Business;
-import asgn2Passengers.Economy;
-import asgn2Passengers.First;
 import asgn2Passengers.Passenger;
 import asgn2Passengers.PassengerException;
-import asgn2Passengers.Premium;
 import asgn2Simulators.Log;
 
 /**
@@ -342,13 +338,13 @@ public abstract class Aircraft {
 	public boolean seatsAvailable(Passenger p) {
 		switch (getPassengerFlightClass(p)) {
 			case "First":
-				return (this.numFirst != this.firstCapacity);
+				return (this.numFirst < this.firstCapacity);
 			case "Business":
-				return (this.numBusiness != this.businessCapacity);
+				return (this.numBusiness < this.businessCapacity);
 			case "Premium":
-				return (this.numPremium != this.premiumCapacity);
+				return (this.numPremium < this.premiumCapacity);
 			case "Economy":
-				return (this.numEconomy != this.economyCapacity);
+				return (this.numEconomy < this.economyCapacity);
 			default:
 				return false;
 		}
@@ -383,23 +379,17 @@ public abstract class Aircraft {
 		
 		for (Passenger p : this.getPassengers()) {
 			if (canUpgradeToFirst(p)) {
-				seats.remove(p);
-				p = p.upgrade();
-				seats.add(p);
+				seats.set(seats.indexOf(p), p.upgrade());
 				this.numFirst += 1;
 				this.numBusiness -= 1;
 			}
 			if (canUpgradeToBusiness(p)) {
-				seats.remove(p);
-				p = p.upgrade();
-				seats.add(p);
+				seats.set(seats.indexOf(p), p.upgrade());
 				this.numBusiness += 1;
 				this.numPremium -= 1;
 			}
 			if (canUpgradeToPremium(p)) {
-				seats.remove(p);
-				p = p.upgrade();
-				seats.add(p);
+				seats.set(seats.indexOf(p), p.upgrade());
 				this.numPremium += 1;
 				this.numEconomy -= 1;
 			}
