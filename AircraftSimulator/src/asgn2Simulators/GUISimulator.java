@@ -229,28 +229,30 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 
 			}
 		} else if (src == swapCharts) {
-			if (chartSwapped) {
-				chartSwapped = false;
-			} else {
-				chartSwapped = true;
-			}
-			
-			if (!chartSwapped) {
-				try {
-					container.remove(CP2);
-					chart1 = createChart(createTimeSeriesData());
-					CP1 = new ChartPanel(chart1);
-					container.add(CP1, BorderLayout.CENTER);
-					container.validate();
-				} catch (SimulationException e1) {
-					e1.printStackTrace();
+			if (!textOutput) {
+				if (chartSwapped) {
+					chartSwapped = false;
+				} else {
+					chartSwapped = true;
 				}
-			} else {
-				container.remove(CP1);
-				chart2 = createBarChart(createDataset());
-				CP2 = new ChartPanel(chart2);
-				container.add(CP2, BorderLayout.CENTER);
-				container.validate();
+				
+				if (!chartSwapped) {
+					try {
+						container.remove(CP2);
+						chart1 = createChart(createTimeSeriesData());
+						CP1 = new ChartPanel(chart1);
+						container.add(CP1, BorderLayout.CENTER);
+						container.validate();
+					} catch (SimulationException e1) {
+						e1.printStackTrace();
+					}
+				} else {
+					container.remove(CP1);
+					chart2 = createBarChart(createDataset());
+					CP2 = new ChartPanel(chart2);
+					container.add(CP2, BorderLayout.CENTER);
+					container.validate();
+				}
 			}
 		}
 	}
