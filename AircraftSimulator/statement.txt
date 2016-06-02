@@ -32,5 +32,5 @@ Statement of Completeness:
 
 - There is an alternative commented main method, where we attempted to write the code for console imports, but couldnt finish.
 
-- 'Swap Chart' button does nothing. There is no second chart to choose from.
+- 'Swap Chart' changes between a time series and bar chart.
 

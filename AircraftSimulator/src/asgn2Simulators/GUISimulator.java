@@ -37,8 +37,12 @@ import javax.swing.JTextField;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
@@ -58,7 +62,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 768;
 
-	private static final String CHART_TITLE = "Random Bookings";
+	private static final String CHART_TITLE = "Flight Bookings";
+	private static final String CHART2_TITLE = "Flight Data";
 
 	private static final String FONT = "Arial";
 	private static final int TEXT_TITLE_FONT_SIZE = 30;
@@ -67,6 +72,12 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 
 	private static Boolean textOutput = false;
 	private static Boolean fieldError = false;
+	
+	private static Boolean chartSwapped = false;
+	private JFreeChart	chart1;
+	private JFreeChart	chart2;
+	private ChartPanel 	CP1;
+	private ChartPanel	CP2;
 
 	private JPanel 		container;
 
@@ -122,8 +133,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			System.exit(-1);
 		}
 		final TimeSeriesCollection dataset = createTimeSeriesData();
-		JFreeChart chart = createChart(dataset);
-		this.add(new org.jfree.chart.ChartPanel(chart), BorderLayout.CENTER);
+		chart1 = createChart(dataset);
+		CP1 = new ChartPanel(chart1);
+		this.add(CP1, BorderLayout.CENTER);
 	}
 
 	/* (non-Javadoc)
@@ -146,6 +158,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			textOutput = true;
 			try {
 				createGUI();
+				printLogOutput();
 			} catch (SimulationException e) {
 				e.printStackTrace();
 				System.exit(-1);
@@ -170,9 +183,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			//start simulation
 			checkTextValues();
 			if (!fieldError) {
-				if (textOutput) {
-					printLogOutput();
-				}
 				try {
 
 					sim = new Simulator(
@@ -189,12 +199,21 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 					log = new Log();
 					SR = new SimulationRunner(this.sim, this.log);
 					SR.runSimulation();
-
-					if (!textOutput) {
-						JFreeChart chart = createChart(createTimeSeriesData());
-						ChartPanel CP = new ChartPanel(chart);
-						container.add(CP, BorderLayout.CENTER);
-						container.validate();
+					
+					if (textOutput) {
+						printLogOutput();
+					} else if (!textOutput){
+						if (!chartSwapped) {
+							chart1 = createChart(createTimeSeriesData());
+							CP1 = new ChartPanel(chart1);
+							container.add(CP1, BorderLayout.CENTER);
+							container.validate();
+						} else {
+							chart2 = createBarChart(createDataset());
+							CP2 = new ChartPanel(chart2);
+							container.add(CP2, BorderLayout.CENTER);
+							container.validate();
+						}
 					}
 
 				} catch (SimulationException | AircraftException | PassengerException | IOException e1) {
@@ -205,42 +224,54 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 
 			}
 		} else if (src == swapCharts) {
-			//change chart
+			if (chartSwapped) {
+				chartSwapped = false;
+			} else {
+				chartSwapped = true;
+			}
+			
+			if (!chartSwapped) {
+				try {
+					container.remove(CP2);
+					chart1 = createChart(createTimeSeriesData());
+					CP1 = new ChartPanel(chart1);
+					container.add(CP1, BorderLayout.CENTER);
+					container.validate();
+				} catch (SimulationException e1) {
+					e1.printStackTrace();
+				}
+			} else {
+				container.remove(CP1);
+				chart2 = createBarChart(createDataset());
+				CP2 = new ChartPanel(chart2);
+				container.add(CP2, BorderLayout.CENTER);
+				container.validate();
+			}
 		}
 	}
 
-	private void printLogOutput() {
-//		String logString = null;
-//		try {
-//			@SuppressWarnings("resource")
-//			BufferedReader br = new BufferedReader(new FileReader(getLatestFilefromDir(System.getProperty("user.dir"))));
-//			StringBuilder sb = new StringBuilder();
-//			String line = br.readLine();
-//
-//			while (line != null) {
-//				sb.append(line);
-//				sb.append(System.lineSeparator());
-//				line = br.readLine();
-//			}
-//			logString = sb.toString();
-//		} catch (FileNotFoundException e1) {
-//			e1.printStackTrace();
-//		} catch (IOException e1) {
-//			e1.printStackTrace();
-//		}
-//		logText.setText(logString);
+	private void printLogOutput() throws SimulationException {
 		String logString = null;
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-
+		String capacities = sim.getFlights(Constants.FIRST_FLIGHT).initialState();
+		
 		logString = timeLog + ": Start of Simulation\n\n";
 
 		logString += "Simulator [meanDailyBookings = " + fieldDailyMean.getText() + ", sdDailyBookings = " + 0.33 * Double.parseDouble(fieldDailyMean.getText())
 		             + ", seed = " + fieldRNGSeed.getText() + ", firstProb = " + fieldFirst.getText() + ", businessProb = "
 		             + fieldBusiness.getText() + ", premiumProb = " + fieldPremium.getText()
 		             + ", economyProb = " + fieldEconomy.getText() + ", maxQueueSize = " + fieldQueueSize.getText()
-		             + ", cancellationProb = " + fieldCancellation.getText() + "]";
+		             + ", cancellationProb = " + fieldCancellation.getText() + "]\n";
+		
+		logString += capacities + "\n";
 
-		logString += "\n\nFinal Totals: [F" + sim.getTotalFirst()
+		for (int time = 0; time <= Constants.DURATION; time++) {
+			logString += sim.getSummary(time, (time >= Constants.FIRST_FLIGHT));
+		}
+		
+		logString += "\n" + timeLog + ": End of Simulation";
+		
+		logString += "\nFinal Totals: [F" + sim.getTotalFirst()
 		             + ":J" + sim.getTotalBusiness()
 		             + ":P" + sim.getTotalPremium()
 		             + ":Y" + sim.getTotalEconomy()
@@ -251,35 +282,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		logText.setText(logString);
 	}
 
-	//I GOT THIS FROM STACK OVERFLOW
-//	private File getLatestFilefromDir(String path){
-//	    File directory = new File(path);
-//	    File[] files = directory.listFiles();
-//	    if (files == null || files.length == 0) {
-//	        return null;
-//	    }
-//
-//	    File lastModifiedFile = files[0];
-//	    for (int i = 1; i < files.length; i++) {
-//	       if (lastModifiedFile.lastModified() < files[i].lastModified()) {
-//	           lastModifiedFile = files[i];
-//	       }
-//	    }
-//	    return lastModifiedFile;
-//	}
-
 	/**
-	 * @param args
 	 * @throws SimulationException
 	 */
-//	public static void main(String[] args) {
-//		//Use this temporarily to help try out the simulator.
-//		//We will not be using this main as the final executable main method.
-//		//Instead the main we will use is a modified main() in SimulationRunner.java.
-//		JFrame.setDefaultLookAndFeelDecorated(true);
-//        SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
-//	}
-
 	private void createGUI() throws SimulationException {
 		setSize(WIDTH, HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -334,8 +339,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			container.add(textArea, BorderLayout.CENTER);
 			layoutTextPanel();
 		} else {
-			ChartPanel CP = new ChartPanel(chart);
-			container.add(CP, BorderLayout.CENTER);
+			CP1 = new ChartPanel(chart);
+			container.add(CP1, BorderLayout.CENTER);
 			container.validate();
 		}
 
@@ -572,5 +577,26 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		range.setAutoRange(true);
 		return result;
 	}
+	
+	private JFreeChart createBarChart(final CategoryDataset dataset) {
+		final JFreeChart result = ChartFactory.createBarChart(CHART2_TITLE, "Type", "Passengers", dataset);
+		result.setBackgroundPaint(Color.WHITE);
+		return result;
+	}
 
+	private CategoryDataset createDataset() {
+		final String capacity = "Capacity";
+		final String queue = "Queue";
+		final String refused = "Refused";
+		
+		final String category1 = "";
+		
+		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		
+		dataset.addValue(sim.getTotalEmpty(), capacity, category1);
+		dataset.addValue(sim.numInQueue(), queue, category1);
+		dataset.addValue(sim.numRefused(), refused, category1);
+		
+		return dataset;
+	}
 }

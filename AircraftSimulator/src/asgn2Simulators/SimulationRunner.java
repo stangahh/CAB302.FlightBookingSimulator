@@ -6,14 +6,14 @@
  */
 package asgn2Simulators;
 
-//import java.io.BufferedReader;
+
 import java.io.IOException;
+
+//import java.io.BufferedReader;
 //import java.io.InputStreamReader;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-
-//import org.jfree.ui.RefineryUtilities;
 
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.PassengerException;
@@ -39,66 +39,18 @@ public class SimulationRunner {
 		final int NUM_ARGS = 9;
 		Simulator s = null;
 
-//		Boolean errors = true;
-//		Boolean missing = false;
-
-//		System.out.println("Please enter 'gui' or 'nogui':");
-//		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-//		String userGUIInput = reader.readLine();
-//		while (errors) {
-//			System.out.println("Please enter 'default' or 9 arguments for \nseed, maxQueueSize, "
-//					+ "meanBookings, sdBookings, firstProb, businessProb, premiumProb, economyProb, "
-//					+ "cancelProb \nseparated by commas:");
-//			BufferedReader reader2 = new BufferedReader(new InputStreamReader(System.in));
-//			String userArgInput = reader2.readLine();
-//
-//			if (userArgInput.toLowerCase() != "default") {
-//				args = userArgInput.split(",");
-//			}
-//			if (args.length <= 1) {
-//				missing = true;
-//			}
-//			if (!userArgInput.matches("^[0-9]+([,.][0-9]+)?$")) {
-//				missing = true;
-//			}
-//
-//			if (!missing) {
-//				for (int i = 0; i < args.length; i++) {
-//					if (Integer.parseInt(args[i]) < 0) {
-//						errors = true;
-//						break;
-//					}
-//				}
-//				if ((Integer.parseInt(args[4]) + Integer.parseInt(args[5]) +
-//						Integer.parseInt(args[6]) + Integer.parseInt(args[7]))!= 1) {
-//					errors = true;
-//				}
-//			} else {
-//				errors = false;
-//			}
-//
-//			if (errors) {
-//				System.out.println("Invalid argument input, please try again.");
-//			}
-//		}
-
 		try {
 			switch (args.length) {
 			case NUM_ARGS: {
 				s = createSimulatorUsingArgs(args);
-//					if (userGUIInput.toLowerCase().contains("gui")) {
 				JFrame.setDefaultLookAndFeelDecorated(true);
 				SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
-//					}
 				break;
 			}
-			//Have to change this case to 1 when using all the commented out stuff
 			case 0: {
 				s = new Simulator();
-//					if (userGUIInput.toLowerCase().contains("gui")) {
 				JFrame.setDefaultLookAndFeelDecorated(true);
 				SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
-//					}
 				break;
 			}
 			default: {
@@ -114,7 +66,8 @@ public class SimulationRunner {
 	}
 
 //----- MAIN METHOD WHICH STARTED TO IMPLEMENT ARGUMENT INPUT IN CONSOLE ------------------------//	
-//	public static void main(String[] args) {
+//----- HAVE TO ALSO IMPORT BUFFEREDREADER AND INPUTSTREAMREADER --------------------------------//
+//	public static void main(String[] args) throws IOException {
 //		final int NUM_ARGS = 9;
 //		Simulator s = null;
 //
