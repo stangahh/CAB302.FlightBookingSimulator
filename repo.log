@@ -1,3 +1,17 @@
+* 3a1496d : Removal of undeed code in GUISimulator
+*   d07a568 : Merge remote-tracking branch 'refs/remotes/origin/master'
+|\  
+| * adce5ad : Organise imports
+| * 6655414 : Added field reset when improper input (GUI Test 1)
+* | 1d0f654 : Added a reset button to the error popup
+|/  
+* 6800914 : Bugfix - No Value in two fields werent picked up.
+* 181d161 : Changed some @author tags, plus minor formatting improvements
+* cc74720 : Now the swapCharts button won't switch charts in the textoutput version
+* 349eac9 : Minor changes in GUISimulator
+* fb40a73 : Updated the SimulationRunner, Added the second chart option, fixed the text output option in the GUI and updated the statement.txt
+* 5e59831 : Updates to statement.txt
+* 3bf26ec : Added repo.log
 * 90ffe4b : Added unfinished code for console Input in SimulationRunner's main method
 * 76865eb : Full A Style Format
 * 9000bd6 : Remove Comments, Cleanup & Format asgn2Passengers, added a few more tests and changed the Simulation Runner to only create one log file
@@ -111,7 +125,85 @@
 |/  
 * a54e38b : Fixed typo in Passenger.confirmSeat; Regenerated javadoc
 * 1532a03 : javadoc: POSTs on key methods; Fix Aircraft.upgradeBookings()
-* d8baff1 : Initial release of Passenger, Aircraft for studentscommit 90ffe4b4145fd3218fbb5d4843407dbb4176a6e9
+* d8baff1 : Initial release of Passenger, Aircraft for studentscommit 3a1496d37b95d2f8d3e44be48b7eb9763b1a9c10
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 20:22:20 2016 +1000
+
+    Removal of undeed code in GUISimulator
+
+commit d07a5686a1341ab5bb7b318607a2067b69fcfdf4
+Merge: 1d0f654 adce5ad
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 20:21:17 2016 +1000
+
+    Merge remote-tracking branch 'refs/remotes/origin/master'
+    
+    Conflicts:
+    	AircraftSimulator/src/asgn2Simulators/GUISimulator.java
+
+commit 1d0f65433c10c8e92d02b8847c547bdc0fd8c59d
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 20:13:28 2016 +1000
+
+    Added a reset button to the error popup
+
+commit adce5ad9118a804e6a5056e3a9ed34748631c38c
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Thu Jun 2 20:06:54 2016 +1000
+
+    Organise imports
+
+commit 66554148922e1b5c4da5f60c4df656bbf2984528
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Thu Jun 2 19:55:34 2016 +1000
+
+    Added field reset when improper input (GUI Test 1)
+    
+    BUG: Still generates log if bad class probability input.
+
+commit 680091484161e16dc91e313c53ab1d932f4d906c
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Thu Jun 2 19:15:22 2016 +1000
+
+    Bugfix - No Value in two fields werent picked up.
+
+commit 181d161a9728fe85b4ace5b88e5f0791a6902cc8
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Thu Jun 2 19:10:39 2016 +1000
+
+    Changed some @author tags, plus minor formatting improvements
+
+commit cc74720fcdb402ea4d5d32851ca208aa3ef8ee6e
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 16:21:20 2016 +1000
+
+    Now the swapCharts button won't switch charts in the textoutput version
+
+commit 349eac94494e36acbab0f33c37a640e998de7430
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 16:17:33 2016 +1000
+
+    Minor changes in GUISimulator
+
+commit fb40a739d08aefa2152d0ca574590d3f9c473fef
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 16:15:50 2016 +1000
+
+    Updated the SimulationRunner, Added the second chart option, fixed the text output option in the GUI and updated the statement.txt
+
+commit 5e598310f7b676ee954a586b41deba90a0b6be3a
+Author: Jesse Stanger <jesse.stanger@gmail.com>
+Date:   Thu Jun 2 03:03:22 2016 +1000
+
+    Updates to statement.txt
+
+commit 3bf26ecb77fb1d9908b7a8b590709f17a6acd0b0
+Author: Nyx- <mnhunter@outlook.com>
+Date:   Thu Jun 2 02:56:08 2016 +1000
+
+    Added repo.log
+
+commit 90ffe4b4145fd3218fbb5d4843407dbb4176a6e9
 Author: Nyx- <mnhunter@outlook.com>
 Date:   Thu Jun 2 02:52:53 2016 +1000
 
