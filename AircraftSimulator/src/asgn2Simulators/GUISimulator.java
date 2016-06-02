@@ -72,6 +72,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 
 	private static Boolean textOutput = false;
 	private static Boolean fieldError = false;
+	private static Boolean resetFields = false;
 
 	private static Boolean chartSwapped = false;
 	private JFreeChart	chart1;
@@ -186,6 +187,18 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		if (src == runSimulation) {
 			//start simulation
 			checkTextValues();
+			if (resetFields) {
+				fieldRNGSeed.setText(String.valueOf(Constants.DEFAULT_SEED));
+				fieldDailyMean.setText(String.valueOf(Constants.DEFAULT_DAILY_BOOKING_MEAN));
+				fieldQueueSize.setText(String.valueOf(Constants.DEFAULT_MAX_QUEUE_SIZE));
+				fieldCancellation.setText(String.valueOf(Constants.DEFAULT_CANCELLATION_PROB));
+				fieldFirst.setText(String.valueOf(Constants.DEFAULT_FIRST_PROB));
+				fieldBusiness.setText(String.valueOf(Constants.DEFAULT_BUSINESS_PROB));
+				fieldPremium.setText(String.valueOf(Constants.DEFAULT_PREMIUM_PROB));
+				fieldEconomy.setText(String.valueOf(Constants.DEFAULT_ECONOMY_PROB));
+				resetFields = false;
+			}
+			
 			if (!fieldError) {
 				try {
 					sim = new Simulator(
@@ -513,12 +526,20 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 					errorMessage += "\nAnd total probabily of classes doesn't equal 1";
 				} else {
 					errorMessage += "\nThe total probability of classes doesn't equal 1";
+					errorFound = true;
 				}
 			}
 		}
 
 		if (errorFound) {
-			JOptionPane.showMessageDialog(this, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
+			switch (checkErrorDialog(errorMessage)) {
+			case 0:
+				resetFields = false;
+				break;
+			case 1:
+				resetFields = true;
+				break;
+			}
 			fieldError = true;
 		} else {
 			fieldError = false;
@@ -526,6 +547,12 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 
 	}
 
+	private int checkErrorDialog(String errorMessage) {
+		Object[] options = {"OK", "Reset"};
+		return JOptionPane.showOptionDialog(this, errorMessage, "Error", JOptionPane.YES_NO_OPTION, 
+				JOptionPane.ERROR_MESSAGE, null, options, options[0]);
+	}
+	
 	/* ------------------------------- JFreeChart & Associated Methods --------------------- */
 	private TimeSeriesCollection createTimeSeriesData() throws SimulationException {
 		TimeSeriesCollection tsc = new TimeSeriesCollection();
