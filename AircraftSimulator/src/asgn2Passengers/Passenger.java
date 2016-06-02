@@ -42,7 +42,7 @@ package asgn2Passengers;
  * {@link asgn2Passengers.PassengerException} is thrown if the state is inappropriate: see method javadoc for details.
  * The method javadoc also indicates the constraints on the time and other parameters.<br><br>
  *
- * @author hogan
+ * @author Megan Hunter, Jesse Stanger, hogan
  *
  */
 public abstract class Passenger {
@@ -80,7 +80,6 @@ public abstract class Passenger {
 			this.passID = "" + Passenger.index;
 			this.newState = true;
 			Passenger.index++;
-
 		}
 	}
 
@@ -412,7 +411,5 @@ public abstract class Passenger {
 		this.newState = p.isNew();
 		this.refused = p.isRefused();
 	}
-
-	//Various private helper methods to check arguments and throw exceptions
 
 }

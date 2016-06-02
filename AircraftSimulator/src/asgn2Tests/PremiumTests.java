@@ -13,7 +13,7 @@ import asgn2Passengers.PassengerException;
 import asgn2Passengers.Premium;
 
 /**
- * @author Megan
+ * @author Megan Hunter
  *
  */
 public class PremiumTests extends Premium {

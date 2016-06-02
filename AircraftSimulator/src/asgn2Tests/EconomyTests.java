@@ -9,6 +9,10 @@ import asgn2Passengers.Economy;
 import asgn2Passengers.Passenger;
 import asgn2Passengers.PassengerException;
 
+/**
+ * @author Megan Hunter
+ *
+ */
 public class EconomyTests {
 
 	Passenger person;

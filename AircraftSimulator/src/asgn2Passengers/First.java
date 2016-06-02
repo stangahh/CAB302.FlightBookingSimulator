@@ -4,7 +4,7 @@
 package asgn2Passengers;
 
 /**
- * @author hogan
+ * @author Megan Hunter, Jesse Stanger, hogan
  *
  */
 public class First extends Passenger {

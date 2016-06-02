@@ -72,7 +72,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 
 	private static Boolean textOutput = false;
 	private static Boolean fieldError = false;
-	
+
 	private static Boolean chartSwapped = false;
 	private JFreeChart	chart1;
 	private JFreeChart	chart2;
@@ -148,7 +148,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	 */
 	@Override
 	public void run() {
-
 		switch (checkOutputVersion()) {
 		case 0:
 			textOutput = false;
@@ -189,7 +188,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			checkTextValues();
 			if (!fieldError) {
 				try {
-
 					sim = new Simulator(
 					    Integer.parseInt(fieldRNGSeed.getText()),
 					    Integer.parseInt(fieldQueueSize.getText()),
@@ -204,10 +202,10 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 					log = new Log();
 					SR = new SimulationRunner(this.sim, this.log);
 					SR.runSimulation();
-					
+
 					if (textOutput) {
 						printLogOutput();
-					} else if (!textOutput){
+					} else if (!textOutput) {
 						if (!chartSwapped) {
 							chart1 = createChart(createTimeSeriesData());
 							CP1 = new ChartPanel(chart1);
@@ -220,13 +218,10 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 							container.validate();
 						}
 					}
-
 				} catch (SimulationException | AircraftException | PassengerException | IOException e1) {
 					e1.printStackTrace();
 					System.exit(-1);
 				}
-
-
 			}
 		} else if (src == swapCharts) {
 			if (!textOutput) {
@@ -235,7 +230,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 				} else {
 					chartSwapped = true;
 				}
-				
+
 				if (!chartSwapped) {
 					try {
 						container.remove(CP2);
@@ -261,7 +256,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		String logString = null;
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		String capacities = sim.getFlights(Constants.FIRST_FLIGHT).initialState();
-		
+
 		logString = timeLog + ": Start of Simulation\n\n";
 
 		logString += "Simulator [meanDailyBookings = " + fieldDailyMean.getText() + ", sdDailyBookings = " + 0.33 * Double.parseDouble(fieldDailyMean.getText())
@@ -269,15 +264,15 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		             + fieldBusiness.getText() + ", premiumProb = " + fieldPremium.getText()
 		             + ", economyProb = " + fieldEconomy.getText() + ", maxQueueSize = " + fieldQueueSize.getText()
 		             + ", cancellationProb = " + fieldCancellation.getText() + "]\n";
-		
+
 		logString += capacities + "\n";
 
 		for (int time = 0; time <= Constants.DURATION; time++) {
 			logString += sim.getSummary(time, (time >= Constants.FIRST_FLIGHT));
 		}
-		
+
 		logString += "\n" + timeLog + ": End of Simulation";
-		
+
 		logString += "\nFinal Totals: [F" + sim.getTotalFirst()
 		             + ":J" + sim.getTotalBusiness()
 		             + ":P" + sim.getTotalPremium()
@@ -351,7 +346,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			container.validate();
 		}
 
-
 		this.getContentPane().add(container, BorderLayout.CENTER);
 		repaint();
 		this.setVisible(true);
@@ -397,7 +391,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	}
 
 	/* ------------------------------- Layout Methods ----------------------------------- */
-
 	private void layoutTextPanel() {
 		GridBagLayout layout = new GridBagLayout();
 		textArea.setLayout(layout);
@@ -407,7 +400,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		constraints.weightx = 1;
 		constraints.weighty = 1;
 
-		addToPanel(textArea, textScroll, constraints, 0, 0, 1, 1);
+		addToPanel(textArea, textScroll, constraints, 					0, 0, 1, 1);
 	}
 
 	private void layoutInteractivePanel() {
@@ -424,7 +417,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		addToPanel(interactiveArea, titleFareClasses, constraints, 		6, 0, 6, 2);
 
 		//Names
-		//--------------------------------------------------------------x/y/w/h
 		addToPanel(interactiveArea, nameRNGSeed, constraints, 			0, 2, 1, 1);
 		addToPanel(interactiveArea, nameDailyMean, constraints, 		0, 3, 1, 1);
 		addToPanel(interactiveArea, nameQueueSize, constraints, 		0, 4, 1, 1);
@@ -512,7 +504,10 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			errorFound = true;
 		}
 		if (!classError) {
-			double totalClassProb = Double.parseDouble(firstValue) + Double.parseDouble(businessValue) + Double.parseDouble(premiumValue) + Double.parseDouble(economyValue);
+			double totalClassProb = Double.parseDouble(firstValue)
+			                        + Double.parseDouble(businessValue)
+			                        + Double.parseDouble(premiumValue)
+			                        + Double.parseDouble(economyValue);
 			if (totalClassProb != 1.0) {
 				if (errorFound) {
 					errorMessage += "\nAnd total probabily of classes doesn't equal 1";
@@ -531,6 +526,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 
 	}
 
+	/* ------------------------------- JFreeChart & Associated Methods --------------------- */
 	private TimeSeriesCollection createTimeSeriesData() throws SimulationException {
 		TimeSeriesCollection tsc = new TimeSeriesCollection();
 		TimeSeries bookTotal = new TimeSeries("Total Bookings");
@@ -539,10 +535,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		TimeSeries busTotal = new TimeSeries("Business");
 		TimeSeries firstTotal = new TimeSeries("First");
 
-		//Base time, data set up - the calendar is needed for the time points
 		Calendar cal = GregorianCalendar.getInstance();
 
-		//These lines are important
 		for (int i = 0; i <= Constants.DURATION; i++) {
 			if (i >= Constants.FIRST_FLIGHT) {
 				Flights flights = sim.getFlights(i);
@@ -584,10 +578,10 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		range.setAutoRange(true);
 		return result;
 	}
-	
+
 	private JFreeChart createBarChart(final CategoryDataset dataset) {
 		final JFreeChart result = ChartFactory.createBarChart(
-									CHART2_TITLE, "Type", "Passengers", dataset);
+		                              CHART2_TITLE, "Type", "Passengers", dataset);
 		result.setBackgroundPaint(Color.WHITE);
 		return result;
 	}
@@ -596,15 +590,15 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		final String capacity = "Capacity";
 		final String queue = "Queue";
 		final String refused = "Refused";
-		
+
 		final String category1 = "";
-		
+
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		
+
 		dataset.addValue(sim.getTotalEmpty(), capacity, category1);
 		dataset.addValue(sim.numInQueue(), queue, category1);
 		dataset.addValue(sim.numRefused(), refused, category1);
-		
+
 		return dataset;
 	}
 }

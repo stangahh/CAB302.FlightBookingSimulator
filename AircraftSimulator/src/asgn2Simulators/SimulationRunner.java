@@ -22,7 +22,7 @@ import asgn2Passengers.PassengerException;
  * Class to operate the simulation, taking parameters and utility methods from the Simulator
  * to control the available resources, and using Log to provide a record of operation.
  *
- * @author hogan
+ * @author Megan Hunter, Jesse Stanger, hogan
  *
  */
 public class SimulationRunner {
@@ -37,6 +37,8 @@ public class SimulationRunner {
 	 */
 	public static void main(String[] args) {
 		final int NUM_ARGS = 9;
+
+		@SuppressWarnings("unused")
 		Simulator s = null;
 
 		try {
@@ -65,7 +67,7 @@ public class SimulationRunner {
 		}
 	}
 
-//----- MAIN METHOD WHICH STARTED TO IMPLEMENT ARGUMENT INPUT IN CONSOLE ------------------------//	
+//----- MAIN METHOD WHICH STARTED TO IMPLEMENT ARGUMENT INPUT IN CONSOLE ------------------------//
 //----- HAVE TO ALSO IMPORT BUFFEREDREADER AND INPUTSTREAMREADER --------------------------------//
 //	public static void main(String[] args) throws IOException {
 //		final int NUM_ARGS = 9;
@@ -124,7 +126,7 @@ public class SimulationRunner {
 //					}
 //				break;
 //			}
-//			
+//
 //			case 1: {
 //				s = new Simulator();
 //					if (userGUIInput.toLowerCase().contains("gui")) {
@@ -144,7 +146,8 @@ public class SimulationRunner {
 //			System.exit(-1);
 //		}
 //	}
-	
+//----- END ----------------------------------------------------------------------------//
+
 	/**
 	 * Helper to process args for Simulator
 	 *
@@ -178,7 +181,6 @@ public class SimulationRunner {
 		System.err.println(str);
 		System.exit(-1);
 	}
-
 
 	private Simulator sim;
 	private Log log;

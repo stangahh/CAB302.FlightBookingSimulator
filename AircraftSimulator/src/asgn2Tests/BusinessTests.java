@@ -12,7 +12,7 @@ import asgn2Passengers.Business;
 import asgn2Passengers.Passenger;
 
 /**
- * @author Megan
+ * @author Megan Hunter
  *
  */
 public class BusinessTests extends Business {
