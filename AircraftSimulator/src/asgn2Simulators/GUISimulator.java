@@ -15,10 +15,6 @@ import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,9 +33,7 @@ import javax.swing.JTextField;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -479,22 +473,27 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		String errorMessage = "There are errors in the following text fields: \n";
 		Boolean errorFound = false;
 		Boolean classError = false;
+		
 
 		if (!RNGSeedValue.matches("^[0-9]+$")) {
 			errorMessage += "\nRNG Seed value";
 			errorFound = true;
+			fieldRNGSeed.setText(String.valueOf(Constants.DEFAULT_SEED));
 		}
 		if (!dailyMeanValue.matches("^[0-9]+([,.][0-9]+)?$")) {
 			errorMessage += "\nDaily mean";
 			errorFound = true;
+			fieldDailyMean.setText(String.valueOf(Constants.DEFAULT_DAILY_BOOKING_MEAN));
 		}
 		if (!queueSizeValue.matches("^[0-9]+$")) {
 			errorMessage += "\nQueue size";
 			errorFound = true;
+			fieldQueueSize.setText(String.valueOf(Constants.DEFAULT_MAX_QUEUE_SIZE));
 		}
 		if (!cancellationValue.matches("^[0-9]+([,.][0-9]+)?$")) {
 			errorMessage += "\nCancellation value";
 			errorFound = true;
+			fieldCancellation.setText(String.valueOf(Constants.DEFAULT_CANCELLATION_PROB));
 		}
 		if (!firstValue.matches("^[0-9]+([,.][0-9]+)?$")) {
 			errorMessage += "\nFirst value";
@@ -524,6 +523,12 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			if (totalClassProb != 1.0) {
 				if (errorFound) {
 					errorMessage += "\nAnd total probabily of classes doesn't equal 1";
+					JOptionPane.showMessageDialog(this, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
+					
+					fieldFirst.setText(String.valueOf(Constants.DEFAULT_FIRST_PROB));
+					fieldBusiness.setText(String.valueOf(Constants.DEFAULT_BUSINESS_PROB));
+					fieldPremium.setText(String.valueOf(Constants.DEFAULT_PREMIUM_PROB));
+					fieldEconomy.setText(String.valueOf(Constants.DEFAULT_ECONOMY_PROB));
 				} else {
 					errorMessage += "\nThe total probability of classes doesn't equal 1";
 					errorFound = true;
