@@ -523,12 +523,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			if (totalClassProb != 1.0) {
 				if (errorFound) {
 					errorMessage += "\nAnd total probabily of classes doesn't equal 1";
-					JOptionPane.showMessageDialog(this, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
-					
-					fieldFirst.setText(String.valueOf(Constants.DEFAULT_FIRST_PROB));
-					fieldBusiness.setText(String.valueOf(Constants.DEFAULT_BUSINESS_PROB));
-					fieldPremium.setText(String.valueOf(Constants.DEFAULT_PREMIUM_PROB));
-					fieldEconomy.setText(String.valueOf(Constants.DEFAULT_ECONOMY_PROB));
 				} else {
 					errorMessage += "\nThe total probability of classes doesn't equal 1";
 					errorFound = true;
