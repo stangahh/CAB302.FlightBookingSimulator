@@ -121,7 +121,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	 * @throws HeadlessException
 	 * @throws SimulationException
 	 */
-	public GUISimulator(String arg0) throws HeadlessException, SimulationException {
+	public GUISimulator(String arg0) throws HeadlessException {
 		super(arg0);
 		try {
 			sim = new Simulator();
@@ -132,10 +132,15 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			e1.printStackTrace();
 			System.exit(-1);
 		}
-		final TimeSeriesCollection dataset = createTimeSeriesData();
-		chart1 = createChart(dataset);
-		CP1 = new ChartPanel(chart1);
-		this.add(CP1, BorderLayout.CENTER);
+		TimeSeriesCollection dataset;
+		try {
+			dataset = createTimeSeriesData();
+			chart1 = createChart(dataset);
+			CP1 = new ChartPanel(chart1);
+			this.add(CP1, BorderLayout.CENTER);
+		} catch (SimulationException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -579,7 +584,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	}
 	
 	private JFreeChart createBarChart(final CategoryDataset dataset) {
-		final JFreeChart result = ChartFactory.createBarChart(CHART2_TITLE, "Type", "Passengers", dataset);
+		final JFreeChart result = ChartFactory.createBarChart(
+									CHART2_TITLE, "Type", "Passengers", dataset);
 		result.setBackgroundPaint(Color.WHITE);
 		return result;
 	}
