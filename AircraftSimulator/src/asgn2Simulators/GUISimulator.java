@@ -467,15 +467,15 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		Boolean errorFound = false;
 		Boolean classError = false;
 
-		if (!RNGSeedValue.matches("^[0-9]*$")) {
-			errorMessage += "\nSeed value";
+		if (!RNGSeedValue.matches("^[0-9]+$")) {
+			errorMessage += "\nRNG Seed value";
 			errorFound = true;
 		}
 		if (!dailyMeanValue.matches("^[0-9]+([,.][0-9]+)?$")) {
 			errorMessage += "\nDaily mean";
 			errorFound = true;
 		}
-		if (!queueSizeValue.matches("^[0-9]*$")) {
+		if (!queueSizeValue.matches("^[0-9]+$")) {
 			errorMessage += "\nQueue size";
 			errorFound = true;
 		}
